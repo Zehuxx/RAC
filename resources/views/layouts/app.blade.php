@@ -28,7 +28,8 @@
         <!-- Main styles for this application-->
         <link href="{{ asset('css/fw/style.css')}}" rel="stylesheet">
         <link href="{{ asset('css/pace.min.css')}}" rel="stylesheet">
-
+        
+        <link rel="stylesheet" href="{{asset('css/sweetalert2.min.css')}}">
         <!-- Global site tag (gtag.js) - Google Analytics-->
         {{-- <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script> --}}
         <script>
@@ -72,6 +73,8 @@
         <script src="{{ asset('js/fw/Chart.min.js')}}"></script>-->
         <script src="{{ asset('js/fw/custom-tooltips.min.js')}}"></script>
         <!-- <script src="{{ asset('js/main.js')}}"></script>-->
+        <script src="{{asset('js/sweetalert2.min.js')}}"></script>
+        @yield('js')
 
     </body>
 </html>

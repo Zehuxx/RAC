@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+//RUTAS ADMINS
 Route::view('/admin', 'admin/home')->name('admin home');
-
+//RUTAS USERS
 Route::view('/user', 'user/home')->name('user home');
+Route::view('/detalles', 'user/details')->name('user detalles');
+Route::view('/orden', 'user/new_order')->name('user orden');

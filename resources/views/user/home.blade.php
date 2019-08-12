@@ -15,7 +15,7 @@
 		echo 
 			    "<div class='col-lg-4 col-sm-6 col-md-4'>
 			    	<div class='card'>
-			      		<div class='card-header'>Card actions
+			      		<div class='card-header'>MARCA/MODELO/AÑO
 			        		<div class='card-header-actions'>
 			          			<a class='card-header-action btn-minimize' href='#' data-toggle='collapse' data-target='#car".$i."' aria-expanded='true'>
 				          			<i class='icon-arrow-up'></i>
@@ -45,6 +45,10 @@
 
 @section('div_principal')
 
+@endsection
+
+@section('js')
+<script src="{{asset('js/user/user.js')}}"></script>
 @endsection
 
 

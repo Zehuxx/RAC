@@ -29,7 +29,9 @@
         <link href="{{ asset('css/fw/style.css')}}" rel="stylesheet">
         <link href="{{ asset('css/pace.min.css')}}" rel="stylesheet">
         
+        <link href="{{ asset('css/table.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('css/sweetalert2.min.css')}}">
+        @yield('css');
         <!-- Global site tag (gtag.js) - Google Analytics-->
         {{-- <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script> --}}
         <script>

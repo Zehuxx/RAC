@@ -10,6 +10,23 @@
 
 @section('cards')
 <div class='row'>
+	<div class="col-lg-12 col-sm-12 col-md-12">
+		<table style="margin-bottom: 10px">
+			<tr>
+				<td style="text-align: left;">
+					<a class="btn btn-primary btn-add" href="#"></a>
+				</td>
+				<td >
+					<form method="get">
+						<input type="text" id="search" value="{{ isset($search) ? $search : ''}}" autofocus="" name="search" placeholder="Buscar...">
+						<input type="submit" style="display: none" />
+					</form>
+				</td>
+			</tr>
+		</table>
+		
+		
+	</div>
 @php	
 	for ($i=0; $i < 9; $i++) { 
 		echo 

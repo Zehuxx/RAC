@@ -18,7 +18,7 @@
 				</td>
 				<td >
 					<form method="get">
-						<input type="text" id="search" value="{{ isset($search) ? $search : ''}}" autofocus="" name="search" placeholder="Buscar...">
+						<input type="text" id="search" value="{{ isset($search) ? $search : ''}}" autofocus="" name="search" placeholder="Buscar..." style="width: auto;">
 						<input type="submit" style="display: none" />
 					</form>
 				</td>

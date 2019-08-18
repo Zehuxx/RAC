@@ -22,3 +22,4 @@ Route::view('/user', 'user/home')->name('user home');
 Route::view('/detalles', 'user/details')->name('user detalles');
 Route::view('/orden', 'user/new_order')->name('user orden');
 Route::view('/carro', 'user/new_car')->name('user carro');
+Route::view('/ordenes', 'user/orderview');

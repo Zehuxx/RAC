@@ -13,7 +13,7 @@
 <style type="text/css">
 	table th{
 		text-align: left;
-	}
+	} 
 </style>
 @endsection
 

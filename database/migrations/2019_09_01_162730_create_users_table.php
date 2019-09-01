@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration {
 			$table->integer('role_id')->index('fk_users_roles1_idx');
 			$table->string('email', 100);
 			$table->dateTime('email_verified_at')->nullable();
-			$table->string('password', 45);
+			$table->string('password');
 			$table->string('remember_token', 100)->nullable();
 			$table->timestamps();
 			$table->softDeletes();

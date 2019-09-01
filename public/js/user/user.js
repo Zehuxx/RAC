@@ -20,12 +20,22 @@ $(document).ready(function(){
               reverseButtons: true
             }).then((result) => {
               if (result.value) {
-                $(this).parent().fadeOut();
-                swalWithBootstrapButtons.fire(
+                var token = $("meta[name='csrf-token']").attr("content");
+                var id=$(event.target.parentElement).attr("data-id");
+                var element=$(this);
+                $.ajax({
+                url:"car/borrar/"+id,
+                method:"DELETE",
+                data:{"id": id,"_token":token },
+                success:function(){
+                  element.parent().fadeOut();
+                  swalWithBootstrapButtons.fire(
                   'Borrado!',
                   'Tus datos han sido borrados',
                   'success'
-                )
+                  )
+                  }   
+                })
 
               } else if (
                 /* Read more about handling dismissals below */
@@ -42,3 +52,5 @@ $(document).ready(function(){
 
     });
 });
+
+

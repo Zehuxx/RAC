@@ -5,7 +5,7 @@
 @section('sidebar elements')
     <li class="nav-title">Bienvenido</li>
     <li class="nav-item">
-        <a class="nav-link" href="{{route('user home')}}">
+        <a class="nav-link" href="{{route('home')}}">
             <i class="nav-icon icon-map"></i> Carros</a>
     </li>
     <li class="nav-item">

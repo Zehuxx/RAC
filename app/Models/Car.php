@@ -10,7 +10,7 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Car
+ * Class Car 
  * 
  * @property int $id
  * @property int $state_id
@@ -55,8 +55,26 @@ class Car extends Eloquent
 		'location_id',
 		'chassis',
 		'license_plate',
-		'image'
+		'image' 
 	];
+
+	public function scopeSearch($query, $search){
+        return $query
+            ->where('chassis','like','%'.$search.'%')
+            ->orWhere('license_plate','like','%'.$search.'%')
+            ->orWhereHas('model',function($q)use($search){
+                $q->where('name','like','%'.$search.'%');
+            })
+            ->orWhereHas('car_brand',function($q)use($search){
+                $q->where('name','like','%'.$search.'%');
+            })
+            ->orWhereHas('car_type',function($q)use($search){
+                $q->where('name','like','%'.$search.'%');
+            })
+            ->orWhereHas('location',function($q)use($search){
+                $q->where('location_code','like','%'.$search.'%');
+            });
+    }
 
 	public function car_brand()
 	{

@@ -59,7 +59,7 @@
             @yield('navbar')
         </header>
 
-        <div class="app-body">
+        <div class="app-body" style="margin-top: 34px">
             @yield('body')
         </div>
 

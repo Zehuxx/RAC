@@ -20,6 +20,8 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name
 Route::group(['middleware'=>['check.admin.role']], function(){
 //RUTAS ADMINS
 
+
+
 Route::view('/admin', 'admin/home')->name('admin home');
 Route::view('empleados', 'admin/employes')->name('admin employes');
 

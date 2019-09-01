@@ -24,7 +24,6 @@
                     <th>#</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>Nusuario</th>
                     <th>Rol</th>
                     <th>Estado</th>
                     <th>Comision</th>
@@ -33,19 +32,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Denis</td>
-                    <td>Henriquez</td>
-                    <td>hdenis</td>
-                    <td>Asistente</td>
-                    <td>A</td>
-                    <td>.80</td>
-                    <td>300000</td>
-                    <td>
-                        <span class="badge badge-success">Active</span>
-                    </td>
+                
+                  @foreach ($employees as $emp)
+                  <tr>
+                  <td>{{$emp->id}}</td>
+                  <td>{{$emp->name}}</td>
+                  <td>{{$emp->last_name}}</td>
+                  <td>{{$emp->rl}}</td>
+                  <td>{{$emp->st}}</td>
+                  <td>{{$emp->cm}}</td>
+                  <td>{{$emp->sg}}</td>
+                  <td>
+                      <span class="badge badge-success">Active</span>
+                  </td> 
                 </tr>
+                  @endforeach
+                
             </tbody>
         </table>
 

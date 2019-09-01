@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models;
 
 class EmployeesController extends Controller
 {
@@ -15,15 +17,16 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        return view('admin/employes')
-        ->with('employees', DB::table('employees')
+        $employees= \App\Models\Employee::select('employees.*','users.*','persons.*','roles.name as rl','goals.sales_goal as sg','sellers.state as st', 'goals.commission as cm')
         ->join('users','users.id','=','employees.id')
         ->join('persons','persons.id','=','employees.id')
         ->join('roles','users.id','=','roles.id')
         ->join('goals','goals.id','=','employees.id')
         ->join('sellers','sellers.id','=','employees.id')
-        ->select('employees.*','users.*','persons.*','roles.name as rl','goals.sales_goal as sg','sellers.state as st', 'goals.commission as cm')
-        ->get());
+        ->get();
+
+        return view('admin/employes')
+        ->with('employees', $employees);
     }
 
     /**

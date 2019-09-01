@@ -1,5 +1,6 @@
 <?php
 //use Illuminate\Support\Facades\Route;
+//use app\Http\Controllers\Admin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,7 +28,7 @@ Route::view('empleados', 'admin/employes')->name('admin employes');
 
 Route::view('/', 'admin/home')->name('admin home');
 
-Route::get('/empleados', 'EmployeesController@index')->name('admin employes');
+Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employes');
 
 
 Route::view('empleados/add', 'admin/add_employe')->name('admin employes add');

@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Mon, 02 Sep 2019 03:07:57 +0000.
+ * Date: Mon, 02 Sep 2019 22:14:14 +0000.
  */
 
 namespace App\Models;
@@ -20,7 +20,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $deleted_at
  * 
  * @property \Illuminate\Database\Eloquent\Collection $cars
- * @property \Illuminate\Database\Eloquent\Collection $employees
+ * @property \Illuminate\Database\Eloquent\Collection $sale_goals
  *
  * @package App\Models
  */
@@ -42,8 +42,8 @@ class CarType extends Eloquent
 		return $this->hasMany(\App\Models\Car::class);
 	}
 
-	public function employees()
+	public function sale_goals()
 	{
-		return $this->hasMany(\App\Models\Employee::class);
+		return $this->hasMany(\App\Models\SaleGoal::class);
 	}
 }

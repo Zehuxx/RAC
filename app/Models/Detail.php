@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Mon, 02 Sep 2019 03:07:58 +0000.
+ * Date: Mon, 02 Sep 2019 22:14:15 +0000.
  */
 
 namespace App\Models;
@@ -15,13 +15,14 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $id
  * @property int $order_id
  * @property int $car_id
+ * @property \Carbon\Carbon $departure_date
+ * @property \Carbon\Carbon $reentry_date
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
  * 
  * @property \App\Models\Car $car
  * @property \App\Models\Order $order
- * @property \Illuminate\Database\Eloquent\Collection $movements
  *
  * @package App\Models
  */
@@ -34,9 +35,16 @@ class Detail extends Eloquent
 		'car_id' => 'int'
 	];
 
+	protected $dates = [
+		'departure_date',
+		'reentry_date'
+	];
+
 	protected $fillable = [
 		'order_id',
-		'car_id'
+		'car_id',
+		'departure_date',
+		'reentry_date'
 	];
 
 	public function car()
@@ -47,10 +55,5 @@ class Detail extends Eloquent
 	public function order()
 	{
 		return $this->belongsTo(\App\Models\Order::class);
-	}
-
-	public function movements()
-	{
-		return $this->hasMany(\App\Models\Movement::class);
 	}
 }

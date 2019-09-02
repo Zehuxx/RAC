@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDetailsTable extends Migration {
+class CreateEmployeesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateDetailsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('details', function(Blueprint $table)
+		Schema::create('employees', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('order_id')->index('fk_Details_orders1_idx');
-			$table->integer('car_id')->index('fk_Details_cars1_idx');
+			$table->integer('id')->index('fk_employees_persons1_idx');
+			$table->float('salary', 10, 0)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -30,7 +29,7 @@ class CreateDetailsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('details');
+		Schema::drop('employees');
 	}
 
 }

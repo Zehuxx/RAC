@@ -23,7 +23,7 @@ class CreateCarsTable extends Migration {
 			$table->string('chassis', 45);
 			$table->string('license_plate', 45);
 			$table->date('year');
-			$table->binary('image', 65535)->nullable();
+			$table->string('image')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

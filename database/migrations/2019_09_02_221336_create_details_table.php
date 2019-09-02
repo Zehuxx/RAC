@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateMovementsTable extends Migration {
+class CreateDetailsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,11 @@ class CreateMovementsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('movements', function(Blueprint $table)
+		Schema::create('details', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('detail_id')->index('fk_movements_Details1_idx');
+			$table->integer('order_id')->index('fk_Details_orders1_idx');
+			$table->integer('car_id')->index('fk_Details_cars1_idx');
 			$table->date('departure_date');
 			$table->date('reentry_date')->nullable();
 			$table->timestamps();
@@ -31,7 +32,7 @@ class CreateMovementsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('movements');
+		Schema::drop('details');
 	}
 
 }

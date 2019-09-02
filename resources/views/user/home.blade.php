@@ -14,7 +14,7 @@
 		<table style="margin-bottom: 10px"> 
 			<tr>
 				<td style="text-align: left;">
-					<a class="btn btn-primary btn-add" href="#"></a>
+					<a class="btn btn-primary btn-add" href="{{route('car create')}}"></a>
 				</td>
 				<td >
 					<form method="get">

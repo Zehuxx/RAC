@@ -63,7 +63,7 @@ class EmployeesController extends Controller
         $usr->save();
         //return $pers;
         //$emp=new Employee;
-        return redirect('/empleados');
+        return redirect('/empleados')->with('status','created');
     }
 
     /**

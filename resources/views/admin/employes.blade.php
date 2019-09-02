@@ -1,5 +1,15 @@
 @extends('layouts.admin')
 
+@if (session('status')=='created')
+<script>
+    function myFunction() {
+      alert("Empleado creado");
+    }
+
+    myFunction();
+    </script>
+@endif
+
 @section('route')
     <li class="breadcrumb-item">Admin</li>
     <li class="breadcrumb-item active">

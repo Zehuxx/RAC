@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models;
+use Illuminate\Support\facades\Input;
 
 class EmployeesController extends Controller
 {
@@ -17,11 +18,11 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees= \App\Models\Employee::select('employees.*','users.*','persons.*','roles.name as rl','goals.sales_goal as sg','sellers.state as st', 'goals.commission as cm')
+        $employees=\App\Models\Employee::select('employees.*','users.*','persons.*','roles.name as rl','goals.sales_goal as sg','sellers.state as st', 'goals.commission as cm')
         ->join('users','users.id','=','employees.id')
         ->join('persons','persons.id','=','employees.id')
-        ->join('roles','users.id','=','roles.id')
-        ->join('goals','goals.id','=','employees.id')
+        ->join('roles','users.role_id','=','roles.id')
+        ->join('goals','goals.seller_id','=','employees.id')
         ->join('sellers','sellers.id','=','employees.id')
         ->get();
 
@@ -36,7 +37,33 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //
+        $pers=new \App\Models\Person;
+        $pers->name=Input::get('nombre');
+        $pers->last_name=Input::get('apellido');
+        $pers->identification_card=Input::get('identidad');
+        $pers->phone=Input::get('telefono');
+        $pers->home_address=Input::get('direccion');
+        $pers->gender=Input::get('sexo');
+        $pers->birth_date=Input::get('fecha-nacimiento');
+        $pers->save();
+
+        $id=\App\Models\Person::where('identification_card',$pers->identification_card)->first();
+
+        $emp=new \App\Models\Employee;
+        $emp->id=$id->id;
+        $emp->salary=0;
+        $emp->hiring_date=\Carbon\Carbon::now();
+        $emp->save();
+
+        $usr= new \App\Models\User;
+        $usr->id=($id->id);
+        $usr->email=Input::get('Email');
+        $usr->password=Input::get('password');
+        $usr->role_id=Input::get('rol');
+        $usr->save();
+        //return $pers;
+        //$emp=new Employee;
+        return redirect('/empleados');
     }
 
     /**

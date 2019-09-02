@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use Image;
-use Carbon\Carbon;
 use App\Models\Car;
 use App\Models\CarBrand;
 use App\Models\CarType;
@@ -12,6 +11,7 @@ use App\Models\Model;
 use App\Models\State;
 use Illuminate\Http\Request;
 use App\Http\Requests\CarStoreRequest;
+use App\Http\Requests\CarUpdateRequest;
 use Illuminate\Support\Facades\Auth; 
 use App\Http\Controllers\Controller;
 
@@ -96,7 +96,13 @@ class CarController extends Controller
      */
     public function edit($id)
     {
-        
+        $carro=Car::find($id);
+        $marcas=CarBrand::all();
+        $tipos=CarType::all();
+        $modelos=Model::all();
+        $ubicaciones=Location::where('availability',1)->get();
+        $estados=State::all();
+        return view('user.details',compact('carro','marcas','tipos','modelos','ubicaciones','estados'));
     }
 
     /**
@@ -106,9 +112,31 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(CarUpdateRequest $request,$id)
     {
+        $car= Car::find($id);
+        $image= $request->file("imagen");
+        if ($image) {
+            if ($car->image) {
+                $fileName=$car->image;
 
+            }else{
+                $fileName = uniqid("img_", true).".".$image->getClientOriginalExtension();
+
+            }
+            Image::make($image)->save( public_path('img/carros/'.$fileName));
+            $car->image = $fileName;
+        }
+        $car->car_brand_id = $request->input("marca");
+        $car->model_id = $request->input("modelo");
+        $car->chassis = $request->input("chasis");
+        $car->license_plate = $request->input("placa");
+        $car->car_type_id = $request->input("tipo");
+        $car->state_id = $request->input("estado");
+        $car->location_id = $request->input("ubicacion");
+        $car->year = $request->input("year").'-01-01';
+        $car->save();
+        return redirect()->route('user home');
     }
 
     /**

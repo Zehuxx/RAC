@@ -46,7 +46,7 @@
 	    		</div>
 	    		<div class='card-footer' style='padding: 0px'>
 	    			<div class='btn-group btn-group-lg' role='group' aria-label='Large button group' style='width: 100%'>
-	    				<a href="#{{$car->id}}" class='btn btn-info' style="border-radius: 0px">Detalles</a>
+	    				<a href="{{route('car edit',$car->id)}}" class='btn btn-info' style="border-radius: 0px">Detalles</a>
 			            <a href="#{{$car->id}}" class='btn btn-success' style="border-radius: 0px">Nueva orden</a>
 			        </div>
 	    		</div>

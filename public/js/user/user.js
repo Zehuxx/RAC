@@ -24,7 +24,7 @@ $(document).ready(function(){
                 var id=$(event.target.parentElement).attr("data-id");
                 var element=$(this);
                 $.ajax({
-                url:"car/borrar/"+id,
+                url:"carros/borrar/"+id,
                 method:"DELETE",
                 data:{"id": id,"_token":token },
                 success:function(){

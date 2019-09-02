@@ -6,7 +6,7 @@ $("#editar").on("click",function(){
     $("#placa").prop("disabled",false);
     $("#tipo").prop("disabled",false);
     $("#estado").prop("disabled",false);
+    $('#year').removeAttr('disabled');
     $("#ubicacion").prop("disabled",false);
-    $("#costo").prop("disabled",false);
-
+    $('#imagen').removeAttr('disabled');
 });

@@ -28,6 +28,7 @@
         <!-- Main styles for this application-->
         <link href="{{ asset('css/fw/style.css')}}" rel="stylesheet">
         <link href="{{ asset('css/pace.min.css')}}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
         
         <link href="{{ asset('css/table.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('css/sweetalert2.min.css')}}">
@@ -52,8 +53,10 @@
         <header class="app-header navbar">
             {{-- logo de la empresa --}}
             <a class="navbar-brand" href="{{route('home')}}">
-                <img class="navbar-brand-full" src="{{asset('img/brand/logo.svg')}}" width="89" height="25" alt="CoreUI Logo">
-                <img class="navbar-brand-minimized" src="{{asset('img/brand/sygnet.svg')}}" width="30" height="30" alt="CoreUI Logo">
+                {{--<img class="navbar-brand-full" src="{{asset('img/brand/RAC.svg')}}" width="89" height="25" alt="RAC">
+                <img class="navbar-brand-minimized" src="{{asset('img/brand/sygnet.svg')}}" width="30" height="30" alt="CoreUI Logo">--}}
+                <span class="navbar-brand-full" style="font-family: Lobster, cursive; font-size:2.5rem;">RAC</span>
+                <span class="navbar-brand-minimized" style="font-family: Lobster, cursive; font-size:1.5rem;">RAC</span>
             </a>
 
             @yield('navbar')

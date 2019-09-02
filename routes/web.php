@@ -45,11 +45,13 @@ Route::group(['middleware'=>['check.user.role']], function(){
 //RUTAS USERS
 Route::get('/carros', 'User\CarController@index')->name('user home');
 Route::get('/carros/agregar', 'User\CarController@create')->name('car create');
+Route::get('/carros/editar/{id}','User\CarController@edit')->name('car edit');
 Route::post('/carros/guardar', 'User\CarController@store')->name('car store');
-Route::view('/orden', 'user/new_order')->name('user orden');
-Route::delete('/car/borrar/{id}', 'User\CarController@destroy')->name('car destroy');
-Route::view('/detalles', 'user/details')->name('user detalles');
+Route::put('/carros/actualizar/{id}', 'User\CarController@update')->name('car update');
+Route::delete('/carros/borrar/{id}', 'User\CarController@destroy')->name('car destroy');
 
+Route::view('/detalles', 'user/details')->name('user detalles');
+Route::view('/orden', 'user/new_order')->name('user orden');
 
 Route::view('/ordenes', 'user/order_view');
 Route::view('/clientes', 'user/client_view');

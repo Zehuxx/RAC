@@ -30,6 +30,7 @@ Route::view('/', 'admin/home')->name('admin home');
 
 Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employes');
 
+Route::post('/empleados/Crear', 'Admin\EmployeesController@create')->name('admin employee add');
 
 Route::view('empleados/add', 'admin/add_employe')->name('admin employes add');
 Route::view('modelos', 'admin/models')->name('admin models');

@@ -8,6 +8,8 @@
 @endsection
 
 @section('cards')
+<form action="/empleados/Crear" method="POST">
+    @csrf
 <div class="col-md-6">
     <div class="card">
         <div class="card-header">
@@ -90,7 +92,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="Email">Email</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="Email" type="email" name="Emai" placeholder="ejemplo@email.com">
+                        <input class="form-control" id="Email" type="email" name="Email" placeholder="ejemplo@email.com">
                         <span class="help-block">Correo electronico</span>
                     </div>
                 </div>
@@ -112,4 +114,5 @@
         </div>
     </div>
 </div>
+</form>
 @endsection

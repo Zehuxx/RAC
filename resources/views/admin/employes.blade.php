@@ -1,5 +1,15 @@
 @extends('layouts.admin')
 
+@if (session('status')=='created')
+<script>
+    function myFunction() {
+      alert("Empleado creado");
+    }
+
+    myFunction();
+    </script>
+@endif
+
 @section('route')
     <li class="breadcrumb-item">Admin</li>
     <li class="breadcrumb-item active">
@@ -18,6 +28,10 @@
         </div>
     </div>
     <div class="card-body">
+        <form action="/empleados/add">
+        <input type="submit" value="agregar"/>
+        </form>
+        <br>
         <table class="table table-responsive-sm table-bordered">
             <thead>
                 <tr>
@@ -44,6 +58,8 @@
                   <td>{{$emp->sg}}</td>
                   <td>
                       <span class="badge badge-success">Active</span>
+                      <input type="button" value="editar">
+                      <input type="button" value="borrar">
                   </td> 
                 </tr>
                   @endforeach

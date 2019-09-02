@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use Image;
+use Carbon\Carbon;
 use App\Models\Car;
 use App\Models\CarBrand;
 use App\Models\CarType;
@@ -29,6 +30,7 @@ class CarController extends Controller
     {
         $search = $request->input('search');
         $cars=Car::search($search)
+                   ->orderby('year','desc')
                    ->paginate(9);
         return view('user.home',compact('cars'));
     }
@@ -71,6 +73,7 @@ class CarController extends Controller
         $car->car_type_id = $request->input("tipo");
         $car->state_id = $request->input("estado");
         $car->location_id = $request->input("ubicacion");
+        $car->year = $request->input("year").'-01-01';
         $car->save();
         return redirect()->route('user home');
     }

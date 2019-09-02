@@ -22,6 +22,7 @@ class CarStoreRequest extends FormRequest
             'tipo'=>'integer',
             'estado'=>'integer',
             'ubicacion'=>'integer',
+            'year'=>'required',
             
         ];
     }
@@ -35,6 +36,7 @@ class CarStoreRequest extends FormRequest
             'chasis.required'=>"El campo 'Chasis' es obligatorio",
             'chasis.max'=>'Caracteres maximos permitidos 45',
             'placa.required'=>"El campo 'Placa' es obligatorio",
+            'year.required'=>"El campo 'Año' es obligatorio",
             'placa.max'=>'Caracteres maximos permitidos 45',
             'tipo.integer'=>'Valor no permitido',
             'estado.integer'=>'Valor no permitido',

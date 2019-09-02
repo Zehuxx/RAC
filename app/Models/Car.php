@@ -45,7 +45,6 @@ class Car extends Eloquent
 		'model_id' => 'int',
 		'car_type_id' => 'int',
 		'location_id' => 'int',
-		'image' => 'boolean'
 	];
 
 	protected $dates = [

@@ -30,7 +30,7 @@
 @foreach($cars as $car)
 	<div class='col-lg-4 col-sm-6 col-md-4'>
 		<div class='card'>
-	  		<div class='card-header'>{{$car->car_brand->name. " / ". $car->model->name." / ". 1900}}
+	  		<div class='card-header'>{{$car->car_brand->name. " / ". $car->model->name." / ". date_format($car->year,"Y")}}
 	    		<div class='card-header-actions'>
 	      			<a class='card-header-action btn-minimize' href='#' data-toggle='collapse' data-target='#car{{$car->id}}' aria-expanded='true'>
 	          			<i class='icon-arrow-up'></i>
@@ -42,7 +42,7 @@
 	    	</div>
 	    	<div class='collapse show' id='car{{$car->id}}'>
 	    		<div class='card-body' style='padding:0px'>
-	    			<img src="{{asset('img/carros/carro2.jpg')}}" style='width:100%'>
+	    			<img src="{{asset('img/carros/'.$car->image)}}"  style='width:100%'>
 	    		</div>
 	    		<div class='card-footer' style='padding: 0px'>
 	    			<div class='btn-group btn-group-lg' role='group' aria-label='Large button group' style='width: 100%'>

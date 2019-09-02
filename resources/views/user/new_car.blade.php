@@ -133,6 +133,17 @@
 	        	    	</td>
 	        	    </tr>
 	        	    <tr>
+	        	    	<th>Año</th>
+	        	    	<td>
+	        	    		<input type="number" min="1900" max="2020" name="year" value="{{old('year')}}" class="form-control @error('year') is-invalid @enderror">
+							@error('year')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('year') }}</strong>
+                                </span>
+                            @enderror
+	        	    	</td>
+	        	    </tr>
+	        	    <tr>
 	        	    	<th>Subir foto</th>
 	        	    	<td>
 	        	    		<input name="imagen" class="form-control @error('imagen') is-invalid @enderror"  type="file" value="{{ old('imagen') }}">
@@ -155,6 +166,8 @@
 @endsection
 
 @section('js')
+
+
 @endsection
 
 

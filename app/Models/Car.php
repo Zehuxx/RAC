@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Sun, 01 Sep 2019 06:16:15 +0000.
+ * Date: Mon, 02 Sep 2019 03:07:57 +0000.
  */
 
 namespace App\Models;
@@ -10,7 +10,7 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Car 
+ * Class Car
  * 
  * @property int $id
  * @property int $state_id
@@ -20,6 +20,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $location_id
  * @property string $chassis
  * @property string $license_plate
+ * @property \Carbon\Carbon $year
  * @property boolean $image
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -47,6 +48,10 @@ class Car extends Eloquent
 		'image' => 'boolean'
 	];
 
+	protected $dates = [
+		'year'
+	];
+
 	protected $fillable = [
 		'state_id',
 		'car_brand_id',
@@ -55,7 +60,8 @@ class Car extends Eloquent
 		'location_id',
 		'chassis',
 		'license_plate',
-		'image' 
+		'year',
+		'image'
 	];
 
 	public function scopeSearch($query, $search){

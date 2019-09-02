@@ -15,8 +15,10 @@ class CreateEmployeesTable extends Migration {
 		Schema::create('employees', function(Blueprint $table)
 		{
 			$table->integer('id')->index('fk_employees_persons1_idx');
+			$table->integer('car_type_id')->nullable()->index('fk_employees_car_types1_idx');
 			$table->float('salary', 10, 0);
-			$table->date('hiring_date');
+			$table->float('commission', 10, 0)->nullable();
+			$table->float('sales_goal', 10, 0)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

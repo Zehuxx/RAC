@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Sun, 01 Sep 2019 06:16:16 +0000.
+ * Date: Mon, 02 Sep 2019 03:07:58 +0000.
  */
 
 namespace App\Models;
@@ -15,7 +15,6 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $id
  * @property int $order_id
  * @property int $car_id
- * @property int $available
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
@@ -32,14 +31,12 @@ class Detail extends Eloquent
 
 	protected $casts = [
 		'order_id' => 'int',
-		'car_id' => 'int',
-		'available' => 'int'
+		'car_id' => 'int'
 	];
 
 	protected $fillable = [
 		'order_id',
-		'car_id',
-		'available'
+		'car_id'
 	];
 
 	public function car()

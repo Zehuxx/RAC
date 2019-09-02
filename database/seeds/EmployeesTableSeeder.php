@@ -14,12 +14,10 @@ class EmployeesTableSeeder extends Seeder
         DB::table('employees')->insert([
             'id'=>2,
             'salary'=>40000,
-            'hiring_date'=>Carbon::parse('2000-01-01'),
         ]);
         DB::table('employees')->insert([
             'id'=>1,
             'salary'=>40000,
-            'hiring_date'=>Carbon::parse('2000-01-01'),
         ]);
     }
 }

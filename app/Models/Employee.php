@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Sun, 01 Sep 2019 06:16:16 +0000.
+ * Date: Mon, 02 Sep 2019 03:07:58 +0000.
  */
 
 namespace App\Models;
@@ -13,15 +13,17 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * Class Employee
  * 
  * @property int $id
+ * @property int $car_type_id
  * @property float $salary
- * @property \Carbon\Carbon $hiring_date
+ * @property float $commission
+ * @property float $sales_goal
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
  * 
+ * @property \App\Models\CarType $car_type
  * @property \App\Models\Person $person
  * @property \Illuminate\Database\Eloquent\Collection $orders
- * @property \App\Models\Seller $seller
  * @property \App\Models\User $user
  *
  * @package App\Models
@@ -33,17 +35,23 @@ class Employee extends Eloquent
 
 	protected $casts = [
 		'id' => 'int',
-		'salary' => 'float'
-	];
-
-	protected $dates = [
-		'hiring_date'
+		'car_type_id' => 'int',
+		'salary' => 'float',
+		'commission' => 'float',
+		'sales_goal' => 'float'
 	];
 
 	protected $fillable = [
+		'car_type_id',
 		'salary',
-		'hiring_date'
+		'commission',
+		'sales_goal'
 	];
+
+	public function car_type()
+	{
+		return $this->belongsTo(\App\Models\CarType::class);
+	}
 
 	public function person()
 	{
@@ -53,11 +61,6 @@ class Employee extends Eloquent
 	public function orders()
 	{
 		return $this->hasMany(\App\Models\Order::class);
-	}
-
-	public function seller()
-	{
-		return $this->hasOne(\App\Models\Seller::class, 'id');
 	}
 
 	public function user()

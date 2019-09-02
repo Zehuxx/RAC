@@ -17,7 +17,6 @@ class CreateDetailsTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('order_id')->index('fk_Details_orders1_idx');
 			$table->integer('car_id')->index('fk_Details_cars1_idx');
-			$table->integer('available')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

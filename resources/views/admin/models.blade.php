@@ -13,12 +13,12 @@
         <i class="fa fa-car"></i> Modelos
         <div class="card-header-actions">
             <a class="card-header-action" href="{{ route('admin models add') }}">
-                <i class="icon-plus btn btn-pill btn-outline-primary btn-sm"></i>
+                <i class="icon-plus"></i>
             </a>
         </div>
     </div>
     <div class="card-body">
-        <table class="table table-responsive-sm table-sm table-bordered">
+        <table class="table table-responsive-sm table-sm table-striped">
             <thead>
                 <tr>
                     <th>#</th>

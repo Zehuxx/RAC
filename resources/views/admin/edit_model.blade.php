@@ -16,7 +16,6 @@
             <strong>Editar modelo</strong>
         </div>
         <div class="card-body">
-            {{-- {{ route('admin models update') }} --}}
         <form class="form-horizontal" name="modelo" id="modelo" action="{{ route('admin models update', $model->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')

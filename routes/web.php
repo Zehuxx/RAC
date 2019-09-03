@@ -33,17 +33,21 @@ Route::post('/empleados/Crear', 'Admin\EmployeesController@create')->name('admin
 
 Route::view('empleados/add', 'admin/add_employe')->name('admin employes add');
 
-Route::get('modelos', 'Admin\ModelController@index')->name('admin models');
-Route::get('modelos/add', 'Admin\ModelController@create')->name('admin models add');
-Route::get('modelos/edit/{id}', 'Admin\ModelController@edit')->name('admin models edit');
-Route::post('modelos/store', 'Admin\ModelController@store')->name('admin models store');
-Route::delete('modelos/delete/{id}', 'Admin\ModelController@destroy')->name('admin models delete');
-Route::put('modelos/update/{id}', 'Admin\ModelController@update')->name('admin models update');
+Route::get('admin/modelos', 'Admin\ModelController@index')->name('admin models');
+Route::get('admin/modelos/add', 'Admin\ModelController@create')->name('admin models add');
+Route::get('admin/modelos/edit/{id}', 'Admin\ModelController@edit')->name('admin models edit');
+Route::post('admin/modelos/store', 'Admin\ModelController@store')->name('admin models store');
+Route::delete('admin/modelos/delete/{id}', 'Admin\ModelController@destroy')->name('admin models delete');
+Route::put('admin/modelos/update/{id}', 'Admin\ModelController@update')->name('admin models update');
 
-Route::view('tipos', 'admin/types')->name('admin types');
-Route::view('tipos/add', 'admin/add_type')->name('admin types add');
-Route::view('/admin/tipos', 'admin/types')->name('admin types');
-Route::view('/admin/tipos/add', 'admin/add_type')->name('admin types add');
+Route::get('admin/tipos', 'Admin\CarTypeController@index')->name('admin types');
+Route::get('admin/tipos/add', 'Admin\CarTypeController@create')->name('admin types add');
+Route::get('admin/tipos/edit/{id}', 'Admin\CarTypeController@edit')->name('admin types edit');
+Route::post('admin/tipos/store', 'Admin\CarTypeController@store')->name('admin types store');
+Route::put('admin/tipos/update/{id}', 'Admin\CarTypeController@update')->name('admin types update');
+Route::delete('admin/tipos/delete/{id}', 'Admin\CarTypeController@destroy')->name('admin types delete');
+
+
 });
 
 

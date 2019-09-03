@@ -9,7 +9,7 @@
             <i class="nav-icon icon-map"></i> Carros</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{route('order index')}}">
             <i class="nav-icon icon-map"></i> Ordenes</a>
     </li>
     <li class="nav-item">

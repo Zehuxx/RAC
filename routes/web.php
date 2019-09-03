@@ -40,7 +40,6 @@ Route::post('modelos/store', 'Admin\ModelController@store')->name('admin models 
 Route::delete('modelos/delete/{id}', 'Admin\ModelController@destroy')->name('admin models delete');
 Route::put('modelos/update/{id}', 'Admin\ModelController@update')->name('admin models update');
 
-
 Route::view('tipos', 'admin/types')->name('admin types');
 Route::view('tipos/add', 'admin/add_type')->name('admin types add');
 Route::view('/admin/tipos', 'admin/types')->name('admin types');
@@ -57,10 +56,13 @@ Route::post('/carros/guardar', 'User\CarController@store')->name('car store');
 Route::put('/carros/actualizar/{id}', 'User\CarController@update')->name('car update');
 Route::delete('/carros/borrar/{id}', 'User\CarController@destroy')->name('car destroy');
 
+Route::get('/ordenes', 'User\OrderController@index')->name('order index');
+Route::view('/orden', 'user/new_order')->name('order create');
+Route::view('/orden/detalles', 'user/order_details')->name('order details');
 Route::view('/detalles', 'user/details')->name('user detalles');
-Route::view('/orden', 'user/new_order')->name('user orden');
 
-Route::view('/ordenes', 'user/order_view');
+
+
 Route::view('/clientes', 'user/client_view');
 Route::view('/cliente', 'user/new_client');
 });

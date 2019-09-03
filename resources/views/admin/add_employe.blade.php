@@ -18,6 +18,7 @@
         </div>
         <div class="card-body">
             <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="nombre">Nombre</label>
                     <div class="col-md-9">
@@ -89,6 +90,39 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="salario">Salario</label>
+                    <div class="col-md-9">
+                        <input class="form-control" id="salario" type="text" name="salario" placeholder="NNNN-NNNN-NNNNN">
+                        <span class="help-block">Salario</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="container">
+                        <p>Datos vendedor (Solo para empleados vendedores)</p>
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Datos vendedor</button>
+                        <br>
+                        <div id="demo" class="collapse">
+                        
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="comision">Comision</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="comision" type="text" name="comision" placeholder="NNNN-NNNN-NNNNN">
+                                    <span class="help-block">Comision</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="meta">Meta</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="meta" type="text" name="meta" placeholder="NNNN-NNNN-NNNNN">
+                                    <span class="help-block">Meta</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="Email">Email</label>
                     <div class="col-md-9">

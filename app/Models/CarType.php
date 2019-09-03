@@ -33,6 +33,7 @@ class CarType extends Eloquent
 	];
 
 	protected $fillable = [
+		'id',
 		'name',
 		'cost'
 	];

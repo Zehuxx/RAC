@@ -3,7 +3,7 @@
 @section('route')
     <li class="breadcrumb-item">Admin</li>
     <li class="breadcrumb-item active">
-        <a href="#">Home</a>
+        <a href="#">Modelos</a>
     </li>
 @endsection
 
@@ -12,13 +12,13 @@
     <div class="card-header">
         <i class="fa fa-car"></i> Modelos
         <div class="card-header-actions">
-            <a class="card-header-action btn-setting" href="{{ route('admin models add') }}">
-                <i class="icon-plus"></i>
+            <a class="card-header-action" href="{{ route('admin models add') }}">
+                <i class="icon-plus btn btn-pill btn-outline-primary btn-sm"></i>
             </a>
         </div>
     </div>
     <div class="card-body">
-        <table class="table table-responsive-sm table-bordered">
+        <table class="table table-responsive-sm table-sm table-bordered">
             <thead>
                 <tr>
                     <th>#</th>
@@ -27,36 +27,37 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Camioneta</td>
-                    <td>
-                        <span class="badge badge-success">Active</span>
-                    </td>
-                </tr>
+                @forelse ($models as $model)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $model->name }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <form method="POST" action="{{ route('admin models delete', $model->id) }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-sm btn-outline-danger mr-2" type="submit">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </form>
+
+                                <form method="GET" action="{{ route('admin models edit', $model->id) }}">
+                                    @csrf
+                                    <button class="btn btn-sm btn-outline-primary" type="submit">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <p>No Hay ningún modelo</p>
+                @endforelse
+
             </tbody>
         </table>
 
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#">Prev</a>
-        </li>
-        <li class="page-item active">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">4</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">Next</a>
-        </li>
-      </ul>
+        {{$models->links()}}
     </div>
   </div>
 @endsection

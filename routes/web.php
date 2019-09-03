@@ -11,17 +11,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
- 
- 
+
+
 Auth::routes();
 Route::get('/','HomeController@index')->name('root');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::group(['middleware'=>['check.admin.role']], function(){
-//RUTAS ADMINS
 
-
+    //RUTAS ADMINS
 
 Route::view('/admin', 'admin/home')->name('admin home');
 Route::view('empleados', 'admin/employes')->name('admin employes');
@@ -33,13 +32,21 @@ Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employe
 Route::post('/empleados/Crear', 'Admin\EmployeesController@create')->name('admin employee add');
 
 Route::view('empleados/add', 'admin/add_employe')->name('admin employes add');
-Route::view('modelos', 'admin/models')->name('admin models');
-Route::view('modelos/add', 'admin/add_model')->name('admin models add');
+
+Route::get('modelos', 'Admin\ModelController@index')->name('admin models');
+Route::get('modelos/add', 'Admin\ModelController@create')->name('admin models add');
+Route::get('modelos/edit/{id}', 'Admin\ModelController@edit')->name('admin models edit');
+Route::post('modelos/store', 'Admin\ModelController@store')->name('admin models store');
+Route::delete('modelos/delete/{id}', 'Admin\ModelController@destroy')->name('admin models delete');
+Route::put('modelos/update/{id}', 'Admin\ModelController@update')->name('admin models update');
+
+
 Route::view('tipos', 'admin/types')->name('admin types');
 Route::view('tipos/add', 'admin/add_type')->name('admin types add');
 Route::view('/admin/tipos', 'admin/types')->name('admin types');
 Route::view('/admin/tipos/add', 'admin/add_type')->name('admin types add');
 });
+
 
 Route::group(['middleware'=>['check.user.role']], function(){
 //RUTAS USERS

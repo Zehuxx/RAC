@@ -19,5 +19,9 @@ class RolesTableSeeder extends Seeder
             'id' =>2,
             'name' => 'User',
         ]);
+        DB::table('roles')->insert([
+            'id' =>3,
+            'name' => 'Asistente',
+        ]);
     }
 }

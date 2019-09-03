@@ -39,7 +39,6 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Rol</th>
-                    <th>Estado</th>
                     <th>Comision</th>
                     <th>Meta</th>
                     <th>Opciones</th>
@@ -53,7 +52,6 @@
                   <td>{{$emp->name}}</td>
                   <td>{{$emp->last_name}}</td>
                   <td>{{$emp->rl}}</td>
-                  <td>{{$emp->st}}</td>
                   <td>{{$emp->cm}}</td>
                   <td>{{$emp->sg}}</td>
                   <td>

@@ -18,12 +18,11 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees=\App\Models\Employee::select('employees.*','users.*','persons.*','roles.name as rl','goals.sales_goal as sg','sellers.state as st', 'goals.commission as cm')
+        $employees=\App\Models\Employee::select('employees.*','users.*','persons.*','roles.name as rl','sale_goals.commission as cm','sale_goals.sale_goal as sg')
         ->join('users','users.id','=','employees.id')
         ->join('persons','persons.id','=','employees.id')
         ->join('roles','users.role_id','=','roles.id')
-        ->join('goals','goals.seller_id','=','employees.id')
-        ->join('sellers','sellers.id','=','employees.id')
+        ->join('sale_goals','sale_goals.employee_id','=','employees.id')
         ->get();
 
         return view('admin/employes')
@@ -51,18 +50,23 @@ class EmployeesController extends Controller
 
         $emp=new \App\Models\Employee;
         $emp->id=$id->id;
-        $emp->salary=0;
-        $emp->hiring_date=\Carbon\Carbon::now();
+        $emp->salary=Input::get('salario');
         $emp->save();
 
-        $usr= new \App\Models\User;
-        $usr->id=($id->id);
+        $usr=new \App\Models\User;
+        $usr->id=$id->id;
         $usr->email=Input::get('Email');
         $usr->password=Input::get('password');
         $usr->role_id=Input::get('rol');
         $usr->save();
-        //return $pers;
-        //$emp=new Employee;
+
+        $sg=new \App\Models\SaleGoal;
+        $sg->employee_id=$id->id;
+        $sg->commission=Input::get('comision');
+        $sg->sale_goal=Input::get('meta');
+        $sg->car_type_id=1;
+        $sg->save();
+
         return redirect('/empleados')->with('status','created');
     }
 

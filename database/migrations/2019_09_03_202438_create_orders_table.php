@@ -16,9 +16,7 @@ class CreateOrdersTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('order_type_id')->index('fk_orders_order_types1_idx');
-			$table->integer('employee_id')->index('fk_orders_employees1_idx');
 			$table->integer('customer_id')->nullable()->index('fk_orders_customers1_idx');
-			$table->string('description', 45)->nullable();
 			$table->float('cost', 10, 0)->nullable();
 			$table->timestamps();
 			$table->softDeletes();

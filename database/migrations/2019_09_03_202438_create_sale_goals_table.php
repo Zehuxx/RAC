@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDetailsTable extends Migration {
+class CreateSaleGoalsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,13 @@ class CreateDetailsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('details', function(Blueprint $table)
+		Schema::create('sale_goals', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('order_id')->index('fk_Details_orders1_idx');
-			$table->integer('car_id')->index('fk_Details_cars1_idx');
-			$table->date('departure_date');
-			$table->date('reentry_date')->nullable();
+			$table->integer('employee_id')->index('fk_sale_goals_employees1_idx');
+			$table->integer('car_type_id')->index('fk_sale_goals_car_types1_idx');
+			$table->float('commission', 10, 0);
+			$table->float('sale_goal', 10, 0);
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -32,7 +32,7 @@ class CreateDetailsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('details');
+		Schema::drop('sale_goals');
 	}
 
 }

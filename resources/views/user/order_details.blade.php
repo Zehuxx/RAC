@@ -11,7 +11,23 @@
 
 @section('css')
 <style type="text/css">
-	
+	body .modal-dialog { /* Width */
+    max-width: 100%;
+    width: auto !important;
+    }
+    .modal {
+    z-index: -1;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .modal-open .modal {
+       z-index: 1050;
+    }
+    .modal-body {
+       padding: 0rem;
+    }
 </style>
 @endsection
 
@@ -35,14 +51,20 @@
     <div class="col-lg-12 col-sm-12 col-md-12">
         <table class="table  table-striped table-hover">
             <tr>
-                <th>Información carro</th>
+                <th>Imagen carro</th>
+                <th>Placa</th>
+                <th>Año</th>
+                <th>Ubicación</th>
                 <th>Fecha Salida</th>
                 <th>Fecha Reingreso</th>
                 <th>Acción</th>
             </tr>
             @foreach($details as $detail)
             <tr>
-                <td><a href="#{{$detail->car_id}}">Informacion</a></td>
+                <td class="car" style="cursor: pointer;"><img src="{{asset('img/carros/'.$detail->imagen)}}" style="max-width: 100px;max-height: 50px;"></td>
+                <td>{{$detail->placa}}</td>
+                <td>{{date_format(date_create($detail->year),"Y")}}</td>
+                <td>{{$detail->ubicacion}}</td>
                 <td>{{$detail->departure_date}}</td>
                 <td>{{$detail->reentry_date}}</td>
                 <td>
@@ -56,7 +78,25 @@
 
 @endsection
 
+@section('div_principal')
+<div class="modal fade"  id="imagen-carro" tabindex="-1" role="dialog" aria-labelledby="ImagenCarro" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-body">
+                <img src="" id="imagen_car" style="max-width: 700px">
+            </div>
+        </div>
+    </div>
+@endsection
+
+
 @section('js')
+<script type="text/javascript">
+    $(".table .car").click(function(event) {
+        $('#imagen_car').attr('src',$(this).find('img').attr('src'));
+        $("#imagen-carro").modal("show");
+    });
+</script>
 @endsection
 
 

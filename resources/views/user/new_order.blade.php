@@ -28,38 +28,41 @@
 	        <div class="card-body">
 	        	<table class="table  table-striped table-hover">
 	        	  <tbody>
-	        	<form class="well form-horizontal" method="post" action="#">
+	        	<form class="well form-horizontal" method="post" action="{{route('order store')}}">
 					@csrf
 	        	    <tr>
 	        	    	<th>Tipo orden</th>
 	        	    	<td>
-	        	    		<select name="tipo" id="tipo"  class="form-control">
+	        	    		<select name="tipoorden" id="tipoorden"  class="form-control @error('tipoorden') is-invalid @enderror">
 								<option selected=""> Seleccione el tipo</option>
-								<option value="1">LUJO</option>
+								@foreach($tiposordenes as $tiposorden)
+									<option value="{{$tiposorden->id}}" {{old('tipoorden') == $tiposorden->id ? 'selected' : ''}}>{{$tiposorden->name}}</option>
+								@endforeach
 							</select>
+							@error('tipoorden')
+                        	    <span class="invalid-feedback" role="alert">
+                        	        <strong>{{ $errors->first('tipoorden') }}</strong>
+                        	    </span>
+                        	@enderror
 						</td>
 	        	    </tr>
 	        	    <tr>
 	        	    	<th>Cliente</th>
 	        	    	<td>
-	        	    		<select name="cliente" id="cliente"  class="form-control">
-								<option selected=""> Seleccione el tipo</option>
-								<option value="1">LUJO</option>
+	        	    		<select name="cliente" id="cliente"  class="form-control @error('cliente') is-invalid @enderror">
+								<option selected=""> Seleccione el cliente</option>
+								@foreach($clientes as $cliente)
+									<option value="{{$cliente->id}}" {{old('cliente') == $cliente->id ? 'selected' : ''}}>{{$cliente->person->name.' '.$cliente->person->last_name.'  '.$cliente->person->identification_card}}</option>
+								@endforeach
 							</select>
+							@error('cliente')
+                        	    <span class="invalid-feedback" role="alert">
+                        	        <strong>{{ $errors->first('cliente') }}</strong>
+                        	    </span>
+                        	@enderror
 						</td>
 	        	    </tr>
-	        	    <tr>
-	        	    	<th>Fecha reingreso</th>
-	        	    	<td>
-	        	    		<input type="date" name="fecha" id="fecha" value="" class="form-control">
-	        	    	</td>
-	        	    </tr>
-	        	    <tr>
-	        	    	<th>Descripción</th>
-	        	    	<td>
-	        	    		<textarea class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion..." aria-label="With textarea"></textarea>
-	        	    	</td>
-	        	    </tr>
+
 	        	  </tbody>
 	        	</table>
 					<button class='btn  btn-success' id="guardar" type='submit' style='border-radius: 0px;'>Guardar</button>

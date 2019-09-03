@@ -29,7 +29,24 @@ class DetailController extends Controller
     
     public function index(Request $request,$id)
     {
-        $details=Detail::where('order_id',$id)->paginate(10);
+        $search = $request->input('search');
+        $details=DB::table('details as a')
+            ->select('a.*','b.year as year','b.license_plate as placa','b.image as imagen','c.location_code as ubicacion')
+            ->join('cars as b', 'a.car_id', '=', 'b.id')
+            ->join('locations as c', 'b.location_id', '=', 'c.id')
+            ->where('a.order_id',$id)
+            ->whereNull('a.deleted_at')
+            ->where(function($q)use($search){
+                $q->where('c.location_code','like', '%'.$search.'%')
+                ->orWhere('b.license_plate','like', '%'.$search.'%')
+                ->orWhere('b.year','like', '%'.$search.'%')
+                ->orWhere('a.departure_date','like', '%'.$search.'%')
+                ->orWhere('a.reentry_date','like', '%'.$search.'%');
+            })
+            //->toSql();
+            ->paginate(10);
+
+            //return $details;
         return view('user.order_details',compact('details'));
     }
     /**

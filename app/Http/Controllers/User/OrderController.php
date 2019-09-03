@@ -5,14 +5,12 @@ namespace App\Http\Controllers\User;
 use Image;
 use App\Models\Car;
 use App\Models\Order;
-use App\Models\CarType;
-use App\Models\Location;
-use App\Models\Model;
-use App\Models\State;
+use App\Models\OrderType;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Requests\OrderStoreRequest;
+use App\Http\Requests\OrderUpdateRequest;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\CarStoreRequest;
-use App\Http\Requests\CarUpdateRequest;
 use Illuminate\Support\Facades\Auth; 
 use App\Http\Controllers\Controller;
 
@@ -58,12 +56,10 @@ class OrderController extends Controller
      */
     public function create()
     { 
-        $marcas=CarBrand::all();
-        $tipos=CarType::all();
-        $modelos=Model::all();
-        $ubicaciones=Location::where('availability',1)->get();
-        $estados=State::all();
-        return view('user.new_car',compact('marcas','tipos','modelos','ubicaciones','estados'));
+        $carros=Car::where('state_id',1)->get();
+        $clientes=Customer::all();
+        $tiposordenes=OrderType::all();
+        return view('user.new_order',compact('carros','clientes','modelos','tiposordenes'));
     }
 
     /**
@@ -72,27 +68,13 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CarStoreRequest $request)
+    public function store(OrderStoreRequest $request)
     {
-        $car= new Car();
-        $image= $request->file("imagen");
-        if ($image) {
-            $fileName = uniqid("img_", true).".".$image->getClientOriginalExtension();
-            Image::make($image)->save( public_path('img/carros/'.$fileName));
-            $car->image = $fileName;
-        }
-        
-        
-        $car->car_brand_id = $request->input("marca");
-        $car->model_id = $request->input("modelo");
-        $car->chassis = $request->input("chasis");
-        $car->license_plate = $request->input("placa");
-        $car->car_type_id = $request->input("tipo");
-        $car->state_id = $request->input("estado");
-        $car->location_id = $request->input("ubicacion");
-        $car->year = $request->input("year").'-01-01';
-        $car->save();
-        return redirect()->route('user home');
+        $order= new Order();
+        $order->order_type_id = $request->input("tipoorden");
+        $order->customer_id = $request->input("cliente");
+        $order->save();
+        return redirect()->route('order index');
     }
     /**
      * Display the specified resource.

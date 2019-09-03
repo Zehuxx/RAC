@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Mon, 02 Sep 2019 22:14:15 +0000.
+ * Date: Tue, 03 Sep 2019 20:26:15 +0000.
  */
 
 namespace App\Models;
@@ -21,12 +21,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class PasswordReset extends Eloquent
 {
-	public $incrementing = false;
 	public $timestamps = false;
-
-	protected $casts = [
-		'id' => 'int'
-	];
 
 	protected $hidden = [
 		'token'

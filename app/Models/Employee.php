@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Mon, 02 Sep 2019 22:14:15 +0000.
+ * Date: Tue, 03 Sep 2019 20:26:15 +0000.
  */
 
 namespace App\Models;
@@ -19,7 +19,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $deleted_at
  * 
  * @property \App\Models\Person $person
- * @property \Illuminate\Database\Eloquent\Collection $orders
+ * @property \Illuminate\Database\Eloquent\Collection $details
  * @property \Illuminate\Database\Eloquent\Collection $sale_goals
  * @property \App\Models\User $user
  *
@@ -44,9 +44,9 @@ class Employee extends Eloquent
 		return $this->belongsTo(\App\Models\Person::class, 'id');
 	}
 
-	public function orders()
+	public function details()
 	{
-		return $this->hasMany(\App\Models\Order::class);
+		return $this->hasMany(\App\Models\Detail::class);
 	}
 
 	public function sale_goals()

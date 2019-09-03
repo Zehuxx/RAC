@@ -61,7 +61,8 @@ Route::put('/carros/actualizar/{id}', 'User\CarController@update')->name('car up
 Route::delete('/carros/borrar/{id}', 'User\CarController@destroy')->name('car destroy');
 
 Route::get('/ordenes', 'User\OrderController@index')->name('order index');
-Route::view('/orden', 'user/new_order')->name('order create');
+Route::get('/orden/agregar', 'User\OrderController@create')->name('order create');
+Route::post('/orden/guardar', 'User\OrderController@store')->name('order store');
 Route::get('/orden/{id}/detalles', 'User\DetailController@index')->name('details index');
 Route::view('/detalles', 'user/details')->name('user detalles');
 

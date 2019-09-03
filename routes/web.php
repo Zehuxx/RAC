@@ -13,7 +13,7 @@
 */
  
  
-Auth::routes();
+Auth::routes(); 
 Route::get('/','HomeController@index')->name('root');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
@@ -50,10 +50,13 @@ Route::post('/carros/guardar', 'User\CarController@store')->name('car store');
 Route::put('/carros/actualizar/{id}', 'User\CarController@update')->name('car update');
 Route::delete('/carros/borrar/{id}', 'User\CarController@destroy')->name('car destroy');
 
+Route::get('/ordenes', 'User\OrderController@index')->name('order index');
+Route::view('/orden', 'user/new_order')->name('order create');
+Route::view('/orden/detalles', 'user/order_details')->name('order details');
 Route::view('/detalles', 'user/details')->name('user detalles');
-Route::view('/orden', 'user/new_order')->name('user orden');
 
-Route::view('/ordenes', 'user/order_view');
+
+
 Route::view('/clientes', 'user/client_view');
 Route::view('/cliente', 'user/new_client');
 });

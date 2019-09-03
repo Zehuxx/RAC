@@ -42,7 +42,7 @@ Route::view('/admin/tipos/add', 'admin/add_type')->name('admin types add');
 });
 
 Route::group(['middleware'=>['check.user.role']], function(){
-//RUTAS USERS
+//RUTAS USERS 
 Route::get('/carros', 'User\CarController@index')->name('user home');
 Route::get('/carros/agregar', 'User\CarController@create')->name('car create');
 Route::get('/carros/editar/{id}','User\CarController@edit')->name('car edit');
@@ -52,7 +52,7 @@ Route::delete('/carros/borrar/{id}', 'User\CarController@destroy')->name('car de
 
 Route::get('/ordenes', 'User\OrderController@index')->name('order index');
 Route::view('/orden', 'user/new_order')->name('order create');
-Route::view('/orden/detalles', 'user/order_details')->name('order details');
+Route::get('/orden/{id}/detalles', 'User\DetailController@index')->name('details index');
 Route::view('/detalles', 'user/details')->name('user detalles');
 
 

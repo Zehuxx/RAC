@@ -47,7 +47,7 @@
                 <td>{{$order->ordertypename}}</td>
                 <td>{{$order->customername}}</td>
                 <td>{{$order->employeename}}</td>
-                <td><a href="#{{$order->id}}">Mostrar</a></td>
+                <td><a href="{{route('details index',$order->id)}}">Mostrar</a></td>
                 <td>{{$order->cost}}</td>
                 <td>{{$order->created_at}}</td>
                 <td>

@@ -40,24 +40,17 @@
                 <th>Fecha Reingreso</th>
                 <th>Acción</th>
             </tr>
+            @foreach($details as $detail)
             <tr>
-                <td><a href="#">Informacion</a></td>
-                <td>12-03-2019</td>
-                <td>12-03-2019</td>
+                <td><a href="#{{$detail->car_id}}">Informacion</a></td>
+                <td>{{$detail->departure_date}}</td>
+                <td>{{$detail->reentry_date}}</td>
                 <td>
-                    <a class="btn-edit btn btn-success" href="#"></a>
-                    <a class="btn-delete btn btn-danger" href="#"></a>
+                    <a class="btn-edit btn btn-success" href="#{{$detail->id}}"></a>
+                    <a class="btn-delete btn btn-danger" href="#{{$detail->id}}"></a>
                 </td>
             </tr>
-            <tr>
-                <td><a href="#">Informacion</a></td>
-                <td>12-03-2019</td>
-                <td>12-03-2019</td>
-                <td>
-                    <a class="btn-edit btn btn-success" href="#"></a>
-                    <a class="btn-delete btn btn-danger" href="#"></a>
-                </td>
-            </tr>
+            @endforeach
         </table>
     </div>
 

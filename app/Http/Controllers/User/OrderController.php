@@ -4,12 +4,15 @@ namespace App\Http\Controllers\User;
 
 use Image;
 use App\Models\Car;
+use App\Models\Detail;
 use App\Models\Order;
 use App\Models\OrderType;
+use App\Models\Location;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth; 
 use App\Http\Controllers\Controller;
@@ -29,18 +32,14 @@ class OrderController extends Controller
     {
         $search = $request->input('search');
         $orders=DB::table('orders as a')
-            ->select(DB::raw("concat(c.name,' ',c.last_name) as customername,concat(e.name,' ',e.last_name) as employeename"),'a.*','f.name as ordertypename')
-            ->join('customers as b', 'a.customer_id', '=', 'b.id')
-            ->join('order_types as f','a.order_type_id','f.id')
-            ->join('persons as c', 'c.id', '=', 'b.id')
-            ->join('employees as d', 'a.employee_id', '=', 'd.id')
-            ->join('persons as e', 'd.id', '=', 'e.id')
+            ->select(DB::raw("concat(c.name,' ',c.last_name) as customername"),'a.*','f.name as ordertypename')
+            ->leftJoin('customers as b', 'a.customer_id', '=', 'b.id')
+            ->leftJoin('order_types as f','a.order_type_id','f.id')
+            ->leftJoin('persons as c', 'c.id', '=', 'b.id')
             ->whereNull('a.deleted_at')
-            ->where(function($q)use($search){
+            ->where(function($q)use($search){ 
                 $q->where('f.name','like', '%'.$search.'%')
                 ->orWhere('a.created_at','like', '%'.$search.'%')
-                ->orWhere('e.last_name','like', '%'.$search.'%')
-                ->orWhere('e.name','like', '%'.$search.'%')
                 ->orWhere('c.name','like', '%'.$search.'%')
                 ->orWhere('c.last_name','like', '%'.$search.'%');
             })
@@ -68,12 +67,94 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrderStoreRequest $request)
+    public function store(Request $request)
     {
+       // dd($request->all());
+         $rules_tipos = [
+            'tipoorden'=>'required|integer|exists:order_types,id',
+        ];
+
+        $messages_tipos= [
+            'tipoorden.required'=>"El campo 'Tipo orden' es obligatorio",
+            'tipoorden.integer'=>'Valor no permitido',
+            'tipoorden.exists'=>"Valor no permitido",
+        ];
+
+        $rules_cliente= [
+            'cliente'=>'exists:customers,id',
+            'tipoorden'=>'required|integer|exists:order_types,id',
+        ];
+
+        $messages_cliente= [
+            'cliente.exists'=>'Valor no permitido',
+            'tipoorden.required'=>"El campo 'Tipo orden' es obligatorio",
+            'tipoorden.integer'=>'Valor no permitido',
+            'tipoorden.exists'=>"Valor no permitido",
+        ];
+
+        $today = now()->format('Y-m-d');
+        $rules_carro= [
+            'fechasalida'=>'required|after_or_equal:'.$today,
+            'fechareeingreso'=>'after_or_equal:fechasalida',
+            'id'=>['required',
+                function($attribute, $value, $fail) {
+                        if($attribute == 'id'){
+                            $car = Car::where($attribute,'=',1)->where('state_id','=', 1)->first();
+                            if($car === null)
+                                return $fail('Este carro no esta disponible.');
+                        }
+
+                },
+            ],
+        ];
+        /*
+        ,
+                      
+        */
+
+        $messages_carro= [
+            'fechareeingreso.after_or_equal'=>'La fecha de reeingreso debe ser igual o posterior a la fecha de salida',
+            'fechasalida.required'=>"La fecha de salida es obligatoria.",
+            'fechasalida.after_or_equal'=> "La fecha de salida debe ser igual o posterior a la fecha actual",
+        ];
+
+        $this->validate($request, $rules_tipos, $messages_tipos);
         $order= new Order();
         $order->order_type_id = $request->input("tipoorden");
-        $order->customer_id = $request->input("cliente");
-        $order->save();
+        //dd($order->order_type_id);
+        //2=ROBO
+        //1=MANTENIMIENTO
+        //EN ALGUNOS TIPOS DE ORDENES NO ES NECESARIO EL CLIENTE
+        //EN CADA ORDEN QUE NO SE NECESITE UN CLIENTE SE REGRESARA LOS CARROS A UNA UBICACION LIBRE
+        if ($order->order_type_id !==1 && $order->order_type_id !== 2) {
+            $this->validate($request, $rules_cliente, $messages_cliente);
+            $order->customer_id = $request->input("cliente");
+        }
+
+        if ($request->input("id")!==null) {
+            //dd($request->all());
+            $this->validate($request, $rules_carro, $messages_carro); 
+            //SI SE HACE UNA ORDEN CON CARRO SE DEBE PONER EL CARRO EN ESTADO NO DISPONIBLE
+            //LA UBICACION SE DEBE HABILITAR PARA OTRO CARRO
+            $car=Car::find($request->input("id"));
+            $car->state_id=2;
+            $car->save();
+            $ubicacion=Location::find($car->location_id);
+            $ubicacion->availability=1;
+            $ubicacion->save();
+            //aqui costo
+            $order->save();
+            $detail= new Detail();
+            $detail->order_id=$order->id;
+            $detail->car_id= $request->input("id");
+            $detail->employee_id=Auth::user()->id;
+            $detail->departure_date= $request->input("fechasalida");
+            $detail->reentry_date= $request->input("fechareeingreso");
+            $detail->save();
+        }else{
+            $order->save();
+        }
+
         return redirect()->route('order index');
     }
     /**

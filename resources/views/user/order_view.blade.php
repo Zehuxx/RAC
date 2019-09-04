@@ -19,9 +19,9 @@
     <div class="col-lg-12 col-sm-12 col-md-12">
         <table style="margin-bottom: 10px"> 
             <tr>
-                {{--<td style="text-align: left;">--}}
-                {{--    <a class="btn btn-primary btn-add" href="#"></a>--}}
-                {{--</td>--}}
+                <td style="text-align: left;">
+                    <a class="btn btn-primary btn-add" href="{{route('order create')}}"></a>
+                </td>
                 <td>
                     <form method="get">
                         <input type="text" id="search" value="{{ isset($search) ? $search : ''}}" autofocus="" name="search" placeholder="Buscar..." style="width: auto;">
@@ -36,7 +36,6 @@
             <tr>
                 <th>Tipo de orden</th>
                 <th>Cliente</th>
-                <th>Ingresada por</th>
                 <th>Detalles</th>
                 <th>Costo</th>
                 <th>Fecha creación</th>
@@ -46,7 +45,6 @@
             <tr>
                 <td>{{$order->ordertypename}}</td>
                 <td>{{$order->customername}}</td>
-                <td>{{$order->employeename}}</td>
                 <td><a href="{{route('details index',$order->id)}}">Mostrar</a></td>
                 <td>{{$order->cost}}</td>
                 <td>{{$order->created_at}}</td>

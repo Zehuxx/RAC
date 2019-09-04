@@ -16,11 +16,11 @@ class OrderTypesTableSeeder extends Seeder
         ]);
         DB::table('order_types')->insert([
             'id'=>2,
-            'name'=>'SALIDA',
+            'name'=>'ROBO',
         ]);
         DB::table('order_types')->insert([
             'id'=>3,
-            'name'=>'ROBO',
+            'name'=>'SALIDA',
         ]);
         DB::table('order_types')->insert([
             'id'=>4,

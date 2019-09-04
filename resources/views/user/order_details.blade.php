@@ -56,7 +56,7 @@
                 <th>Año</th>
                 <th>Ubicación</th>
                 <th>Fecha Salida</th>
-                <th>Fecha Reingreso</th>
+                <th>Fecha Reeingreso</th>
                 <th>Acción</th>
             </tr>
             @foreach($details as $detail)

@@ -29,7 +29,8 @@ class CarController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $cars=Car::search($search)
+        $cars=Car::where('state_id',1)
+                   ->search($search)
                    ->orderby('year','desc')
                    ->paginate(9);
         return view('user.home',compact('cars'));

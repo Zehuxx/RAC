@@ -6,15 +6,15 @@
     <li class="nav-title">Bienvenido</li>
     <li class="nav-item">
         <a class="nav-link" href="{{route('home')}}">
-            <i class="nav-icon icon-map"></i> Carros</a>
+            <i class="nav-icon icon-list"></i> Carros</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{route('order index')}}">
-            <i class="nav-icon icon-map"></i> Ordenes</a>
+            <i class="nav-icon icon-grid"></i> Ordenes</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="typography.html">
-            <i class="nav-icon icon-menu"></i> Clientes</a>
+        <a class="nav-link" href="{{route('user clients')}}">
+            <i class="nav-icon icon-people"></i> Clientes</a>
     </li>
 @endsection
 

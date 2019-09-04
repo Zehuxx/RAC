@@ -10,7 +10,7 @@
 @section('cards')
 <form action="/empleados/Crear" method="POST">
     @csrf
-<div class="col-md-6">
+<div class="col-md-6 mx-auto">
     <div class="card">
         <div class="card-header">
             <i class="fa fa-plus"></i>
@@ -18,7 +18,7 @@
         </div>
         <div class="card-body">
             <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                
+
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="nombre">Nombre</label>
                     <div class="col-md-9">
@@ -104,7 +104,7 @@
                         <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Datos vendedor</button>
                         <br>
                         <div id="demo" class="collapse">
-                        
+
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="comision">Comision</label>
                                 <div class="col-md-9">

@@ -15,13 +15,13 @@ class CarStoreRequest extends FormRequest
     {
         return [
             'imagen'=>'image|mimes:jpeg,bmp,jpg,png|max:4096',
-            'marca'=>'integer',
-            'modelo'=>'integer',
+            'marca'=>'integer|exists:car_brands,id',
+            'modelo'=>'integer|exists:models,id',
             'chasis'=>'required|max:45',
             'placa'=>'required|max:45|unique:cars,license_plate',
-            'tipo'=>'integer',
-            'estado'=>'integer',
-            'ubicacion'=>'integer',
+            'tipo'=>'integer|exists:car_types,id',
+            'estado'=>'integer|exists:states,id',
+            'ubicacion'=>'integer|exists:locations,id',
             'year'=>'required',
             
         ];
@@ -32,7 +32,9 @@ class CarStoreRequest extends FormRequest
     {
         return [
             'marca.integer'=>'Valor no permitido',
+            'marca.exists'=>'Valor no permitido',
             'modelo.integer'=>'Valor no permitido',
+            'modelo.exists'=>'Valor no permitido',
             'chasis.required'=>"El campo 'Chasis' es obligatorio",
             'chasis.max'=>'Caracteres maximos permitidos 45',
             'placa.required'=>"El campo 'Placa' es obligatorio",
@@ -40,8 +42,11 @@ class CarStoreRequest extends FormRequest
             'placa.max'=>'Caracteres maximos permitidos 45',
             'placa.unique'=>'Placa ya registrada.',
             'tipo.integer'=>'Valor no permitido',
+            'tipo.exists'=>'Valor no permitido',
             'estado.integer'=>'Valor no permitido',
+            'estado.exists'=>'Valor no permitido',
             'ubicacion.integer'=>'Valor no permitido',
+            'ubicacion.exists'=>'Valor no permitido',
             'imagen.max'=>"La foto no debe tener mayor a 4 MB, y debe de tener una extension bmp,jpeg,jpg o png",
             'imagen.image'=>"La foto no debe tener un peso mayor a 4 MB, y debe de tener una extension bmp,jpeg,jpg o png",
             'imagen.mimes'=>"La foto no debe tener un peso mayor a 4 MB, y debe de tener una extension bmp,jpeg,jpg o png",

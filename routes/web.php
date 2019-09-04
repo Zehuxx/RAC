@@ -47,12 +47,17 @@ Route::post('admin/tipos/store', 'Admin\CarTypeController@store')->name('admin t
 Route::put('admin/tipos/update/{id}', 'Admin\CarTypeController@update')->name('admin types update');
 Route::delete('admin/tipos/delete/{id}', 'Admin\CarTypeController@destroy')->name('admin types delete');
 
-
+Route::get('admin/marcas', 'Admin\CarBrandController@index')->name('admin brands');
+Route::get('admin/marcas/add', 'Admin\CarBrandController@create')->name('admin brands add');
+Route::get('admin/marcas/edit/{id}', 'Admin\CarBrandController@edit')->name('admin brands edit');
+Route::post('admin/marcas/store', 'Admin\CarBrandController@store')->name('admin brands store');
+Route::put('admin/marcas/update/{id}', 'Admin\CarBrandController@update')->name('admin brands update');
+Route::delete('admin/marcas/delete/{id}', 'Admin\CarBrandController@destroy')->name('admin brands delete');
 });
 
 
 Route::group(['middleware'=>['check.user.role']], function(){
-//RUTAS USERS 
+//RUTAS USERS
 Route::get('/carros', 'User\CarController@index')->name('user home');
 Route::get('/carros/agregar', 'User\CarController@create')->name('car create');
 Route::get('/carros/editar/{id}','User\CarController@edit')->name('car edit');

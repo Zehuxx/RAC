@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 03 Sep 2019 20:26:15 +0000.
+ * Date: Wed, 04 Sep 2019 23:00:40 +0000.
  */
 
 namespace App\Models;
@@ -16,6 +16,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $order_id
  * @property int $car_id
  * @property int $employee_id
+ * @property int $movement_id
  * @property \Carbon\Carbon $departure_date
  * @property \Carbon\Carbon $reentry_date
  * @property \Carbon\Carbon $created_at
@@ -25,6 +26,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property \App\Models\Car $car
  * @property \App\Models\Order $order
  * @property \App\Models\Employee $employee
+ * @property \App\Models\Movement $movement
  *
  * @package App\Models
  */
@@ -35,7 +37,8 @@ class Detail extends Eloquent
 	protected $casts = [
 		'order_id' => 'int',
 		'car_id' => 'int',
-		'employee_id' => 'int'
+		'employee_id' => 'int',
+		'movement_id' => 'int'
 	];
 
 	protected $dates = [
@@ -47,6 +50,7 @@ class Detail extends Eloquent
 		'order_id',
 		'car_id',
 		'employee_id',
+		'movement_id',
 		'departure_date',
 		'reentry_date'
 	];
@@ -64,5 +68,10 @@ class Detail extends Eloquent
 	public function employee()
 	{
 		return $this->belongsTo(\App\Models\Employee::class);
+	}
+
+	public function movement()
+	{
+		return $this->belongsTo(\App\Models\Movement::class);
 	}
 }

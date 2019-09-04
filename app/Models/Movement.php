@@ -10,38 +10,25 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Order
+ * Class Movement
  * 
  * @property int $id
- * @property int $customer_id
- * @property float $cost
+ * @property string $name
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
  * 
- * @property \App\Models\Customer $customer
  * @property \Illuminate\Database\Eloquent\Collection $details
  *
  * @package App\Models
  */
-class Order extends Eloquent
+class Movement extends Eloquent
 {
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 
-	protected $casts = [
-		'customer_id' => 'int',
-		'cost' => 'float'
-	];
-
 	protected $fillable = [
-		'customer_id',
-		'cost'
+		'name'
 	];
-
-	public function customer()
-	{
-		return $this->belongsTo(\App\Models\Customer::class);
-	}
 
 	public function details()
 	{

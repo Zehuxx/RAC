@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Image;
 use App\Models\Car;
+use App\Models\CarType;
 use App\Models\Detail;
 use App\Models\Order;
 use App\Models\OrderType;
@@ -99,7 +100,7 @@ class OrderController extends Controller
             'id'=>['required',
                 function($attribute, $value, $fail) {
                         if($attribute == 'id'){
-                            $car = Car::where($attribute,'=',1)->where('state_id','=', 1)->first();
+                            $car = Car::where($attribute,'=',$value)->where('state_id','=', 1)->first();
                             if($car === null)
                                 return $fail('Este carro no esta disponible.');
                         }
@@ -130,7 +131,7 @@ class OrderController extends Controller
             $this->validate($request, $rules_cliente, $messages_cliente);
             $order->customer_id = $request->input("cliente");
         }
-
+        //SI SE HA SELECCIONADO UN VEHICULO
         if ($request->input("id")!==null) {
             //dd($request->all());
             $this->validate($request, $rules_carro, $messages_carro); 
@@ -139,11 +140,20 @@ class OrderController extends Controller
             $car=Car::find($request->input("id"));
             $car->state_id=2;
             $car->save();
-            $ubicacion=Location::find($car->location_id);
-            $ubicacion->availability=1;
-            $ubicacion->save();
-            //aqui costo
+            //SE VERIFICA LA UBICACION DEL VEHICULO
+            //SI EL TIPO DE ORDEN ES DISTINTA A ENTRADA SE VERIFICA LA UBICACION
+            if ($order->order_type_id!==4) {
+                $ubicacion=Location::find($car->location_id);
+                $ubicacion->availability=1;
+                $ubicacion->save();
+            }
+            //SE CALCULA EL COSTO DE LA ORDEN DE ACUERDO AL TIPO DE VEHICULO
+            $cartype=CarType::find($car->car_type_id);
+            $order->cost=$cartype->cost;
+            //SE GUARDA LA ORDEN
             $order->save();
+            //COMO SE HA SELECCIONADO UN VEHICULO SE DEBE CREAR EL DETALLE
+            //DE LA ORDEN HACIENDO REFERENCIA AL VEHICULO,USUARIO QUE CREA LA ORDEN Y DEMAS DATOS
             $detail= new Detail();
             $detail->order_id=$order->id;
             $detail->car_id= $request->input("id");
@@ -152,6 +162,8 @@ class OrderController extends Controller
             $detail->reentry_date= $request->input("fechareeingreso");
             $detail->save();
         }else{
+            //SI NO SE HA SELECCIONADO UN VEHICULO
+            $order->cost=0;
             $order->save();
         }
 

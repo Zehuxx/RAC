@@ -29,8 +29,7 @@ class CarController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $cars=Car::where('state_id',1)
-                   ->search($search)
+        $cars=Car::search($search)
                    ->orderby('year','desc')
                    ->paginate(9);
         return view('user.home',compact('cars'));
@@ -76,6 +75,9 @@ class CarController extends Controller
         $car->location_id = $request->input("ubicacion");
         $car->year = $request->input("year").'-01-01';
         $car->save();
+        $location=Location::find($car->location_id);
+        $location->availability=0;
+        $location->save();
         return redirect()->route('user home');
     }
     /**
@@ -134,8 +136,17 @@ class CarController extends Controller
         $car->license_plate = $request->input("placa");
         $car->car_type_id = $request->input("tipo");
         $car->state_id = $request->input("estado");
-        $car->location_id = $request->input("ubicacion");
         $car->year = $request->input("year").'-01-01';
+        $nuevaubicacion=$request->input("ubicacion");
+        if ($car->location_id!==$nuevaubicacion) {
+            $loc=Location::find($car->location_id);
+            $loc->availability=1;
+            $loc->save();
+            $loc=Location::find($nuevaubicacion);
+            $loc->availability=0;
+            $loc->save();
+            $car->location_id = $nuevaubicacion;
+        }
         $car->save();
         return redirect()->route('user home');
     }

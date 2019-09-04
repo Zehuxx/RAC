@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-class OrderTypesTableSeeder extends Seeder
+class MovementsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -10,19 +10,19 @@ class OrderTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('order_types')->insert([
+        DB::table('movements')->insert([
             'id'=>1,
             'name'=>'MANTENIMIENTO',
         ]);
-        DB::table('order_types')->insert([
+        DB::table('movements')->insert([
             'id'=>2,
             'name'=>'ROBO',
         ]);
-        DB::table('order_types')->insert([
+        DB::table('movements')->insert([
             'id'=>3,
             'name'=>'SALIDA',
         ]);
-        DB::table('order_types')->insert([
+        DB::table('movements')->insert([
             'id'=>4,
             'name'=>'ENTRADA',
         ]);

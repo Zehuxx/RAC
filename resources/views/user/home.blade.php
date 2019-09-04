@@ -30,7 +30,7 @@
 @foreach($cars as $car)
 	<div class='col-lg-4 col-sm-6 col-md-4'>
 		<div class='card'>
-	  		<div class='card-header'>{{$car->car_brand->name. " / ". $car->model->name." / ". date_format($car->year,"Y")}}
+	  		<div class='card-header' @if($car->state_id==2) style="background-color: #f17c7c" @endif >{{$car->car_brand->name. " / ". $car->model->name." / ". date_format($car->year,"Y")}}
 	    		<div class='card-header-actions'>
 	      			<a class='card-header-action btn-minimize' href='#' data-toggle='collapse' data-target='#car{{$car->id}}' aria-expanded='true'>
 	          			<i class='icon-arrow-up'></i>

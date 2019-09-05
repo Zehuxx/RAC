@@ -19,7 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::group(['middleware'=>['check.admin.role']], function(){
- 
+
     //RUTAS ADMINS
 
 Route::view('/admin', 'admin/home')->name('admin home');
@@ -74,7 +74,10 @@ Route::get('/orden/{id_orden}/carro/{id_carro}/detalle/agregar', 'User\DetailCon
 Route::post('/orden/{id_orden}/carro/{id_carro}/detalle/guardar', 'User\DetailController@store')->name('detail store');
 
 
-Route::view('/clientes', 'user/client_view');
-Route::view('/cliente', 'user/new_client');
+Route::get('user/clientes', 'User\ClientController@index')->name('user clients');
+Route::get('user/clientes/add', 'User\ClientController@create')->name('user clients add');
+Route::post('user/clientes/store', 'User\ClientController@store')->name('user clients store');
+Route::Delete('user/clientes/delete/{id}', 'User\ClientController@destroy')->name('user clients delete');
+
 });
 

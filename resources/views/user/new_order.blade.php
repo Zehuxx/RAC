@@ -28,30 +28,9 @@
 	        <div class="card-body">
 
 	        	<table class="table  table-striped table-hover">
-	        		@error('id')
-                       	<span class="invalid-feedback" style="display: table-cell;" role="alert">
-                       	    <strong>{{ $errors->first('id') }}</strong>
-                       	</span>
-                    @enderror
 	        	  <tbody>
 	        	<form class="well form-horizontal" method="post" action="{{route('order store')}}">
 					@csrf
-	        	    <tr>
-	        	    	<th>Tipo orden</th>
-	        	    	<td>
-	        	    		<select name="tipoorden" id="tipoorden"  class="form-control @error('tipoorden') is-invalid @enderror">
-								<option selected=""> Seleccione el tipo</option>
-								@foreach($tiposordenes as $tiposorden)
-									<option value="{{$tiposorden->id}}" {{old('tipoorden') == $tiposorden->id ? 'selected' : ''}}>{{$tiposorden->name}}</option>
-								@endforeach
-							</select>
-							@error('tipoorden')
-                        	    <span class="invalid-feedback" role="alert">
-                        	        <strong>{{ $errors->first('tipoorden') }}</strong>
-                        	    </span>
-                        	@enderror
-						</td>
-	        	    </tr>
 	        	    <tr>
 	        	    	<th>Cliente</th>
 	        	    	<td>
@@ -68,31 +47,6 @@
                         	@enderror
 						</td>
 	        	    </tr>
-	        	    @if(isset($_GET["car"]))
-	        	    	<tr>
-	        	    	<th>Fecha Salida</th>
-	        	    	<td>
-	        	    		<input type="date" class="form-control @error('fechasalida') is-invalid @enderror" name="fechasalida" value="{{old("fechasalida")}}">
-							@error('fechasalida')
-                        	    <span class="invalid-feedback" role="alert">
-                        	        <strong>{{ $errors->first('fechasalida') }}</strong>
-                        	    </span>
-                        	@enderror
-						</td>
-	        	    </tr>
-	        	    <tr>
-	        	    	<th>Fecha Reeingreso</th>
-	        	    	<td>
-	        	    		<input type="date" class="form-control @error('fechareeingreso') is-invalid @enderror" name="fechareeingreso" value="{{old("fechareeingreso")}}">
-							@error('fechareeingreso')
-                        	    <span class="invalid-feedback" role="alert">
-                        	        <strong>{{ $errors->first('fechareeingreso') }}</strong>
-                        	    </span>
-                        	@enderror
-						</td>
-						<input type="hidden" name="id" value="{{$_GET["car"]}}">
-	        	    </tr>
-	        	    @endif
 	        	  </tbody>
 	        	</table>
 					<button class='btn  btn-success' id="guardar" type='submit' style='border-radius: 0px;'>Guardar</button>

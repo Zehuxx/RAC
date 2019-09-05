@@ -38,7 +38,7 @@
 	        		<a class='card-header-action btn-close' href="#" data-id="{{$car->id}}">
 	          			<i class='icon-close'></i>
 	        		</a>
-	      		</div>
+	      		</div> 
 	    	</div>
 	    	<div class='collapse show' id='car{{$car->id}}'>
 	    		<div class='card-body' style='padding:0px'>
@@ -47,7 +47,9 @@
 	    		<div class='card-footer' style='padding: 0px'>
 	    			<div class='btn-group btn-group-lg' role='group' aria-label='Large button group' style='width: 100%'>
 	    				<a href="{{route('car edit',$car->id)}}" class='btn btn-info' style="border-radius: 0px">Detalles</a>
-			            <a href="{{route('order create',['car='.$car->id])}}" class='btn btn-success' style="border-radius: 0px">Nueva orden</a>
+	    				@if(isset($_GET["orden"]))
+			            <a href="{{route('detail create',['id_orden'=>$_GET["orden"],'id_carro'=>$car->id])}}" class='btn btn-success' style="border-radius: 0px">Nuevo detalle</a>
+			            @endif
 			        </div>
 	    		</div>
 	    	</div>

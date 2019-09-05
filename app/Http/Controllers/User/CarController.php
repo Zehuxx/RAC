@@ -103,7 +103,8 @@ class CarController extends Controller
         $marcas=CarBrand::all();
         $tipos=CarType::all();
         $modelos=Model::all();
-        $ubicaciones=Location::where('availability',1)->get();
+        $ubicaciones=Location::where('availability',1)
+                               ->orWhere('id',$carro->location_id)->get();
         $estados=State::all();
         return view('user.details',compact('carro','marcas','tipos','modelos','ubicaciones','estados'));
     }

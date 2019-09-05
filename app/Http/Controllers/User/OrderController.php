@@ -7,7 +7,6 @@ use App\Models\Car;
 use App\Models\CarType;
 use App\Models\Detail;
 use App\Models\Order;
-use App\Models\OrderType;
 use App\Models\Location;
 use App\Models\Customer;
 use Illuminate\Http\Request;
@@ -15,7 +14,7 @@ use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;  
 use App\Http\Controllers\Controller;
 
 
@@ -33,17 +32,16 @@ class OrderController extends Controller
     {
         $search = $request->input('search');
         $orders=DB::table('orders as a')
-            ->select(DB::raw("concat(c.name,' ',c.last_name) as customername"),'a.*','f.name as ordertypename')
+            ->select(DB::raw("concat(c.name,' ',c.last_name) as customername"),'a.*')
             ->leftJoin('customers as b', 'a.customer_id', '=', 'b.id')
-            ->leftJoin('order_types as f','a.order_type_id','f.id')
             ->leftJoin('persons as c', 'c.id', '=', 'b.id')
             ->whereNull('a.deleted_at')
             ->where(function($q)use($search){ 
-                $q->where('f.name','like', '%'.$search.'%')
-                ->orWhere('a.created_at','like', '%'.$search.'%')
+                $q->where('a.created_at','like', '%'.$search.'%')
                 ->orWhere('c.name','like', '%'.$search.'%')
                 ->orWhere('c.last_name','like', '%'.$search.'%');
             })
+            ->orderby('a.created_at','desc')
             //->toSql();
             ->paginate(10);
         //return $orders;
@@ -56,10 +54,8 @@ class OrderController extends Controller
      */
     public function create()
     { 
-        $carros=Car::where('state_id',1)->get();
         $clientes=Customer::all();
-        $tiposordenes=OrderType::all();
-        return view('user.new_order',compact('carros','clientes','modelos','tiposordenes'));
+        return view('user.new_order',compact('clientes'));
     }
 
     /**
@@ -70,102 +66,19 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
-         $rules_tipos = [
-            'tipoorden'=>'required|integer|exists:order_types,id',
-        ];
-
-        $messages_tipos= [
-            'tipoorden.required'=>"El campo 'Tipo orden' es obligatorio",
-            'tipoorden.integer'=>'Valor no permitido',
-            'tipoorden.exists'=>"Valor no permitido",
-        ];
 
         $rules_cliente= [
             'cliente'=>'exists:customers,id',
-            'tipoorden'=>'required|integer|exists:order_types,id',
         ];
 
         $messages_cliente= [
             'cliente.exists'=>'Valor no permitido',
-            'tipoorden.required'=>"El campo 'Tipo orden' es obligatorio",
-            'tipoorden.integer'=>'Valor no permitido',
-            'tipoorden.exists'=>"Valor no permitido",
         ];
-
-        $today = now()->format('Y-m-d');
-        $rules_carro= [
-            'fechasalida'=>'required|after_or_equal:'.$today,
-            'fechareeingreso'=>'after_or_equal:fechasalida',
-            'id'=>['required',
-                function($attribute, $value, $fail) {
-                        if($attribute == 'id'){
-                            $car = Car::where($attribute,'=',$value)->where('state_id','=', 1)->first();
-                            if($car === null)
-                                return $fail('Este carro no esta disponible.');
-                        }
-
-                },
-            ],
-        ];
-        /*
-        ,
-                      
-        */
-
-        $messages_carro= [
-            'fechareeingreso.after_or_equal'=>'La fecha de reeingreso debe ser igual o posterior a la fecha de salida',
-            'fechasalida.required'=>"La fecha de salida es obligatoria.",
-            'fechasalida.after_or_equal'=> "La fecha de salida debe ser igual o posterior a la fecha actual",
-        ];
-
-        $this->validate($request, $rules_tipos, $messages_tipos);
+        $this->validate($request, $rules_cliente, $messages_cliente);
         $order= new Order();
-        $order->order_type_id = $request->input("tipoorden");
-        //dd($order->order_type_id);
-        //2=ROBO
-        //1=MANTENIMIENTO
-        //EN ALGUNOS TIPOS DE ORDENES NO ES NECESARIO EL CLIENTE
-        //EN CADA ORDEN QUE NO SE NECESITE UN CLIENTE SE REGRESARA LOS CARROS A UNA UBICACION LIBRE
-        if ($order->order_type_id !==1 && $order->order_type_id !== 2) {
-            $this->validate($request, $rules_cliente, $messages_cliente);
-            $order->customer_id = $request->input("cliente");
-        }
-        //SI SE HA SELECCIONADO UN VEHICULO
-        if ($request->input("id")!==null) {
-            //dd($request->all());
-            $this->validate($request, $rules_carro, $messages_carro); 
-            //SI SE HACE UNA ORDEN CON CARRO SE DEBE PONER EL CARRO EN ESTADO NO DISPONIBLE
-            //LA UBICACION SE DEBE HABILITAR PARA OTRO CARRO
-            $car=Car::find($request->input("id"));
-            $car->state_id=2;
-            $car->save();
-            //SE VERIFICA LA UBICACION DEL VEHICULO
-            //SI EL TIPO DE ORDEN ES DISTINTA A ENTRADA SE VERIFICA LA UBICACION
-            if ($order->order_type_id!==4) {
-                $ubicacion=Location::find($car->location_id);
-                $ubicacion->availability=1;
-                $ubicacion->save();
-            }
-            //SE CALCULA EL COSTO DE LA ORDEN DE ACUERDO AL TIPO DE VEHICULO
-            $cartype=CarType::find($car->car_type_id);
-            $order->cost=$cartype->cost;
-            //SE GUARDA LA ORDEN
-            $order->save();
-            //COMO SE HA SELECCIONADO UN VEHICULO SE DEBE CREAR EL DETALLE
-            //DE LA ORDEN HACIENDO REFERENCIA AL VEHICULO,USUARIO QUE CREA LA ORDEN Y DEMAS DATOS
-            $detail= new Detail();
-            $detail->order_id=$order->id;
-            $detail->car_id= $request->input("id");
-            $detail->employee_id=Auth::user()->id;
-            $detail->departure_date= $request->input("fechasalida");
-            $detail->reentry_date= $request->input("fechareeingreso");
-            $detail->save();
-        }else{
-            //SI NO SE HA SELECCIONADO UN VEHICULO
-            $order->cost=0;
-            $order->save();
-        }
+        $order->customer_id = $request->input("cliente");
+        $order->cost=0;
+        $order->save();
 
         return redirect()->route('order index');
     }

@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\Order;
 use App\Models\CarType;
 use App\Models\Detail;
+use App\Models\Movement;
 use App\Models\Model;
 use App\Models\State;
 use Illuminate\Http\Request;
@@ -31,9 +32,10 @@ class DetailController extends Controller
     {
         $search = $request->input('search');
         $details=DB::table('details as a')
-            ->select('a.*','b.year as year','b.license_plate as placa','b.image as imagen','c.location_code as ubicacion')
+            ->select('a.*','b.year as year','b.license_plate as placa','b.image as imagen','c.location_code as ubicacion','d.name as movimiento')
             ->join('cars as b', 'a.car_id', '=', 'b.id')
             ->join('locations as c', 'b.location_id', '=', 'c.id')
+            ->join('movements as d', 'a.movement_id', '=', 'd.id')
             ->where('a.order_id',$id)
             ->whereNull('a.deleted_at')
             ->where(function($q)use($search){
@@ -41,7 +43,8 @@ class DetailController extends Controller
                 ->orWhere('b.license_plate','like', '%'.$search.'%')
                 ->orWhere('b.year','like', '%'.$search.'%')
                 ->orWhere('a.departure_date','like', '%'.$search.'%')
-                ->orWhere('a.reentry_date','like', '%'.$search.'%');
+                ->orWhere('a.reentry_date','like', '%'.$search.'%')
+                ->orWhere('d.name','like', '%'.$search.'%');
             })
             //->toSql();
             ->paginate(10);
@@ -56,7 +59,8 @@ class DetailController extends Controller
      */
     public function create()
     { 
-        
+        $tiposmovimientos=Movement::all();
+        return view('user.new_order_detail',compact('tiposmovimientos'));
     }
 
     /**

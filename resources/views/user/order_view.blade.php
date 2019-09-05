@@ -34,7 +34,6 @@
     <div class="col-lg-12 col-sm-12 col-md-12">
         <table class="table  table-striped table-hover">
             <tr>
-                <th>Tipo de orden</th>
                 <th>Cliente</th>
                 <th>Detalles</th>
                 <th>Costo</th>
@@ -43,7 +42,6 @@
             </tr>
             @foreach($orders as $order)
             <tr>
-                <td>{{$order->ordertypename}}</td>
                 <td>{{$order->customername}}</td>
                 <td><a href="{{route('details index',$order->id)}}">Mostrar</a></td>
                 <td>{{$order->cost}}</td>

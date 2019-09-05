@@ -68,9 +68,10 @@ Route::delete('/carros/borrar/{id}', 'User\CarController@destroy')->name('car de
 Route::get('/ordenes', 'User\OrderController@index')->name('order index');
 Route::get('/orden/agregar', 'User\OrderController@create')->name('order create');
 Route::post('/orden/guardar', 'User\OrderController@store')->name('order store');
-Route::get('/orden/{id}/detalles', 'User\DetailController@index')->name('details index');
-Route::view('/detalles', 'user/details')->name('user detalles');
 
+Route::get('/orden/{id_orden}/detalles', 'User\DetailController@index')->name('details index');
+Route::get('/orden/{id_orden}/carro/{id_carro}/detalle/agregar', 'User\DetailController@create')->name('detail create');
+Route::post('/orden/{id_orden}/carro/{id_carro}/detalle/guardar', 'User\DetailController@store')->name('detail store');
 
 
 Route::view('/clientes', 'user/client_view');

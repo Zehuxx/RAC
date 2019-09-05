@@ -37,7 +37,7 @@
         <table style="margin-bottom: 10px"> 
             <tr>
                 <td style="text-align: left;">
-                    <a class="btn btn-primary btn-add" href="#"></a>
+                    <a class="btn btn-primary btn-add" href="{{route('user home',['orden'=>Route::current()->parameters['id_orden']])}}"></a>
                 </td>
                 <td >
                     <form method="get">
@@ -57,6 +57,7 @@
                 <th>Ubicación</th>
                 <th>Fecha Salida</th>
                 <th>Fecha Reeingreso</th>
+                <th>Movimiento</th>
                 <th>Acción</th>
             </tr>
             @foreach($details as $detail)
@@ -67,6 +68,7 @@
                 <td>{{$detail->ubicacion}}</td>
                 <td>{{$detail->departure_date}}</td>
                 <td>{{$detail->reentry_date}}</td>
+                <td>{{$detail->movimiento}}</td>
                 <td>
                     <a class="btn-edit btn btn-success" href="#{{$detail->id}}"></a>
                     <a class="btn-delete btn btn-danger" href="#{{$detail->id}}"></a>

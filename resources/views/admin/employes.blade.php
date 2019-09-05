@@ -56,8 +56,8 @@
                   <td>{{$emp->sg}}</td>
                   <td>
                       <span class="badge badge-success">Active</span>
-                      <input type="button" value="editar">
-                      <input type="button" value="borrar">
+                      <input type="button" onclick='editar({{$emp->id}})' value="editar">
+                      <input type="button" onclick='borrar({{$emp->id}})' value="borrar">
                   </td> 
                 </tr>
                   @endforeach
@@ -87,4 +87,10 @@
       </ul>
     </div>
   </div>
+  <script>
+    function editar(i)
+    {
+      alert("editar");
+    }
+  </script>
 @endsection

@@ -72,6 +72,7 @@ Route::post('/orden/guardar', 'User\OrderController@store')->name('order store')
 Route::get('/orden/{id_orden}/detalles', 'User\DetailController@index')->name('details index');
 Route::get('/orden/{id_orden}/carro/{id_carro}/detalle/agregar', 'User\DetailController@create')->name('detail create');
 Route::post('/orden/{id_orden}/carro/{id_carro}/detalle/guardar', 'User\DetailController@store')->name('detail store');
+Route::delete('/orden/{id_orden}/detalle/{id_detalle}/borrar', 'User\DetailController@destroy')->name('detail destroy');
 
 
 Route::get('user/clientes', 'User\CustomerController@index')->name('user clients');

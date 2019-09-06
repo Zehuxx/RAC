@@ -11,7 +11,7 @@ $(document).ready(function(){
             })
 
             swalWithBootstrapButtons.fire({
-              title: 'Estas seguro?',
+              title: 'Estas seguro?', 
               text: "No podras revertir estos cambios!",
               type: 'warning',
               showCancelButton: true,

@@ -95,38 +95,6 @@
 	        	    	</td>
 	        	    </tr>
 	        	    <tr>
-	        	    	<th>Estado</th>
-	        	    	<td>
-	        	    		<select name="estado" id="estado" disabled="disabled" class="form-control @error('estado') is-invalid @enderror">
-								<option selected=""> Seleccione el estado</option>
-								@foreach($estados as $estado)
-								<option value="{{$estado->id}}" {{$carro->state_id == $estado->id ? 'selected' : ''}}>{{$estado->name}}</option>
-								@endforeach
-							</select>
-							@error('estado')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('estado') }}</strong>
-                                </span>
-                            @enderror
-	        	    	</td>
-	        	    </tr>
-	        	    <tr>
-	        	    	<th>Ubicación</th>
-	        	    	<td>
-	        	    		<select name="ubicacion" id="ubicacion" disabled="disabled"  class="form-control @error('ubicacion') is-invalid @enderror">
-								<option selected=""> Seleccione la ubicacion</option>
-								@foreach($ubicaciones as $ubicacion)
-								<option value="{{$ubicacion->id}}" {{$carro->location_id == $ubicacion->id ? 'selected' : ''}}>{{$ubicacion->location_code}}</option>
-								@endforeach
-							</select>
-							@error('ubicacion')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('ubicacion') }}</strong>
-                                </span>
-                            @enderror
-	        	    	</td>
-	        	    </tr>
-	        	    <tr>
 	        	    	<th>Año</th>
 	        	    	<td>
 	        	    		<input type="number" id="year" min="1900" max="2020" disabled="disabled" name="year" value="{{date_format($carro->year,"Y")}}" class="form-control @error('year') is-invalid @enderror">

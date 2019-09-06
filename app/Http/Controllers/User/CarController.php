@@ -10,6 +10,7 @@ use App\Models\Location;
 use App\Models\Model;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CarStoreRequest;
 use App\Http\Requests\CarUpdateRequest;
 use Illuminate\Support\Facades\Auth; 
@@ -29,9 +30,29 @@ class CarController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $cars=Car::search($search)
-                   ->orderby('year','desc')
-                   ->paginate(9);
+        $cars=DB::table('cars as a')
+            ->select('g.movement_id','g.deleted_at as detail_state','a.*','b.name as marca','c.name as tipo','d.location_code as ubicacion','e.name as modelo')
+            ->leftjoin('car_brands as b', 'a.car_brand_id', '=', 'b.id')
+            ->leftjoin('car_types as c', 'a.car_type_id', '=', 'c.id')
+            ->leftjoin('locations as d', 'a.location_id', '=', 'd.id')
+            ->leftjoin('models as e', 'a.model_id', '=', 'e.id')
+            ->leftjoin(DB::raw("(SELECT g.* FROM details g WHERE g.created_at = (SELECT MAX(b.created_at) FROM details b WHERE b.car_id = g.car_id)) as g"), 'a.id', '=', 'g.car_id')
+            //->leftJoin(DB::raw("(SELECT [...]) AS p"), 'p.post_id', '=', 'posts.id')
+            ->orderby('year','desc')
+            ->whereNull('a.deleted_at')
+            ->where(function($q)use($search){
+                $q->where('a.chassis','like','%'.$search.'%')
+                ->orWhere('e.name','like','%'.$search.'%')
+                ->orWhere('a.year','like','%'.$search.'%')
+                ->orWhere('a.license_plate','like','%'.$search.'%')
+                ->orWhere('b.name','like', '%'.$search.'%')
+                ->orWhere('c.name','like', '%'.$search.'%')
+                ->orWhere('d.location_code','like', '%'.$search.'%');
+            })
+            //->toSql();
+            ->paginate(9);
+            //dd($cars);
+            //return $cars;
         return view('user.home',compact('cars'));
     }
     /**
@@ -44,9 +65,7 @@ class CarController extends Controller
         $marcas=CarBrand::all();
         $tipos=CarType::all();
         $modelos=Model::all();
-        $ubicaciones=Location::where('availability',1)->get();
-        $estados=State::all();
-        return view('user.new_car',compact('marcas','tipos','modelos','ubicaciones','estados'));
+        return view('user.new_car',compact('marcas','tipos','modelos','ubicaciones'));
     }
 
     /**
@@ -64,20 +83,15 @@ class CarController extends Controller
             Image::make($image)->save( public_path('img/carros/'.$fileName));
             $car->image = $fileName;
         }
-        
-        
         $car->car_brand_id = $request->input("marca");
         $car->model_id = $request->input("modelo");
         $car->chassis = $request->input("chasis");
         $car->license_plate = $request->input("placa");
         $car->car_type_id = $request->input("tipo");
-        $car->state_id = $request->input("estado");
-        $car->location_id = $request->input("ubicacion");
+        $car->state_id = 2;
+        $car->location_id = null;
         $car->year = $request->input("year").'-01-01';
         $car->save();
-        $location=Location::find($car->location_id);
-        $location->availability=0;
-        $location->save();
         return redirect()->route('user home');
     }
     /**
@@ -103,10 +117,7 @@ class CarController extends Controller
         $marcas=CarBrand::all();
         $tipos=CarType::all();
         $modelos=Model::all();
-        $ubicaciones=Location::where('availability',1)
-                               ->orWhere('id',$carro->location_id)->get();
-        $estados=State::all();
-        return view('user.details',compact('carro','marcas','tipos','modelos','ubicaciones','estados'));
+        return view('user.details',compact('carro','marcas','tipos','modelos'));
     }
 
     /**
@@ -136,18 +147,7 @@ class CarController extends Controller
         $car->chassis = $request->input("chasis");
         $car->license_plate = $request->input("placa");
         $car->car_type_id = $request->input("tipo");
-        $car->state_id = $request->input("estado");
         $car->year = $request->input("year").'-01-01';
-        $nuevaubicacion=$request->input("ubicacion");
-        if ($car->location_id!==$nuevaubicacion) {
-            $loc=Location::find($car->location_id);
-            $loc->availability=1;
-            $loc->save();
-            $loc=Location::find($nuevaubicacion);
-            $loc->availability=0;
-            $loc->save();
-            $car->location_id = $nuevaubicacion;
-        }
         $car->save();
         return redirect()->route('user home');
     }

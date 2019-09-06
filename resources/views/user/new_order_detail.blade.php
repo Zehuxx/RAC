@@ -29,16 +29,26 @@
 	        <div class="card-body">
 
 	        	<table class="table  table-striped table-hover">
-	        		@error('id')
-                       	<span class="invalid-feedback" style="display: table-cell;" role="alert">
-                       	    <strong>{{ $errors->first('id') }}</strong>
+	        		@error('id_carro')
+                       	<span class="invalid-feedback" style="display: block;" role="alert">
+                       	    <strong>{{ $errors->first('id_carro') }}</strong>
+                       	</span>
+                    @enderror
+                    @error('id_orden')
+                       	<span class="invalid-feedback" style="display: block;" role="alert">
+                       	    <strong>{{ $errors->first('id_orden') }}</strong>
+                       	</span>
+                    @enderror
+                    @error('ubicacion')
+                       	<span class="invalid-feedback" style="display: block;" role="alert">
+                       	    <strong>{{ $errors->first('ubicacion') }}</strong>
                        	</span>
                     @enderror
 	        	  <tbody>
-	        	<form class="well form-horizontal" method="post" action="{{route('detail store',['id_orden','id_carro'])}}">
+	        	<form class="well form-horizontal" method="post" action="{{route('detail store',[Route::current()->parameters['id_orden'],Route::current()->parameters['id_carro']])}}">
 					@csrf
 	        	    <tr>
-	        	    	<th>Tipo orden</th>
+	        	    	<th>Tipo movimiento</th>
 	        	    	<td>
 	        	    		<select name="tipomovimiento" id="tipomovimiento"  class="form-control @error('tipoorden') is-invalid @enderror">
 								<option selected=""> Seleccione el tipo de movimiento</option>
@@ -47,7 +57,7 @@
 								@endforeach
 							</select>
 							@error('tipomovimiento')
-                        	    <span class="invalid-feedback" role="alert">
+                        	    <span class="invalid-feedback" style="display: block;" role="alert">
                         	        <strong>{{ $errors->first('tipomovimiento') }}</strong>
                         	    </span>
                         	@enderror
@@ -67,10 +77,10 @@
 	        	    <tr>
 	        	    	<th>Fecha Reeingreso</th>
 	        	    	<td>
-	        	    		<input type="date" class="form-control @error('fechareeingreso') is-invalid @enderror" name="fechareeingreso" value="{{old("fechareeingreso")}}">
-							@error('fechareeingreso')
-                        	    <span class="invalid-feedback" role="alert">
-                        	        <strong>{{ $errors->first('fechareeingreso') }}</strong>
+	        	    		<input type="date" class="form-control @error('fechamodificada') is-invalid @enderror" name="fechareeingreso" value="{{old("fechareeingreso")}}">
+							@error('fechamodificada')
+                        	    <span class="invalid-feedback" style="display: block;" role="alert">
+                        	        <strong>{{ $errors->first('fechamodificada') }}</strong>
                         	    </span>
                         	@enderror
 						</td>

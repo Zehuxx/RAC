@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Model;
 use Illuminate\Http\Request;
+use App\Http\Requests\ModelRequest;
 use App\Http\Controllers\Controller;
 
 class ModelController extends Controller
@@ -31,7 +32,7 @@ class ModelController extends Controller
         return redirect()->route('admin models');
     }
 
-    public function store(Request $request)
+    public function store(ModelRequest $request)
     {
         // $model_delete = Model::onlyTrashed()
         //     ->where('name', $request->name)
@@ -49,7 +50,7 @@ class ModelController extends Controller
         return redirect()->route('admin models');
     }
 
-    public function update(Request $request, $id) {
+    public function update(ModelRequest $request, $id) {
         $model = Model::find($id);
 
         $model->name = $request->name;

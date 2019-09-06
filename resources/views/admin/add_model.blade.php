@@ -22,7 +22,11 @@
                     <label class="col-md-3 col-form-label" for="name">Modelo</label>
                     <div class="col-md-9">
                         <input class="form-control" id="name" type="text" name="name" placeholder="Nombre">
-                        <span class="help-block">Modelo</span>
+                        @if($errors->has('name'))
+                        <div class="alert alert-danger">
+                            <span>* {{ $errors->first('name') }}</span>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </form>

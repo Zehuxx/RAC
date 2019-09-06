@@ -79,7 +79,8 @@ Route::get('user/clientes', 'User\CustomerController@index')->name('user clients
 Route::get('user/clientes/add', 'User\CustomerController@create')->name('user clients add');
 Route::get('user/clientes/edit/{id}', 'User\CustomerController@edit')->name('user clients edit');
 Route::post('user/clientes/store', 'User\CustomerController@store')->name('user clients store');
-Route::Delete('user/clientes/delete/{id}', 'User\CustomerController@destroy')->name('user clients delete');
+Route::put('user/clientes/update/{id}', 'User\CustomerController@update')->name('user clients update');
+Route::delete('user/clientes/delete/{id}', 'User\CustomerController@destroy')->name('user clients delete');
 
 });
 

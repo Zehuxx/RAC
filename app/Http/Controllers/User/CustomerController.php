@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\Person;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Requests\CustomerRequest;
 use App\Http\Controllers\Controller;
 
 class CustomerController extends Controller
@@ -40,7 +41,7 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
         $client = new Person();
         $client->name = $request->name;
@@ -92,9 +93,23 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CustomerRequest $request, $id)
     {
-        //
+        $client = Customer::find($id)->person;
+        $client->name = $request->name;
+        $client->last_name = $request->last_name;
+        $client->identification_card = $request->identification_card;
+        $client->phone = $request->phone;
+        $client->home_address = $request->home_address;
+        $client->gender = $request->gender;
+        $client->birth_date = $request->birth_date;
+        $client->update();
+
+        $cust = $client->customer;
+        $cust->updated_at = $client->updated_at;
+        $cust->save();
+
+        return redirect()->route('user clients');
     }
 
     /**

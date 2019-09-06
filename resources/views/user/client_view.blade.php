@@ -42,7 +42,7 @@
                         <td>{{ $client->identification_card }}</td>
                         <td>{{ $client->home_address }}</td>
                         <td>{{ $client->phone }}</td>
-                        <td>{{ $client->birth_date }}</td>
+                        <td>{{ \Carbon\Carbon::parse($client->birth_date)->format('Y-m-d') }}</td>
                         <td>{{ $client->gender }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">

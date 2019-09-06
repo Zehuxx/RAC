@@ -8,6 +8,14 @@
 
     myFunction();
     </script>
+@elseif (session('status')=='deleted')
+<script>
+    function myFunction() {
+      alert("Empleado eliminado");
+    }
+
+    myFunction();
+  </script>
 @endif
 
 @section('route')
@@ -56,8 +64,18 @@
                   <td>{{$emp->sg}}</td>
                   <td>
                       <span class="badge badge-success">Active</span>
-                      <input type="button" onclick='editar({{$emp->id}})' value="editar">
-                      <input type="button" onclick='borrar({{$emp->id}})' value="borrar">
+
+                      <form action="/empleados/editar" method="post">
+                        @csrf
+                      <input type="submit" value="editar">
+                      <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
+                      </form>
+
+                      <form action="/empleados/borrar" method="post">
+                        @csrf
+                      <input type="submit" value="borrar">
+                      <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
+                      </form>
                   </td> 
                 </tr>
                   @endforeach
@@ -87,10 +105,4 @@
       </ul>
     </div>
   </div>
-  <script>
-    function editar(i)
-    {
-      alert("editar");
-    }
-  </script>
 @endsection

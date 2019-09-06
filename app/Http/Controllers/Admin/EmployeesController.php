@@ -98,9 +98,9 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return "edit: ".Input::get('empId');
     }
 
     /**
@@ -121,8 +121,23 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $id=\App\Models\Person::where('id', Input::get('empId'));
+        $id->delete();
+
+        $emp=\App\Models\Employee::where('id', Input::get('empId'));
+        $emp->delete();
+
+        $usr=\App\Models\User::where('id', Input::get('empId'));
+        $usr->delete();
+
+        $sg=\App\Models\SaleGoal::where('employee_id', Input::get('empId'));
+        foreach ($sg as $s) {
+            $s->delete();
+        }
+
+        return redirect('/empleados')->with('status','deleted');
+        //return "destroy: ".Input::get('empId');
     }
 }

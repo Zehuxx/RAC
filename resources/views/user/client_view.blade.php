@@ -54,7 +54,7 @@
                                     </button>
                                 </form>
 
-                                <form method="GET" action="{{ route('admin brands edit', $client->id) }}">
+                                <form method="GET" action="{{ route('user clients edit', $client->id) }}">
                                     @csrf
                                     <button class="btn btn-sm btn-outline-primary" type="submit">
                                         <i class="fa fa-pencil-square-o"></i>

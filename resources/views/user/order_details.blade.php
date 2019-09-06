@@ -70,12 +70,17 @@
                 <td>{{$detail->reentry_date}}</td>
                 <td>{{$detail->movimiento}}</td>
                 <td>
-                    <a class="btn-edit btn btn-success" href="#{{$detail->id}}"></a>
-                    <a class="btn-delete btn btn-danger" href="#{{$detail->id}}"></a>
+                    <a class="btn-delete btn btn-danger" data-order="{{Route::current()->parameters['id_orden']}}" data-id="{{$detail->id}}" href="#"></a>
+                    <form method="post" action="{{ route('detail destroy',['id_orden'=>Route::current()->parameters['id_orden'],'id_detalle'=>$detail->id]) }}">
+                    {{--        @csrf--}}
+                    {{--        @method('DELETE')--}}
+                    {{--        <button type="submit" class="btn-delete btn btn-danger"></button>--}}
+                    {{--</form>--}}
                 </td>
             </tr>
             @endforeach
         </table>
+        {{ $details->links() }}
     </div>
 
 @endsection
@@ -93,6 +98,7 @@
 
 
 @section('js')
+<script src="{{asset('js/user/details.js')}}"></script>
 <script type="text/javascript">
     $(".table .car").click(function(event) {
         $('#imagen_car').attr('src',$(this).find('img').attr('src'));

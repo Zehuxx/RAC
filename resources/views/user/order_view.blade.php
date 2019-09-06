@@ -47,7 +47,6 @@
                 <td>{{$order->cost}}</td>
                 <td>{{$order->created_at}}</td>
                 <td>
-                    <a class="btn-edit btn btn-success" href="#{{$order->id}}"></a>
                     <a class="btn-delete btn btn-danger" href="#{{$order->id}}"></a>
                 </td>
             </tr>

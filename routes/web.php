@@ -74,12 +74,14 @@ Route::post('/orden/guardar', 'User\OrderController@store')->name('order store')
 Route::get('/orden/{id_orden}/detalles', 'User\DetailController@index')->name('details index');
 Route::get('/orden/{id_orden}/carro/{id_carro}/detalle/agregar', 'User\DetailController@create')->name('detail create');
 Route::post('/orden/{id_orden}/carro/{id_carro}/detalle/guardar', 'User\DetailController@store')->name('detail store');
+Route::delete('/orden/{id_orden}/detalle/{id_detalle}/borrar', 'User\DetailController@destroy')->name('detail destroy');
 
 
-Route::get('user/clientes', 'User\ClientController@index')->name('user clients');
-Route::get('user/clientes/add', 'User\ClientController@create')->name('user clients add');
-Route::post('user/clientes/store', 'User\ClientController@store')->name('user clients store');
-Route::Delete('user/clientes/delete/{id}', 'User\ClientController@destroy')->name('user clients delete');
+Route::get('user/clientes', 'User\CustomerController@index')->name('user clients');
+Route::get('user/clientes/add', 'User\CustomerController@create')->name('user clients add');
+Route::get('user/clientes/edit/{id}', 'User\CustomerController@edit')->name('user clients edit');
+Route::post('user/clientes/store', 'User\CustomerController@store')->name('user clients store');
+Route::Delete('user/clientes/delete/{id}', 'User\CustomerController@destroy')->name('user clients delete');
 
 });
 

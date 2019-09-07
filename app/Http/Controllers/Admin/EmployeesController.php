@@ -12,6 +12,13 @@ use Illuminate\Support\facades\Input;
 class EmployeesController extends Controller
 {
     /**
+    * @return \Illuminate\Http\Response;
+    */
+    public function preCreate()
+    {
+        return view('Admin/add_employe')->with('holders',['name'=>'nombre', 'last'=>'apellido','id'=>'NNNN-NNNN-NNNNN','tel'=>'NNNN-NNNN','addr'=>'ej. Col.', 'birthdate'=>'date','salary'=>'NNNNN','commission'=>'NN','goal'=>'NNNN','email'=>'email']);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -76,9 +83,44 @@ class EmployeesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
         //
+    }
+
+    public function edit()
+    {
+        $id=Input::get('id');
+
+        //return $id;
+
+        $pers=\App\Models\Person::where('id',$id)->first();
+        $pers->name=Input::get('nombre');
+        $pers->last_name=Input::get('apellido');
+        $pers->identification_card=Input::get('identidad');
+        $pers->phone=Input::get('telefono');
+        $pers->home_address=Input::get('direccion');
+        $pers->gender=Input::get('sexo');
+        $pers->birth_date=Input::get('fecha-nacimiento');
+        $pers->save();
+
+        $emp=\App\Models\Employee::where('id',$id)->first();
+        $emp->salary=Input::get('salario');
+        $emp->save();
+
+        $usr=\App\Models\User::where('id',$id)->first();
+        $usr->email=Input::get('Email');
+        $usr->password=Input::get('password');
+        $usr->role_id=Input::get('rol');
+        $usr->save();
+
+        $sg=\App\Models\SaleGoal::where('employee_id',$id)->first();
+        $sg->commission=Input::get('comision');
+        $sg->sale_goal=Input::get('meta');
+        $sg->car_type_id=1;
+        $sg->save();
+
+        return redirect('/empleados')->with('status','edited');
     }
 
     /**
@@ -98,9 +140,19 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function preEdit()
     {
-        return "edit: ".Input::get('empId');
+        $id=Input::get('empId');
+
+        $pers=\App\Models\Person::where('id', $id)->first();
+        $emp=\App\Models\employee::where('id', $id)->first();
+        $usr=\App\Models\user::where('id',$id)->first();
+        $sg=\App\Models\SaleGoal::where('employee_id',$id)->first();
+
+        //return $id;
+
+        return view('admin/edit_employee')
+        ->with('holders',['id'=>$id,'name'=>$pers->name, 'last'=>$pers->last_name, 'id_card'=>$pers->identification_card, 'tel'=>$pers->phone, 'addr'=>$pers->home_address, 'birthdate'=>$pers->birth_date, 'salary'=>$emp->salary, 'commission'=>$sg->commission, 'goal'=>$sg->sale_goal, 'email'=>$usr->email]);
     }
 
     /**

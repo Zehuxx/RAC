@@ -46,8 +46,23 @@ class EmployeesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>'required',
+            'apellido'=> 'required',
+            'identidad'=>'required|unique:persons,identification_card|numeric',
+            'telefono'=>'required',
+            'direccion'=>'required|alpha',
+            'sexo'=>'numeric',
+            'fecha-nacimiento'=>'required|date',
+            'salario'=>'numeric',
+            'comision'=>'numeric',
+            'meta'=>'numeric',
+            'Email'=>'required|e-mail',
+            'password'=>'required'
+        ]);
+        
         $pers=new \App\Models\Person;
         $pers->name=Input::get('nombre');
         $pers->last_name=Input::get('apellido');
@@ -78,18 +93,31 @@ class EmployeesController extends Controller
         $sg->sale_goal=Input::get('meta');
         $sg->car_type_id=1;
         $sg->save();
-
+        
         return redirect('/empleados')->with('status','created');
     }
 
   
    
 
-    public function edit()
+    public function edit(Request $request)
     {
         $id=Input::get('id');
 
-        //return $id;
+        $request->validate([
+            'nombre'=>'required',
+            'apellido'=> 'required',
+            'identidad'=>'required|unique:persons,identification_card|numeric',
+            'telefono'=>'required',
+            'direccion'=>'required|alpha',
+            'sexo'=>'numeric',
+            'fecha-nacimiento'=>'required|date',
+            'salario'=>'numeric',
+            'comision'=>'numeric',
+            'meta'=>'numeric',
+            'Email'=>'required|e-mail',
+            'password'=>'required'
+        ]);
 
         $pers=\App\Models\Person::where('id',$id)->first();
         $pers->name=Input::get('nombre');

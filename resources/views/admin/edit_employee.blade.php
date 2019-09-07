@@ -1,5 +1,15 @@
 @extends('layouts.admin')
 
+@if ($errors->any())
+<script>
+  function myFunction() {
+    alert("Han habido errores en los datos!");
+  }
+
+  myFunction();
+  </script>
+@endif
+
 @section('route')
     <li class="breadcrumb-item">Admin</li>
     <li class="breadcrumb-item active">

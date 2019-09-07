@@ -73,16 +73,22 @@
                   <td>
                       <span class="badge badge-success">Active</span>
 
-                      <form action="/empleados/editar" method="get">
+                      <form action="{{ route('admin employees edit', $emp->id) }} method="get">
                         @csrf
-                      <input type="submit" value="editar">
-                      <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
-                      </form>
+                        <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
+                        <button class="btn btn-sm btn-outline-primary" type="submit">
+                          <i class="fa fa-pencil-square-o"></i>
+                      </button>
+                  </form>
 
-                      <form action="/empleados/borrar" method="post">
+                      <form action="{{ route('admin employees delete', $emp->id) }}" method="post">
                         @csrf
-                      <input type="submit" value="borrar">
-                      <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
+                        @method('delete')
+                        <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
+                      <button class="btn btn-sm btn-outline-danger mr-2" type="submit">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                    
                       </form>
                   </td> 
                 </tr>

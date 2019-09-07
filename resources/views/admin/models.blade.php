@@ -41,7 +41,7 @@
                                     </button>
                                 </form>
 
-                                <form method="GET" action="{{ route('admin models edit', $model->id) }}">
+                                <form method="GET" action="{{ route('admin employees edit', $model->id) }}">
                                     @csrf
                                     <button class="btn btn-sm btn-outline-primary" type="submit">
                                         <i class="fa fa-pencil-square-o"></i>

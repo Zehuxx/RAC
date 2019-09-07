@@ -140,9 +140,9 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function preEdit()
+    public function preEdit($id)
     {
-        $id=Input::get('empId');
+        //$id=Input::get('empId');
 
         $pers=\App\Models\Person::where('id', $id)->first();
         $emp=\App\Models\employee::where('id', $id)->first();
@@ -173,18 +173,18 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        $id=\App\Models\Person::where('id', Input::get('empId'));
-        $id->delete();
+        $pers=\App\Models\Person::where('id',$id)->first();
+        $pers->delete();
 
-        $emp=\App\Models\Employee::where('id', Input::get('empId'));
+        $emp=\App\Models\Employee::where('id', $id)->first();
         $emp->delete();
 
-        $usr=\App\Models\User::where('id', Input::get('empId'));
+        $usr=\App\Models\User::where('id', $id)->first();
         $usr->delete();
 
-        $sg=\App\Models\SaleGoal::where('employee_id', Input::get('empId'));
+        $sg=\App\Models\SaleGoal::where('employee_id', $id);
         foreach ($sg as $s) {
             $s->delete();
         }

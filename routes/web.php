@@ -32,9 +32,9 @@ Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employe
 Route::post('/empleados/Crear', 'Admin\EmployeesController@create')->name('admin employee add');
 
 Route::get('empleados/add', 'Admin\EmployeesController@preCreate')->name('admin employes add');
-Route::get('/empleados/editar', 'Admin\EmployeesController@preEdit');
+Route::get('/empleados/editar/{id}', 'Admin\EmployeesController@preEdit')->name('admin employees edit');
 Route::post('/empleados/guardar', 'Admin\EmployeesController@edit');
-Route::post('/empleados/borrar', 'Admin\EmployeesController@destroy');
+Route::delete('/empleados/borrar/{id}', 'Admin\EmployeesController@destroy')->name('admin employees delete');
 
 Route::get('admin/modelos', 'Admin\ModelController@index')->name('admin models');
 Route::get('admin/modelos/add', 'Admin\ModelController@create')->name('admin models add');

@@ -34,7 +34,7 @@
 	        	    <tr>
 	        	    	<th>Nombres</th>
 	        	    	<td>
-                            <input type="text" name="name" id="name" value="{{ $client->name }}" class="form-control">
+                            <input type="text" name="name" id="name" value="{{ old('name' ,$client->name) }}" class="form-control">
                             @if($errors->has('name'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('name') }}</span>
@@ -45,7 +45,7 @@
                     <tr>
 	        	    	<th>Apellidos</th>
 	        	    	<td>
-	        	    		<input type="text" name="last_name" id="last_name" value="{{ $client->last_name }}" class="form-control">
+	        	    		<input type="text" name="last_name" id="last_name" value="{{ old('last_name' ,$client->last_name) }}" class="form-control">
                             @if($errors->has('last_name'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('last_name') }}</span>
@@ -56,7 +56,7 @@
 								<tr>
 	        	    	<th>Tarjeta de identidad</th>
 	        	    	<td>
-                            <input type="text" name="identification_card" id="identification_card" value="{{ $client->identification_card }}" class="form-control">
+                            <input type="text" name="identification_card" id="identification_card" value="{{ old('identification_card', $client->identification_card) }}" class="form-control">
                             @if($errors->has('identification_card'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('identification_card') }}</span>
@@ -67,7 +67,7 @@
                     <tr>
 	        	    	<th>Telefono</th>
 	        	    	<td>
-	        	    		<input type="tel" name="phone" id="phone" value="{{ $client->phone }}" class="form-control">
+	        	    		<input type="tel" name="phone" id="phone" value="{{ old('phone' ,$client->phone) }}" class="form-control">
                             @if($errors->has('phone'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('phone') }}</span>
@@ -78,7 +78,9 @@
 	        	    <tr>
 	        	    	<th>Direccion</th>
 	        	    	<td>
-	        	    		<textarea class="form-control" name="home_address" id="home_address" placeholder="Direccion..." aria-label="With textarea"> {{ $client->home_address }} </textarea>
+	        	    		<textarea class="form-control" name="home_address" id="home_address" placeholder="Direccion..." aria-label="With textarea">
+                                {{ old('home_address', $client->home_address) }}
+                            </textarea>
                             @if($errors->has('home_address'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('home_address') }}</span>
@@ -104,7 +106,7 @@
                     <tr>
 	        	    	<th>Fecha nacimiento</th>
 	        	    	<td>
-	        	    		<input type="date" name="birth_date" id="birth_date" value="{{ \Carbon\Carbon::parse($client->birth_date)->format('Y-m-d') }}" class="form-control">
+	        	    		<input type="date" name="birth_date" id="birth_date" value="{{ old('birth_date', \Carbon\Carbon::parse($client->birth_date)->format('Y-m-d')) }}" class="form-control">
                             @if($errors->has('birth_date'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('birth_date') }}</span>

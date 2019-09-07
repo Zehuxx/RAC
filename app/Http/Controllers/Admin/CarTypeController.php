@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\CarType;
 use Illuminate\Http\Request;
+use App\Http\Requests\CarTypeRequest;
 use App\Http\Controllers\Controller;
 
 class CarTypeController extends Controller
@@ -36,7 +37,7 @@ class CarTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CarTypeRequest $request)
     {
         $carType_delete = CarType::onlyTrashed()
             ->where('name', $request->name)
@@ -86,7 +87,7 @@ class CarTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CarTypeRequest $request, $id)
     {
         $carType_delete = CarType::onlyTrashed()
             ->where('name', $request->name)

@@ -33,7 +33,7 @@
 	        	    <tr>
 	        	    	<th>Nombres</th>
 	        	    	<td>
-	        	    		<input type="text" name="name" id="name" value="" class="form-control">
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control">
                             @if($errors->has('name'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('name') }}</span>
@@ -44,7 +44,7 @@
 								<tr>
 	        	    	<th>Apellidos</th>
 	        	    	<td>
-                            <input type="text" name="last_name" id="last_name" value="" class="form-control">
+                            <input type="text" name="last_name" id="last_name" value="{{ old('last_name') }}" class="form-control">
                             @if($errors->has('last_name'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('last_name') }}</span>
@@ -55,7 +55,7 @@
 								<tr>
 	        	    	<th>Tarjeta de identidad</th>
 	        	    	<td>
-                            <input type="text" name="identification_card" id="identification_card" value="" class="form-control">
+                            <input type="text" name="identification_card" id="identification_card" value="{{ old('identification_card') }}" class="form-control">
                             @if($errors->has('identification_card'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('identification_card') }}</span>
@@ -66,7 +66,7 @@
 								<tr>
 	        	    	<th>Telefono</th>
 	        	    	<td>
-                            <input type="tel" name="phone" id="phone" value="" class="form-control">
+                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" class="form-control">
                             @if($errors->has('phone'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('phone') }}</span>
@@ -77,7 +77,9 @@
 	        	    <tr>
 	        	    	<th>Direccion</th>
 	        	    	<td>
-                            <textarea class="form-control" name="home_address" id="home_address" placeholder="Direccion..." aria-label="With textarea"></textarea>
+                            <textarea class="form-control" name="home_address" id="home_address" placeholder="Direccion..." aria-label="With textarea">
+                                {{ old('home_address') }}
+                            </textarea>
                             @if($errors->has('home_address'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('home_address') }}</span>
@@ -89,7 +91,7 @@
                     <tr>
 	        	    	<th>Sexo</th>
 	        	    	<td>
-	        	    		<select name="gender" id="gender"  class="form-control">
+	        	    		<select name="gender" id="gender" value="{{ old('gender') }}"  class="form-control">
 								<option selected=""> Sexo...</option>
 								<option value="F">Femenino</option>
 								<option value="M">Masculino</option>
@@ -104,7 +106,7 @@
                     <tr>
 	        	    	<th>Fecha nacimiento</th>
 	        	    	<td>
-                            <input type="date" name="birth_date" id="birth_date" value="" class="form-control">
+                            <input type="date" name="birth_date" id="birth_date" value="{{ old('birth_date') }}" class="form-control">
                             @if($errors->has('birth_date'))
                             <div class="alert alert-danger">
                                 <span>*{{ $errors->first('birth_date') }}</span>

@@ -22,7 +22,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="name">Modelo</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="name" type="text" name="name" placeholder="Nombre" value="{{$model->name}}">
+                    <input class="form-control" id="name" type="text" name="name" placeholder="Nombre" value="{{ old('name', $model->name) }}">
                         @if($errors->has('name'))
                         <div class="alert alert-danger">
                             <span>* {{ $errors->first('name') }}</span>

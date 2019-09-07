@@ -22,16 +22,24 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="name">Tipo</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="name" type="text" name="name" placeholder="Tipo" value="{{$carType->name}}">
-                        <span class="help-block">Tipo</span>
+                        <input class="form-control" id="name" type="text" name="name" placeholder="Tipo" value="{{ old('name', $carType->name) }}">
+                        @if($errors->has('name'))
+                        <div class="alert alert-danger">
+                            <span>* {{ $errors->first('name') }}</span>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="cost">Costo</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="cost" type="number" step=".01" name="cost" placeholder="000000.00"  value="{{$carType->cost}}">
-                        <span class="help-block">Costo</span>
+                        <input class="form-control" id="cost" type="number" step=".01" min="0" name="cost" placeholder="000000.00"  value="{{ old('cost', $carType->cost) }}">
+                        @if($errors->has('cost'))
+                        <div class="alert alert-danger">
+                            <span>* {{ $errors->first('cost') }}</span>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </form>

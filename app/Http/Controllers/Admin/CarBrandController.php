@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\CarBrand;
 use Illuminate\Http\Request;
+use App\Http\Requests\BrandRequest;
 use App\Http\Controllers\Controller;
 
 class CarBrandController extends Controller
@@ -36,7 +37,7 @@ class CarBrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         $brand = new CarBrand();
         $brand->name = $request->name;
@@ -76,7 +77,7 @@ class CarBrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BrandRequest $request, $id)
     {
         $brand = CarBrand::find($id);
         $brand->name = $request->name;

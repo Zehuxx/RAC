@@ -21,7 +21,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="name">Modelo</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="name" type="text" name="name" placeholder="Nombre">
+                        <input class="form-control" id="name" value="{{ old('name') }}" type="text" name="name" placeholder="Nombre">
                         @if($errors->has('name'))
                         <div class="alert alert-danger">
                             <span>* {{ $errors->first('name') }}</span>

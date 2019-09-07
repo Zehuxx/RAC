@@ -16,6 +16,14 @@
 
     myFunction();
   </script>
+  @elseif (session('status')=='edited')
+  <script>
+      function myFunction() {
+        alert("Empleado editado");
+      }
+  
+      myFunction();
+    </script>
 @endif
 
 @section('route')
@@ -65,7 +73,7 @@
                   <td>
                       <span class="badge badge-success">Active</span>
 
-                      <form action="/empleados/editar" method="post">
+                      <form action="/empleados/editar" method="get">
                         @csrf
                       <input type="submit" value="editar">
                       <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">

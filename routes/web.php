@@ -31,8 +31,9 @@ Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employe
 
 Route::post('/empleados/Crear', 'Admin\EmployeesController@create')->name('admin employee add');
 
-Route::view('empleados/add', 'admin/add_employe')->name('admin employes add');
-Route::post('/empleados/editar', 'Admin\EmployeesController@edit');
+Route::get('empleados/add', 'Admin\EmployeesController@preCreate')->name('admin employes add');
+Route::get('/empleados/editar', 'Admin\EmployeesController@preEdit');
+Route::post('/empleados/guardar', 'Admin\EmployeesController@edit');
 Route::post('/empleados/borrar', 'Admin\EmployeesController@destroy');
 
 Route::get('admin/modelos', 'Admin\ModelController@index')->name('admin models');

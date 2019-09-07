@@ -63,9 +63,9 @@ class CarController extends Controller
     public function create()
     { 
         $marcas=CarBrand::all();
-        $tipos=CarType::all();
+        $tipos=CarType::all(); 
         $modelos=Model::all();
-        return view('user.new_car',compact('marcas','tipos','modelos','ubicaciones'));
+        return view('user.new_car',compact('marcas','tipos','modelos'));
     }
 
     /**

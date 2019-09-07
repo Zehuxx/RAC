@@ -1,14 +1,6 @@
 @extends('layouts.admin')
 
-@if ($errors->any())
-<script>
-  function myFunction() {
-    alert("Han habido errores en los datos!");
-  }
 
-  myFunction();
-  </script>
-@endif
 
 @section('route')
     <li class="breadcrumb-item">Admin</li>
@@ -23,9 +15,18 @@
 <input type="hidden" name="id" id="id" value="{{$holders['id']}}">
 <div class="col-md-6 mx-auto">
     <div class="card">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="card-header">
             <i class="fa fa-plus"></i>
-            <strong>Nuevo empleado</strong>
+            <strong>Editar empleado</strong>
         </div>
         <div class="card-body">
             <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">

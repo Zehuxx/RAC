@@ -51,8 +51,8 @@ class EmployeesController extends Controller
         $request->validate([
             'nombre'=>'required',
             'apellido'=> 'required',
-            'identidad'=>'required|unique:persons,identification_card|numeric',
-            'telefono'=>'required',
+            'identidad'=>array('required','unique:persons,identification_card','regex:/(^[01][0-8][0-9]{2}-((19)[4-9][0-9]|(20)[0-9]{2})-[0-9]{5}$)/u'),
+            'telefono'=>array('required','regex:/(^[0-9]{4}-[0-9]{4}$)/u'),
             'direccion'=>'required|alpha',
             'sexo'=>'numeric',
             'fecha-nacimiento'=>'required|date',
@@ -60,8 +60,9 @@ class EmployeesController extends Controller
             'comision'=>'numeric',
             'meta'=>'numeric',
             'Email'=>'required|e-mail',
-            'password'=>'required'
+            'password'=>'required|min:8'
         ]);
+
         
         $pers=new \App\Models\Person;
         $pers->name=Input::get('nombre');
@@ -97,18 +98,17 @@ class EmployeesController extends Controller
         return redirect('/empleados')->with('status','created');
     }
 
-  
-   
-
     public function edit(Request $request)
     {
         $id=Input::get('id');
 
+        //return Input::get('password');
+
         $request->validate([
             'nombre'=>'required',
             'apellido'=> 'required',
-            'identidad'=>'required|unique:persons,identification_card|numeric',
-            'telefono'=>'required',
+            'identidad'=>array('required','unique:persons,identification_card','regex:/(^[01][0-8][0-9]{2}-((19)[4-9][0-9]|(20)[0-9]{2})-[0-9]{5}$)/u'),
+            'telefono'=>array('required','regex:/(^[0-9]{4}-[0-9]{4}$)/u'),
             'direccion'=>'required|alpha',
             'sexo'=>'numeric',
             'fecha-nacimiento'=>'required|date',
@@ -116,7 +116,7 @@ class EmployeesController extends Controller
             'comision'=>'numeric',
             'meta'=>'numeric',
             'Email'=>'required|e-mail',
-            'password'=>'required'
+            'password'=>'required|min:8'
         ]);
 
         $pers=\App\Models\Person::where('id',$id)->first();

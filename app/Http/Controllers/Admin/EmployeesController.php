@@ -11,10 +11,12 @@ use Illuminate\Support\facades\Input;
 
 class EmployeesController extends Controller
 {
-    /**
-    * @return \Illuminate\Http\Response;
-    */
-    public function preCreate()
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         return view('Admin/add_employe')->with('holders',['name'=>'nombre', 'last'=>'apellido','id'=>'NNNN-NNNN-NNNNN','tel'=>'NNNN-NNNN','addr'=>'ej. Col.', 'birthdate'=>'date','salary'=>'NNNNN','commission'=>'NN','goal'=>'NNNN','email'=>'email']);
     }
@@ -36,12 +38,15 @@ class EmployeesController extends Controller
         ->with('employees', $employees);
     }
 
-    /**
-     * Show the form for creating a new resource.
+  
+
+       /**
+     * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store()
     {
         $pers=new \App\Models\Person;
         $pers->name=Input::get('nombre');
@@ -77,16 +82,8 @@ class EmployeesController extends Controller
         return redirect('/empleados')->with('status','created');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store($id)
-    {
-        //
-    }
+  
+   
 
     public function edit()
     {

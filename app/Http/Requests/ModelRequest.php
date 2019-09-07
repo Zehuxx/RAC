@@ -24,7 +24,7 @@ class ModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:models,name,id|max:45'
+            'name'=>'required|unique:models,name,'.$this->id.'|max:45'
         ];
     }
 

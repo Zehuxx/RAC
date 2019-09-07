@@ -28,8 +28,8 @@ class CustomerRequest extends FormRequest
         return [
             'name'=>'required',
             'last_name'=>'required',
-            'identification_card'=>'required|unique:persons,identification_card,id|regex:/(^(\d{4}\-\d{4}\-\d{5})$)/u',
-            'phone'=>'required|unique:persons,phone,id|regex:/(^(\d{4}\-\d{4})$)/u',
+            'identification_card'=>'required|unique:persons,identification_card,'.$this->id.'|regex:/(^(\d{4}\-\d{4}\-\d{5})$)/u',
+            'phone'=>'required|unique:persons,phone,'.$this->id.'|regex:/(^(\d{4}\-\d{4})$)/u',
             'home_address'=>'required|max:45',
             'gender'=>'required|in:M,F',
             'birth_date'=>'required|before:'.$today

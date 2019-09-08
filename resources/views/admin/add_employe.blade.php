@@ -22,7 +22,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="nombre">Nombre</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="nombre" type="text" name="nombre" placeholder="{{$holders['name']}}">
+                    <input class="form-control" id="nombre" type="text" name="nombre" placeholder="{{$holders['name']}}" required>
                         <span class="help-block">Su nombre</span>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="apellido">Apellido</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="apellido" type="text" name="apellido" placeholder="{{$holders['last']}}">
+                    <input class="form-control" id="apellido" type="text" name="apellido" placeholder="{{$holders['last']}}" required>
                         <span class="help-block">Porfavor introduzca su apellido</span>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="identidad">Identidad</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="identidad" type="text" name="identidad" placeholder="{{$holders['id']}}">
+                    <input class="form-control" id="identidad" type="text" name="identidad" placeholder="{{$holders['id']}}" required>
                         <span class="help-block">Identidad</span>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="telefono">Teléfono</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="telefono" type="text" name="telefono" placeholder="{{$holders['tel']}}">
+                        <input class="form-control" id="telefono" type="text" name="telefono" placeholder="{{$holders['tel']}}" required>
                         <span class="help-block">Teléfono</span>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="direccion">Dirección</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="direccion" type="text" name="direccion" placeholder="{{$holders['addr']}}">
+                        <input class="form-control" id="direccion" type="text" name="direccion" placeholder="{{$holders['addr']}}" required>
                         <span class="help-block">Dirección</span>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="fecha-nacimiento">Fecha de nacimiento</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="fecha-nacimiento" type="date" name="fecha-nacimiento" placeholder="{{$holders['birthdate']}}">
+                        <input class="form-control" id="fecha-nacimiento" type="date" name="fecha-nacimiento" placeholder="{{$holders['birthdate']}}" required>
                         <span class="help-block">Please enter a valid date</span>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="salario">Salario</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="salario" type="text" name="salario" placeholder="{{$holders['salary']}}">
+                        <input class="form-control" id="salario" type="text" name="salario" placeholder="{{$holders['salary']}}" required>
                         <span class="help-block">Salario</span>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="Email">Email</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="Email" type="email" name="Email" placeholder="{{$holders['email']}}">
+                        <input class="form-control" id="Email" type="email" name="Email" placeholder="{{$holders['email']}}" required>
                         <span class="help-block">Correo electronico</span>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="password">Password</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="password" type="password" name="password" placeholder="">
+                        <input class="form-control" id="password" type="password" name="password" placeholder="" required>
                         <span class="help-block">Please enter a complex password</span>
                     </div>
                 </div>

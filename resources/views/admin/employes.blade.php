@@ -44,9 +44,6 @@
         </div>
     </div>
     <div class="card-body">
-        <form action="/empleados/add">
-        <input type="submit" value="agregar"/>
-        </form>
         <br>
         <table class="table table-responsive-sm table-bordered">
             <thead>

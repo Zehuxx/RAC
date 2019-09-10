@@ -54,10 +54,11 @@ class EmployeesController extends Controller
             'identidad'=>array('required','unique:persons,identification_card','regex:/(^[01][0-8][0-9]{2}-((19)[4-9][0-9]|(20)[0-9]{2})-[0-9]{5}$)/u'),
             'telefono'=>array('required','regex:/(^[0-9]{4}-[0-9]{4}$)/u'),
             'direccion'=>'required|alpha',
-            'sexo'=>'numeric',
+            'sexo'=>'required|numeric',
             'fecha-nacimiento'=>'required|date',
             'salario'=>'numeric',
             'comision'=>'numeric',
+            'rol'=>'required|numeric',
             'meta'=>'numeric',
             'Email'=>'required|e-mail',
             'password'=>'required|min:8'
@@ -84,7 +85,7 @@ class EmployeesController extends Controller
         $usr=new \App\Models\User;
         $usr->id=$id->id;
         $usr->email=Input::get('Email');
-        $usr->password=Input::get('password');
+        $usr->password=bcrypt(Input::get('password'));
         $usr->role_id=Input::get('rol');
         $usr->save();
 
@@ -102,18 +103,17 @@ class EmployeesController extends Controller
     {
         $id=Input::get('id');
 
-        //return Input::get('password');
-
         $request->validate([
             'nombre'=>'required',
             'apellido'=> 'required',
             'identidad'=>array('required','unique:persons,identification_card','regex:/(^[01][0-8][0-9]{2}-((19)[4-9][0-9]|(20)[0-9]{2})-[0-9]{5}$)/u'),
             'telefono'=>array('required','regex:/(^[0-9]{4}-[0-9]{4}$)/u'),
             'direccion'=>'required|alpha',
-            'sexo'=>'numeric',
+            'sexo'=>'required|numeric',
             'fecha-nacimiento'=>'required|date',
             'salario'=>'numeric',
             'comision'=>'numeric',
+            'rol'=>'required|numeric',
             'meta'=>'numeric',
             'Email'=>'required|e-mail',
             'password'=>'required|min:8'
@@ -135,7 +135,7 @@ class EmployeesController extends Controller
 
         $usr=\App\Models\User::where('id',$id)->first();
         $usr->email=Input::get('Email');
-        $usr->password=Input::get('password');
+        $usr->password=bcrypt(Input::get('password'));
         $usr->role_id=Input::get('rol');
         $usr->save();
 

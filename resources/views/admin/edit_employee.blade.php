@@ -26,7 +26,12 @@
                     <label class="col-md-3 col-form-label" for="nombre">Nombre</label>
                     <div class="col-md-9">
                     <input class="form-control" id="nombre" type="text" name="nombre" value="{{$holders['name']}}">
-                        <span class="help-block">Su nombre</span>
+                    @if($errors->has('nombre'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('nombre') }}</span>
+                    </div>
+                    @endif     
+                    <span class="help-block">Su nombre</span>
                     </div>
                 </div>
 
@@ -34,7 +39,12 @@
                     <label class="col-md-3 col-form-label" for="apellido">Apellido</label>
                     <div class="col-md-9">
                     <input class="form-control" id="apellido" type="text" name="apellido" value="{{$holders['last']}}">
-                        <span class="help-block">Porfavor introduzca su apellido</span>
+                    @if($errors->has('apellido'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('apellido') }}</span>
+                    </div>
+                    @endif     
+                    <span class="help-block">Porfavor introduzca su apellido</span>
                     </div>
                 </div>
 
@@ -68,6 +78,11 @@
                     <label class="col-md-3 col-form-label" for="direccion">Dirección</label>
                     <div class="col-md-9">
                         <input class="form-control" id="direccion" type="text" name="direccion" value="{{$holders['addr']}}">
+                        @if($errors->has('direccion'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('direccion') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Dirección</span>
                     </div>
                 </div>
@@ -81,12 +96,22 @@
                             <option value="2">F</option>
                         </select>
                     </div>
+                    @if($errors->has('sexo'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('sexo') }}</span>
+                    </div>
+                    @endif 
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="fecha-nacimiento">Fecha de nacimiento</label>
                     <div class="col-md-9">
                         <input class="form-control" id="fecha-nacimiento" type="date" name="fecha-nacimiento" value="{{$holders['birthdate']}}">
+                        @if($errors->has('fecha-nacimiento'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('fecha-nacimiento') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Please enter a valid date</span>
                     </div>
                 </div>
@@ -101,12 +126,22 @@
                             <option value="3">Admin</option>
                         </select>
                     </div>
+                    @if($errors->has('rol'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('rol') }}</span>
+                    </div>
+                    @endif 
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="salario">Salario</label>
                     <div class="col-md-9">
                         <input class="form-control" id="salario" type="text" name="salario" value="{{$holders['salary']}}">
+                        @if($errors->has('salario'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('salario') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Salario</span>
                     </div>
                 </div>
@@ -140,6 +175,11 @@
                     <label class="col-md-3 col-form-label" for="Email">Email</label>
                     <div class="col-md-9">
                         <input class="form-control" id="Email" type="email" name="Email" value="{{$holders['email']}}">
+                        @if($errors->has('Email'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('Email') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Correo electronico</span>
                     </div>
                 </div>
@@ -148,6 +188,11 @@
                     <label class="col-md-3 col-form-label" for="password">Password</label>
                     <div class="col-md-9">
                         <input class="form-control" id="password" type="password" name="password" value="">
+                        @if($errors->has('password'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('password') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Please enter a complex password</span>
                     </div>
                 </div>

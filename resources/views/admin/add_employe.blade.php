@@ -8,8 +8,7 @@
 @endsection
 
 @section('cards')
-<form action="/empleados/Crear" method="POST">
-    @csrf
+<form class="form-horizontal" action="/empleados/Crear" method="post" enctype="multipart/form-data">    
 <div class="col-md-6 mx-auto">
     <div class="card">
         <div class="card-header">
@@ -17,8 +16,8 @@
             <strong>Nuevo empleado</strong>
         </div>
         <div class="card-body">
-            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-
+            
+                @csrf
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="nombre">Nombre</label>
                     <div class="col-md-9">
@@ -75,7 +74,13 @@
                     <label class="col-md-3 col-form-label" for="direccion">Dirección</label>
                     <div class="col-md-9">
                         <input class="form-control" id="direccion" type="text" name="direccion" value="{{ old('direccion') }}" placeholder="{{$holders['addr']}}" required>
+                        @if($errors->has('direccion'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('direccion') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Dirección</span>
+
                     </div>
                 </div>
 
@@ -88,12 +93,22 @@
                             <option value="2">F</option>
                         </select>
                     </div>
+                    @if($errors->has('sexo'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('sexo') }}</span>
+                    </div>
+                    @endif 
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="fecha-nacimiento">Fecha de nacimiento</label>
                     <div class="col-md-9">
                         <input class="form-control" id="fecha-nacimiento" type="date" name="fecha-nacimiento" value="{{ old('fecha-nacimiento') }}" placeholder="{{$holders['birthdate']}}" required>
+                        @if($errors->has('fecha-nacimiento'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('fecha-nacimiento') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Please enter a valid date</span>
                     </div>
                 </div>
@@ -108,6 +123,11 @@
                             <option value="3">Admin</option>
                         </select>
                     </div>
+                    @if($errors->has('rol'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('rol') }}</span>
+                    </div>
+                    @endif 
                 </div>
 
                 <div class="form-group row">
@@ -155,6 +175,11 @@
                     <label class="col-md-3 col-form-label" for="password">Password</label>
                     <div class="col-md-9">
                         <input class="form-control" id="password" type="password" name="password" placeholder="" required>
+                        @if($errors->has('password'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('password') }}</span>
+                    </div>
+                    @endif 
                         <span class="help-block">Please enter a complex password</span>
                     </div>
                 </div>

@@ -32,14 +32,24 @@ class OrderController extends Controller
     {
         $search = $request->input('search');
         $orders=DB::table('orders as a')
-            ->select(DB::raw("concat(c.name,' ',c.last_name) as customername"),'a.*')
-            ->leftJoin('customers as b', 'a.customer_id', '=', 'b.id')
-            ->leftJoin('persons as c', 'c.id', '=', 'b.id')
+            ->select(DB::raw("concat(f.name,' ',f.last_name) as customername"),"a.id","a.created_at","b.cost")
+            ->leftjoin(DB::raw("(select a.order_id,sum(c.cost) as cost
+                                from details as a
+                                left join cars b 
+                                on a.car_id=b.id
+                                LEFT join car_types c 
+                                on b.car_type_id=c.id
+                                where a.deleted_at is null 
+                                and b.deleted_at is null 
+                                and c.deleted_at is null
+                                group by a.order_id) as b"), 'a.id', '=', 'b.order_id')
+            ->leftJoin('customers as e', 'a.customer_id', '=', 'e.id')
+            ->leftJoin('persons as f', 'e.id', '=', 'f.id')
             ->whereNull('a.deleted_at')
             ->where(function($q)use($search){ 
                 $q->where('a.created_at','like', '%'.$search.'%')
-                ->orWhere('c.name','like', '%'.$search.'%')
-                ->orWhere('c.last_name','like', '%'.$search.'%');
+                ->orWhere('f.name','like', '%'.$search.'%')
+                ->orWhere('f.last_name','like', '%'.$search.'%');
             })
             ->orderby('a.created_at','desc')
             //->toSql();

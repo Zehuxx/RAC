@@ -44,7 +44,7 @@
             <tr>
                 <td>{{$order->customername}}</td>
                 <td><a href="{{route('details index',$order->id)}}">Mostrar</a></td>
-                <td>{{$order->cost}}</td>
+                <td>{{($order->cost===null) ? 0:$order->cost}}</td>
                 <td>{{$order->created_at}}</td>
                 <td>
                     <a class="btn-delete btn btn-danger" href="#{{$order->id}}"></a>

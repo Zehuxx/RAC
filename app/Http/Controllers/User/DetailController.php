@@ -289,23 +289,7 @@ class DetailController extends Controller
                         break;
                 }
             }else{
-                switch ($detail->movement_id) {
-                    case 1:
-                        $detail->delete();
-                        break;
-                    case 2:
-                        $detail->delete();
-                        break;
-                    case 3:
-                        $detail->delete();
-                        break;
-                    case 4:
-                        $detail->delete();
-                        break;
-                    default:
-                        //
-                        break;
-                }
+                $detail->delete();
             }
             
         }

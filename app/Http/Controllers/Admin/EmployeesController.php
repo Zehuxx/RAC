@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models;
-use Illuminate\Support\facades\Input;
+use Illuminate\Support\Facades\Input;
 
 class EmployeesController extends Controller
 {

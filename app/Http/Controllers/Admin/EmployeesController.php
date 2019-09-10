@@ -32,7 +32,7 @@ class EmployeesController extends Controller
         ->join('persons','persons.id','=','employees.id')
         ->join('roles','users.role_id','=','roles.id')
         ->join('sale_goals','sale_goals.employee_id','=','employees.id')
-        ->get();
+        ->paginate(10);
 
         return view('admin/employes')
         ->with('employees', $employees);

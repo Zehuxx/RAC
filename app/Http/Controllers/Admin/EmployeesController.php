@@ -18,7 +18,7 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        return view('Admin/add_employe')->with('holders',['name'=>'nombre', 'last'=>'apellido','id'=>'NNNN-NNNN-NNNNN','tel'=>'NNNN-NNNN','addr'=>'ej. Col.', 'birthdate'=>'date','salary'=>'NNNNN','commission'=>'NN','goal'=>'NNNN','email'=>'email']);
+        return view('admin/add_employe')->with('holders',['name'=>'nombre', 'last'=>'apellido','id'=>'NNNN-NNNN-NNNNN','tel'=>'NNNN-NNNN','addr'=>'ej. Col.', 'birthdate'=>'date','salary'=>'NNNNN','commission'=>'NN','goal'=>'NNNN','email'=>'email']);
     }
     /**   
      * Display a listing of the resource.

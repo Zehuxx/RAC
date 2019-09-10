@@ -15,15 +15,6 @@
 <input type="hidden" name="id" id="id" value="{{$holders['id']}}">
 <div class="col-md-6 mx-auto">
     <div class="card">
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <div class="card-header">
             <i class="fa fa-plus"></i>
             <strong>Editar empleado</strong>
@@ -51,7 +42,12 @@
                     <label class="col-md-3 col-form-label" for="identidad">Identidad</label>
                     <div class="col-md-9">
                     <input class="form-control" id="identidad" type="text" name="identidad" value="{{$holders['id_card']}}">
-                        <span class="help-block">Identidad</span>
+                    @if($errors->has('identidad'))
+                    <div class="alert alert-danger">
+                        <span>*{{ $errors->first('identidad') }}</span>
+                    </div>
+                    @endif      
+                    <span class="help-block">Identidad</span>
                     </div>
                 </div>
 
@@ -59,6 +55,11 @@
                     <label class="col-md-3 col-form-label" for="telefono">Teléfono</label>
                     <div class="col-md-9">
                         <input class="form-control" id="telefono" type="text" name="telefono" value="{{$holders['tel']}}">
+                        @if($errors->has('telefono'))
+                        <div class="alert alert-danger">
+                            <span>*{{ $errors->first('telefono') }}</span>
+                        </div>
+                        @endif  
                         <span class="help-block">Teléfono</span>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="sexo">Sexo</label>
                     <div class="col-md-9">
-                        <select class="form-control" id="sexo" name="sexo">
+                        <select class="form-control" id="sexo" name="sexo" value="{{ old('sexo') }}">
                             <option value="0">Seleccionar...</option>
                             <option value="1">M</option>
                             <option value="2">F</option>
@@ -93,7 +94,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="rol">Rol</label>
                     <div class="col-md-9">
-                        <select class="form-control" id="rol" name="rol">
+                        <select class="form-control" id="rol" name="rol" value="{{ old('rol') }}">
                             <option value="0">Seleccionar...</option>
                             <option value="1">Asistente</option>
                             <option value="2">User</option>

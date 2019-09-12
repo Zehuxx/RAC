@@ -17,8 +17,7 @@ class CreateSaleGoalsTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('employee_id')->index('fk_sale_goals_employees1_idx');
 			$table->integer('car_type_id')->index('fk_sale_goals_car_types1_idx');
-			$table->float('commission', 10, 0);
-			$table->float('sale_goal', 10, 0);
+			$table->integer('group_id')->index('fk_sale_goals_groups1_idx');
 			$table->timestamps();
 			$table->softDeletes();
 		});

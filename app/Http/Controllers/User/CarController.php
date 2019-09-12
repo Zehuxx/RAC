@@ -82,6 +82,8 @@ class CarController extends Controller
             $fileName = uniqid("img_", true).".".$image->getClientOriginalExtension();
             Image::make($image)->save( public_path('img/carros/'.$fileName));
             $car->image = $fileName;
+        }else{
+            $car->image ='empty.png';
         }
         $car->car_brand_id = $request->input("marca");
         $car->model_id = $request->input("modelo");

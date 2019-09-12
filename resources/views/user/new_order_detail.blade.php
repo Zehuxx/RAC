@@ -84,6 +84,9 @@
                         	    </span>
                         	@enderror
 						</td>
+						<input type="hidden" name="id_orden" value="{{Route::current()->parameters['id_orden']}}">
+						<input type="hidden" name="id_carro" value="{{Route::current()->parameters['id_carro']}}">
+						<input type="hidden" name="fechamodificada" value="">
 	        	    </tr>
 	        	  </tbody>
 	        	</table>

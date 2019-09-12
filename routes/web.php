@@ -30,7 +30,7 @@ Route::view('/', 'admin/home')->name('admin home');
 Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employes');
 
 Route::post('/empleados/Crear', 'Admin\EmployeesController@store')->name('admin employee add');
-
+ 
 Route::get('empleados/add', 'Admin\EmployeesController@create')->name('admin employes add');
 Route::get('/empleados/editar/{id}', 'Admin\EmployeesController@preEdit')->name('admin employees edit');
 Route::post('/empleados/guardar', 'Admin\EmployeesController@edit');

@@ -50,9 +50,9 @@
 	        	  </tbody>
 	        	</table>
 					<button class='btn  btn-success' id="guardar" type='submit' style='border-radius: 0px;'>Guardar</button>
-					<button class='btn btn-primary' id="cliente" type='button' style='border-radius: 0px;float: right;'> Agregar cliente</button>
+					<a class='btn btn-primary' id="cliente" href="{{route('user clients add')}}"  style='border-radius: 0px;float: right;'> Agregar cliente</a>
 			    	
-				</form> 
+				</form>
 	        </div>
 	    </div>
 	</div>

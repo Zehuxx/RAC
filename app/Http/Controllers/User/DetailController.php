@@ -12,6 +12,7 @@ use App\Models\Model;
 use App\Models\State;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use App\Http\Requests\DetailStoreRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CarStoreRequest;
 use App\Http\Requests\CarUpdateRequest;
@@ -70,67 +71,8 @@ class DetailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id_orden,$id_carro)
+    public function store(DetailStoreRequest $request,$id_orden,$id_carro)
     {
-        //dd($id_carro);
-        $request->request->add(['fechamodificada'=>$request->fechasalida.' '.$request->fechareeingreso.' '.$request->tipomovimiento,'id_carro' => $id_carro.' '.$request->tipomovimiento,'id_orden' => $id_orden]);
-        //dd($request);
-        $today = now()->format('Y-m-d');
-        $rules_carro= [
-            'tipomovimiento'=>'exists:movements,id',
-            'fechasalida'=>'required|after_or_equal:'.$today,
-            'fechamodificada'=>[
-                function($attribute, $value, $fail) {
-                    $value=explode(' ', $value);
-                    $fechasalida=strtotime($value[0]);
-                    $fechareeingreso=strtotime($value[1]);
-                    $tipomovimiento=(int)$value[2];
-                    //2 = ROBO
-                    //4= MANTENIMIENTO
-
-                    if ($tipomovimiento!==2 && $tipomovimiento!==4) {
-                        //dd($fechasalida,$fechareeingreso);
-                        if ($fechasalida>$fechareeingreso) {
-                            return $fail('La fecha de reeingreso debe ser igual o posterior a la fecha de salida');
-                        }
-                    }
-                },
-            ],
-            'id_carro'=>['required',
-                function($attribute, $value, $fail) {
-                    $value=explode(' ', $value);
-                    $idcarro=(int)$value[0];//$value[0]=$id_carro
-                    $idtipo=(int)$value[1];//$value[0]=tipo de movimiento
-                    //EN CASO DE QUE EL MOVIMIENTO SE ENTRADA DEBEMOS PERMITIR EL MOVIMIENTO
-                    //AUNQUE EL CARRO NO ESTE DISPONIBLE 
-                        if($attribute == 'id_carro'){
-                            //4 = ENTRADA
-                            //2 = ROBO
-                            $car = Car::find($idcarro);// SE VERIFICA QUE EL CARRO EXISTA
-                            if ($car!==null) {
-                                if ($idtipo!==4 && $idtipo!==2) {//SE VERIFICA QUE EL CARRO ESTE DISPONIBLE 
-                                                                 //PARA UN MOVIMIENTO   
-                                    $car = Car::where('id','=',$idcarro)->where('state_id','=', 1)->first();
-                                    if($car === null)
-                                        return $fail('Este carro no esta disponible.');
-                                }
-                            }else{
-                                return $fail('Carro no encontrado.');
-                            }
-                        }
-                },
-            ],
-            'id_orden'=>'exists:orders,id',
-        ];
-
-        $messages_carro= [
-            'fechasalida.required'=>"La fecha de salida es obligatoria.",
-            'fechasalida.after_or_equal'=> "La fecha de salida debe ser igual o posterior a la fecha actual",
-            'id_orden.exists'=> "Esa orden no existe",
-            'tipomovimiento.exists'=> "Tipo de movimiento invalido.",
-        ];
-        $this->validate($request, $rules_carro, $messages_carro); 
-
         $detail=new Detail();
         $detail->order_id=$id_orden;
         $detail->car_id=$id_carro;

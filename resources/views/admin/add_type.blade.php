@@ -2,8 +2,9 @@
 
 @section('route')
     <li class="breadcrumb-item">Admin</li>
+    <li class="breadcrumb-item">Tipos</li>
     <li class="breadcrumb-item active">
-        <a href="#">Home</a>
+        <a href="#">Add</a>
     </li>
 @endsection
 
@@ -44,7 +45,7 @@
         </div>
         <div class="card-footer">
             <button class="btn btn-sm btn-primary" type="submit" form="tipos">
-                <i class="fa fa-dot-circle-o"></i> Guardar</button>
+                <i class="fa fa-save"></i> Guardar</button>
             <a class="btn btn-sm btn-danger" href="{{ route('admin types') }}">
                 <i class="fa fa-ban"></i> Cancelar</a>
         </div>

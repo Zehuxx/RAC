@@ -32,9 +32,8 @@
 @endsection
 
 @section('cards')
-<div class='row'>
     <div class="col-lg-12 col-sm-12 col-md-12">
-        <table style="margin-bottom: 10px"> 
+        <table style="margin-bottom: 10px">
             <tr>
                 <td style="text-align: left;">
                     <a class="btn btn-primary btn-add" href="{{route('user home',['orden'=>Route::current()->parameters['id_orden']])}}"></a>
@@ -48,40 +47,56 @@
             </tr>
         </table>
     </div>
-    <div class="col-lg-12 col-sm-12 col-md-12">
-        <table class="table  table-striped table-hover">
-            <tr>
-                <th>Imagen carro</th>
-                <th>Placa</th>
-                <th>Año</th>
-                <th>Ubicación</th>
-                <th>Fecha Salida</th>
-                <th>Fecha Reeingreso</th>
-                <th>Movimiento</th>
-                <th>Acción</th>
-            </tr>
-            @foreach($details as $detail)
-            <tr>
-                <td class="car" style="cursor: pointer;"><img src="{{asset('img/carros/'.$detail->imagen)}}" style="max-width: 100px;max-height: 50px;"></td>
-                <td>{{$detail->placa}}</td>
-                <td>{{date_format(date_create($detail->year),"Y")}}</td>
-                <td>{{$detail->ubicacion}}</td>
-                <td>{{$detail->departure_date}}</td>
-                <td>{{$detail->reentry_date}}</td>
-                <td>{{$detail->movimiento}}</td>
-                <td>
-                    <a class="btn-delete btn btn-danger" data-order="{{Route::current()->parameters['id_orden']}}" data-id="{{$detail->id}}" href="#"></a>
-                    <form method="post" action="{{ route('detail destroy',['id_orden'=>Route::current()->parameters['id_orden'],'id_detalle'=>$detail->id]) }}">
-                    {{--        @csrf--}}
-                    {{--        @method('DELETE')--}}
-                    {{--        <button type="submit" class="btn-delete btn btn-danger"></button>--}}
-                    {{--</form>--}}
-                </td>
-            </tr>
-            @endforeach
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-list"></i> Detalles
+    </div>
+    <div class="card-body">
+        @if(count($details) > 0)
+        <table class="table table-sm table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Imagen carro</th>
+                    <th>Placa</th>
+                    <th>Año</th>
+                    <th>Ubicación</th>
+                    <th>Fecha Salida</th>
+                    <th>Fecha Reeingreso</th>
+                    <th>Movimiento</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($details as $detail)
+                    <tr>
+                        <td class="car" style="cursor: pointer;"><img src="{{asset('img/carros/'.$detail->imagen)}}" style="max-width: 100px;max-height: 50px;"></td>
+                        <td>{{$detail->placa}}</td>
+                        <td>{{date_format(date_create($detail->year),"Y")}}</td>
+                        <td>{{$detail->ubicacion}}</td>
+                        <td>{{$detail->departure_date}}</td>
+                        <td>{{$detail->reentry_date}}</td>
+                        <td>{{$detail->movimiento}}</td>
+                        <td>
+                            <a class="btn-delete btn btn-danger" data-order="{{Route::current()->parameters['id_orden']}}" data-id="{{$detail->id}}" href="#"></a>
+                            <form method="post" action="{{ route('detail destroy',['id_orden'=>Route::current()->parameters['id_orden'],'id_detalle'=>$detail->id]) }}">
+                            {{--        @csrf--}}
+                            {{--        @method('DELETE')--}}
+                            {{--        <button type="submit" class="btn-delete btn btn-danger"></button>--}}
+                            {{--</form>--}}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
         {{ $details->links() }}
+        @else
+            <h3>
+                Agregue un detalle.
+            </h3>
+            <a href=""></a>
+        @endif
     </div>
+</div>
 
 @endsection
 

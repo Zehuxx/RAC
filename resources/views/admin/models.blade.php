@@ -8,17 +8,28 @@
 @endsection
 
 @section('cards')
+
+<table style="margin-bottom: 10px">
+    <tr>
+        <td style="text-align: left;">
+            <a class="btn btn-primary btn-add " href="{{ route('admin models add') }}"></a>
+        </td>
+        <td >
+            <form method="get">
+                <input type="text" id="search" value="{{ isset($search) ? $search : ''}}" autofocus="" name="search" placeholder="Filtrar..." style="width: auto;">
+                <input type="submit" style="display: none" />
+            </form>
+        </td>
+    </tr>
+</table>
+
 <div class="card">
     <div class="card-header">
         <i class="fa fa-car"></i> Modelos
-        <div class="card-header-actions">
-            <a class="card-header-action" href="{{ route('admin models add') }}">
-                <i class="icon-plus"></i>
-            </a>
-        </div>
     </div>
     <div class="card-body">
-        <table class="table table-responsive-sm table-sm table-striped">
+        @if( count($models) > 0 )
+        <table class="table table-responsive-sm table-sm table-hover table-striped">
             <thead>
                 <tr>
                     <th>#</th>
@@ -27,37 +38,33 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($models as $model)
+                @foreach ($models as $model)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $model->name }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
+                                <a class="btn btn-sm btn-outline-success mr-2" href="{{ route('admin models edit', $model->id) }}"  type="submit">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
+
                                 <form method="POST" action="{{ route('admin models delete', $model->id) }}">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-sm btn-outline-danger mr-2" type="submit">
+                                    <button class="btn btn-sm btn-outline-danger" type="submit">
                                         <i class="fa fa-trash-o"></i>
-                                    </button>
-                                </form>
-
-                                <form method="GET" action="{{ route('admin employees edit', $model->id) }}">
-                                    @csrf
-                                    <button class="btn btn-sm btn-outline-primary" type="submit">
-                                        <i class="fa fa-pencil-square-o"></i>
                                     </button>
                                 </form>
                             </div>
                         </td>
                     </tr>
-                @empty
-                    <p>No Hay ningún modelo</p>
-                @endforelse
-
+                @endforeach
             </tbody>
         </table>
-
         {{$models->links()}}
+        @else
+            <h2>No existe ningún modelo</h2>
+        @endif
     </div>
   </div>
 @endsection

@@ -2,7 +2,7 @@
 @section('route')
     <li class="breadcrumb-item">Admin</li>
     <li class="breadcrumb-item active">
-        <a href="#">Home</a>
+        <a href="#">Empleados</a>
     </li>
 @endsection
 
@@ -18,17 +18,17 @@
                         <input type="text" id="search" value="{{ isset($search) ? $search : ''}}" autofocus="" name="search" placeholder="Filtrar..." style="width: auto;">
                         <input type="submit" style="display: none" />
                     </form>
-                </td> 
+                </td>
             </tr>
         </table>
 <div class="card">
     <div class="card-header">
-        <i class="fa fa-align-justify"></i> Empleados
+        <i class="fa fa-user"></i> Empleados
     </div>
-    
+
     <div class="card-body">
-        <br>
-        <table class="table table-striped table-hover">
+        @if( count($employees) > 0 )
+        <table class="table table-responsive-sm table-sm table-striped table-hover">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -39,23 +39,31 @@
             </thead>
             <tbody>
                 @foreach($employees as $employee)
-                  <tr>
-                    <td>{{$employee->nombre.' '.$employee->apellido}}</td>
-                    <td>{{$employee->rol}}</td>
-                    <td>{{$employee->email}}</td>
-                    <td>
-                      <a class="btn-edit btn btn-success" href="{{route('admin employees edit',$employee->id)}}"></a>
-                      <form method="post" style="display: contents;" action="{{route('admin employees delete',$employee->id)}}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"   class="btn-delete btn btn-danger"></ button>
-                      </form>
-                    </td>
-                  </tr>
+                    <tr>
+                        <td>{{$employee->nombre.' '.$employee->apellido}}</td>
+                        <td>{{$employee->rol}}</td>
+                        <td>{{$employee->email}}</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-success mr-2" href="{{route('admin employees edit',$employee->id)}}">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+
+                            <form method="post" style="display: contents;" action="{{route('admin employees delete',$employee->id)}}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"   class="btn btn-sm btn-outline-danger">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
         {{$employees->links()}}
+        @else
+            <h2>No existe ningún empleado registrado</h2>
+        @endif
     </div>
   </div>
 @endsection

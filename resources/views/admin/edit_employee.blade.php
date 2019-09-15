@@ -13,11 +13,11 @@
 <div class="col-md-6 mx-auto">
     <div class="card">
         <div class="card-header">
-            <i class="fa fa-plus"></i>
+            <i class="fa fa-pencil"></i>
             <strong>Editar empleado</strong>
         </div>
         <div class="card-body">
-            <form class="form-horizontal" action="{{route('admin employees update',$employee->id)}}" method="post">
+            <form class="form-horizontal" id="empleado" name="empleado" action="{{route('admin employees update',$employee->id)}}" method="post">
                 @method('PUT')
                 @csrf
                 <div class="form-group row">
@@ -28,7 +28,7 @@
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('nombre') }}</strong>
                         </span>
-                    @enderror  
+                    @enderror
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@
                         </span>
                     @enderror
                     </div>
-                    
+
                 </div>
 
                 <div class="form-group row">
@@ -173,8 +173,13 @@
                     </div>
                     <input type="hidden" name="id" value="{{$employee->id}}">
                 </div>
-                <button class='btn  btn-success' id="guardar" type='submit' style='border-radius: 0px;'>Actualizar</button>
             </form>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-primary" type="submit" form="empleado">
+                <i class="fa fa-save"></i> Guardar</button>
+            <a class="btn btn-sm btn-danger" href="{{ route('admin employees') }}">
+                <i class="fa fa-ban"></i> Cancelar</a>
         </div>
 </div>
 </div>

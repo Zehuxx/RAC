@@ -9,10 +9,10 @@
 @endsection
 
 @section('cards')
-<div class="col-md-6">
+<div class="col-md-6 mx-auto my-5">
     <div class="card">
         <div class="card-header">
-            <i class="fa fa-plus"></i>
+            <i class="fa fa-pencil"></i>
             <strong>Editar tipo</strong>
         </div>
         <div class="card-body">
@@ -46,7 +46,7 @@
         </div>
         <div class="card-footer">
             <button class="btn btn-sm btn-primary" type="submit" form="tipos">
-                <i class="fa fa-dot-circle-o"></i> Guardar Cambios</button>
+                <i class="fa fa-refresh"></i> Actualizar</button>
             <a class="btn btn-sm btn-danger" href="{{ route('admin types') }}">
                 <i class="fa fa-ban"></i> Cancelar</a>
         </div>

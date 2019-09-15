@@ -29,7 +29,7 @@
 
 	        	<table class="table  table-striped table-hover">
 	        	  <tbody>
-	        	<form class="well form-horizontal" method="post" action="{{route('order store')}}">
+	        	<form class="well form-horizontal" id="orden" name="orden" method="post" action="{{route('order store')}}">
 					@csrf
 	        	    <tr>
 	        	    	<th>Cliente</th>
@@ -49,11 +49,18 @@
 	        	    </tr>
 	        	  </tbody>
 	        	</table>
-					<button class='btn  btn-success' id="guardar" type='submit' style='border-radius: 0px;'>Guardar</button>
-					<a class='btn btn-primary' id="cliente" href="{{route('user clients add')}}"  style='border-radius: 0px;float: right;'> Agregar cliente</a>
-			    	
 				</form>
-	        </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn btn-sm btn-primary" type="submit" form="orden">
+                    <i class="fa fa-refresh"></i> Guardar</button>
+                <a class="btn btn-sm btn-danger" href="{{ route('order index') }}">
+                    <i class="fa fa-ban"></i> Cancelar</a>
+                <a class="btn btn-sm btn-success" href="{{ route('user clients add') }}">
+                        <i class="fa fa-user"></i> Nuevo cliente</a>
+            </div>
+
 	    </div>
 	</div>
 </div>

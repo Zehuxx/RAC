@@ -22,13 +22,13 @@ Route::group(['middleware'=>['check.admin.role']], function(){
 
     //RUTAS ADMINS
 
-Route::view('empleados', 'admin/employes')->name('admin employes');
-Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employees');
-Route::get('empleados/agregar', 'Admin\EmployeesController@create')->name('admin employees create');
-Route::post('/empleados/guardar', 'Admin\EmployeesController@store')->name('admin employees store');
-Route::get('/empleados/editar/{id}', 'Admin\EmployeesController@edit')->name('admin employees edit');
-Route::put('/empleados/actualizar/{id}', 'Admin\EmployeesController@update')->name('admin employees update');
-Route::delete('/empleados/borrar/{id}', 'Admin\EmployeesController@destroy')->name('admin employees delete');
+Route::view('admin/empleados', 'admin/employes')->name('admin employes');
+Route::get('admin/empleados', 'Admin\EmployeesController@index')->name('admin employees');
+Route::get('admin/empleados/agregar', 'Admin\EmployeesController@create')->name('admin employees create');
+Route::post('admin/empleados/guardar', 'Admin\EmployeesController@store')->name('admin employees store');
+Route::get('admin/empleados/editar/{id}', 'Admin\EmployeesController@edit')->name('admin employees edit');
+Route::put('admin/empleados/actualizar/{id}', 'Admin\EmployeesController@update')->name('admin employees update');
+Route::delete('admin/empleados/borrar/{id}', 'Admin\EmployeesController@destroy')->name('admin employees delete');
 
 Route::get('admin/modelos', 'Admin\ModelController@index')->name('admin models');
 Route::get('admin/modelos/add', 'Admin\ModelController@create')->name('admin models add');
@@ -55,21 +55,21 @@ Route::delete('admin/marcas/delete/{id}', 'Admin\CarBrandController@destroy')->n
 
 Route::group(['middleware'=>['check.user.role']], function(){
 //RUTAS USERS
-Route::get('/carros', 'User\CarController@index')->name('user home');
-Route::get('/carros/agregar', 'User\CarController@create')->name('car create');
-Route::get('/carros/editar/{id}','User\CarController@edit')->name('car edit');
-Route::post('/carros/guardar', 'User\CarController@store')->name('car store');
-Route::put('/carros/actualizar/{id}', 'User\CarController@update')->name('car update');
-Route::delete('/carros/borrar/{id}', 'User\CarController@destroy')->name('car destroy');
+Route::get('user/carros', 'User\CarController@index')->name('user home');
+Route::get('user/carros/agregar', 'User\CarController@create')->name('car create');
+Route::get('user/carros/editar/{id}','User\CarController@edit')->name('car edit');
+Route::post('user/carros/guardar', 'User\CarController@store')->name('car store');
+Route::put('user/carros/actualizar/{id}', 'User\CarController@update')->name('car update');
+Route::delete('user/carros/borrar/{id}', 'User\CarController@destroy')->name('car destroy');
 
-Route::get('/ordenes', 'User\OrderController@index')->name('order index');
-Route::get('/orden/agregar', 'User\OrderController@create')->name('order create');
-Route::post('/orden/guardar', 'User\OrderController@store')->name('order store');
+Route::get('user/ordenes', 'User\OrderController@index')->name('order index');
+Route::get('user/orden/agregar', 'User\OrderController@create')->name('order create');
+Route::post('user/orden/guardar', 'User\OrderController@store')->name('order store');
 
-Route::get('/orden/{id_orden}/detalles', 'User\DetailController@index')->name('details index');
-Route::get('/orden/{id_orden}/carro/{id_carro}/detalle/agregar', 'User\DetailController@create')->name('detail create');
-Route::post('/orden/{id_orden}/carro/{id_carro}/detalle/guardar', 'User\DetailController@store')->name('detail store');
-Route::delete('/orden/{id_orden}/detalle/{id_detalle}/borrar', 'User\DetailController@destroy')->name('detail destroy');
+Route::get('user/orden/{id_orden}/detalles', 'User\DetailController@index')->name('details index');
+Route::get('user/orden/{id_orden}/carro/{id_carro}/detalle/agregar', 'User\DetailController@create')->name('detail create');
+Route::post('user/orden/{id_orden}/carro/{id_carro}/detalle/guardar', 'User\DetailController@store')->name('detail store');
+Route::delete('user/orden/{id_orden}/detalle/{id_detalle}/borrar', 'User\DetailController@destroy')->name('detail destroy');
 
 
 Route::get('user/clientes', 'User\CustomerController@index')->name('user clients');

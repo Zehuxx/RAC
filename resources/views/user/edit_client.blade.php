@@ -23,12 +23,12 @@
 	<div style="width: 500px; margin: 0 auto;">
 	    <div class="card">
 	    	<div class="card-header">
-	        	<i class="fa fa-plus-circle"></i> Editar cliente
+	        	<i class="fa fa-pencil"></i> Editar cliente
             </div>
 	        <div class="card-body">
 	        	<table class="table  table-striped table-hover">
 	        	  <tbody>
-                  <form class="well form-horizontal" method="post" action="{{ route('user clients update', $client->id) }}">
+                  <form class="well form-horizontal" id="cliente" name="cliente" method="post" action="{{ route('user clients update', $client->id) }}">
                     @csrf
                     @method('put')
 	        	    <tr>
@@ -116,10 +116,16 @@
 	        	    </tr>
 	        	  </tbody>
 	        	</table>
-                    <a class='btn  btn-success' href="{{ route('user clients') }}" style='border-radius: 0px;'>Cancelar</a>
-					<button class='btn btn-primary' id="cliente" type='submit' style='border-radius: 0px;float: right;'> Guardar cambios</button>
 				</form>
-	        </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn btn-sm btn-primary" type="submit" form="cliente">
+                    <i class="fa fa-save"></i> Guardar</button>
+                <a class="btn btn-sm btn-danger" href="{{ route('user clients') }}">
+                    <i class="fa fa-ban"></i> Cancelar</a>
+            </div>
+
 	    </div>
 	</div>
 </div>

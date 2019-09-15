@@ -8,190 +8,158 @@
 @endsection
 
 @section('cards')
-<form class="form-horizontal" action="/empleados/Crear" method="post" enctype="multipart/form-data">    
+<form class="form-horizontal" action="{{route('admin employees store')}}" method="post">    
 <div class="col-md-6 mx-auto">
     <div class="card">
         <div class="card-header">
             <i class="fa fa-plus"></i>
             <strong>Nuevo empleado</strong>
         </div>
-        <div class="card-body">
+        <div class="card-body"> 
             
                 @csrf
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="nombre">Nombre</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" placeholder="{{$holders['name']}}" required>
-                    @if($errors->has('nombre'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('nombre') }}</span>
-                    </div>
-                    @endif    
-                    <span class="help-block">Su nombre</span>
+                    <input class="form-control @error('nombre') is-invalid @enderror" placeholder="Nombre" id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" >
+                    @error('nombre')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('nombre') }}</strong>
+                        </span>
+                    @enderror  
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="apellido">Apellido</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="apellido" type="text" name="apellido" value="{{ old('apellido') }}" placeholder="{{$holders['last']}}" required>
-                    @if($errors->has('apellido'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('apellido') }}</span>
-                    </div>
-                    @endif    
-                    <span class="help-block">Porfavor introduzca su apellido</span>
+                    <input class="form-control @error('apellido') is-invalid @enderror" placeholder="Apellido" id="apellido" type="text" name="apellido" value="{{ old('apellido') }}" >
+                    @error('apellido')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('apellido') }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="identidad">Identidad</label>
                     <div class="col-md-9">
-                    <input class="form-control" id="identidad" type="text" name="identidad" value="{{ old('identidad') }}" placeholder="{{$holders['id']}}" required>
-                    @if($errors->has('identidad'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('identidad') }}</span>
-                    </div>
-                    @endif    
-                    <span class="help-block">Identidad</span>
+                    <input class="form-control @error('identidad') is-invalid @enderror" id="identidad" type="text" name="identidad" value="{{ old('identidad') }}" placeholder="NNNN-NNNN-NNNNN" >
+                    @error('identidad')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('identidad') }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="telefono">Teléfono</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="telefono" type="text" name="telefono" value="{{ old('telefono') }}" placeholder="{{$holders['tel']}}" required>
-                        @if($errors->has('telefono'))
-                        <div class="alert alert-danger">
-                            <span>*{{ $errors->first('telefono') }}</span>
-                        </div>
-                        @endif
-                        <span class="help-block">Teléfono</span>
+                        <input class="form-control @error('telefono') is-invalid @enderror" id="telefono" type="text" name="telefono" value="{{ old('telefono') }}" placeholder="NNNN-NNNN" >
+                    @error('telefono')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('telefono') }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="direccion">Dirección</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="direccion" type="text" name="direccion" value="{{ old('direccion') }}" placeholder="{{$holders['addr']}}" required>
-                        @if($errors->has('direccion'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('direccion') }}</span>
-                    </div>
-                    @endif 
-                        <span class="help-block">Dirección</span>
-
+                        <input class="form-control @error('direccion') is-invalid @enderror" id="direccion" type="text" name="direccion" value="{{ old('direccion') }}" placeholder="ejem. col..." >
+                    @error('direccion')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('direccion') }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="sexo">Sexo</label>
                     <div class="col-md-9">
-                        <select class="form-control" id="sexo" name="sexo" value="{{ old('sexo') }}">
-                            <option value="0">Seleccionar...</option>
-                            <option value="1">M</option>
-                            <option value="2">F</option>
+                        <select class="form-control @error('sexo') is-invalid @enderror" id="sexo" name="sexo" value="{{ old('sexo') }}">
+                            <option value="">Seleccionar sexo</option>
+                            <option value="1" {{old('sexo') == 1 ? 'selected' : ''}}>M</option>
+                            <option value="2" {{old('sexo') == 2 ? 'selected' : ''}}>F</option>
                         </select>
+                        @error('sexo')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('sexo') }}</strong>
+                        </span>
+                    @enderror
                     </div>
-                    @if($errors->has('sexo'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('sexo') }}</span>
-                    </div>
-                    @endif 
+                    
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="fecha-nacimiento">Fecha de nacimiento</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="fecha-nacimiento" type="date" name="fecha-nacimiento" value="{{ old('fecha-nacimiento') }}" placeholder="{{$holders['birthdate']}}" required>
-                        @if($errors->has('fecha-nacimiento'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('fecha-nacimiento') }}</span>
-                    </div>
-                    @endif 
-                        <span class="help-block">Please enter a valid date</span>
+                        <input class="form-control @error('fechan') is-invalid @enderror" id="fechan" type="date" name="fechan" value="{{ old('fechan') }}" >
+                        @error('fechan')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('fechan') }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="rol">Rol</label>
                     <div class="col-md-9">
-                        <select class="form-control" id="rol" name="rol" value="{{ old('rol') }}">
-                            <option value="0">Seleccionar...</option>
-                            <option value="1">Asistente</option>
-                            <option value="2">User</option>
-                            <option value="3">Admin</option>
+                        <select class="form-control @error('rol') is-invalid @enderror" id="rol" name="rol">
+                            <option value="">Seleccionar rol</option>
+                            <option value="1" {{old('rol') == 1 ? 'selected' : ''}}>Admin</option>
+                            <option value="2" {{old('rol') == 2 ? 'selected' : ''}}>User</option>
                         </select>
+                        @error('rol')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('rol') }}</strong>
+                        </span>
+                    @enderror
                     </div>
-                    @if($errors->has('rol'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('rol') }}</span>
-                    </div>
-                    @endif 
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="salario">Salario</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="salario" type="text" name="salario" value="{{ old('salario') }}" placeholder="{{$holders['salary']}}" required>
-                        <span class="help-block">Salario</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="container">
-                        <p>Datos vendedor (Solo para empleados vendedores)</p>
-                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Datos vendedor</button>
-                        <br>
-                        <div id="demo" class="collapse">
-
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="comision">Comision</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" id="comision" type="text" name="comision" value="{{ old('comision') }}" placeholder="{{$holders['commission']}}">
-                                    <span class="help-block">Comision</span>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="meta">Meta</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" id="meta" type="text" name="meta" value="{{ old('meta') }}" placeholder="{{$holders['goal']}}">
-                                    <span class="help-block">Meta</span>
-                                </div>
-                            </div>
-                        </div>
+                    <input class="form-control @error('salario') is-invalid @enderror" id="salario" type="text" name="salario" value="{{ old('salario') }}" >
+                    @error('salario')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('salario') }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
                 <br>
                 <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="Email">Email</label>
+                    <label class="col-md-3 col-form-label" for="Email">Correo</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="Email" type="email" name="Email" value="{{ old('Email') }}" placeholder="{{$holders['email']}}" required>
-                        <span class="help-block">Correo electronico</span>
+                        <input class="form-control @error('email') is-invalid @enderror" placeholder="name@nnn.nnn" id="email" type="email" name="email" value="{{ old('email') }}" required="">
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="password">Password</label>
+                    <label class="col-md-3 col-form-label" for="password">Contraseña</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="password" type="password" name="password" placeholder="" required>
-                        @if($errors->has('password'))
-                    <div class="alert alert-danger">
-                        <span>*{{ $errors->first('password') }}</span>
-                    </div>
-                    @endif 
-                        <span class="help-block">Please enter a complex password</span>
+                        <input class="form-control @error('password') is-invalid @enderror" id="password" type="password" name="password" value="{{ old('password') }}" required="">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="card-footer">
-            <button class="btn btn-sm btn-primary" type="submit">
-                <i class="fa fa-dot-circle-o"></i> Submit</button>
-            <button class="btn btn-sm btn-danger" type="reset">
-                <i class="fa fa-ban"></i> Reset</button>
-        </div>
-    </div>
+                <button class='btn  btn-success' id="guardar" type='submit' style='border-radius: 0px;'>Guardar</button>
+     </div>
 </div>
 </form>
 @endsection

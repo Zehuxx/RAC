@@ -22,18 +22,12 @@ Route::group(['middleware'=>['check.admin.role']], function(){
 
     //RUTAS ADMINS
 
-Route::view('/admin', 'admin/home')->name('admin home');
 Route::view('empleados', 'admin/employes')->name('admin employes');
-
-Route::view('/', 'admin/home')->name('admin home');
-
-Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employes');
-
-Route::post('/empleados/Crear', 'Admin\EmployeesController@store')->name('admin employee add');
- 
-Route::get('empleados/add', 'Admin\EmployeesController@create')->name('admin employes add');
-Route::get('/empleados/editar/{id}', 'Admin\EmployeesController@preEdit')->name('admin employees edit');
-Route::post('/empleados/guardar', 'Admin\EmployeesController@edit');
+Route::get('/empleados', 'Admin\EmployeesController@index')->name('admin employees');
+Route::get('empleados/agregar', 'Admin\EmployeesController@create')->name('admin employees create');
+Route::post('/empleados/guardar', 'Admin\EmployeesController@store')->name('admin employees store');
+Route::get('/empleados/editar/{id}', 'Admin\EmployeesController@edit')->name('admin employees edit');
+Route::put('/empleados/actualizar/{id}', 'Admin\EmployeesController@update')->name('admin employees update');
 Route::delete('/empleados/borrar/{id}', 'Admin\EmployeesController@destroy')->name('admin employees delete');
 
 Route::get('admin/modelos', 'Admin\ModelController@index')->name('admin models');

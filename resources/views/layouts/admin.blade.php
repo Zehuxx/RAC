@@ -3,7 +3,7 @@
 @section('sidebar elements')
     <li class="nav-title">Bienvenido</li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin employes') }}">
+        <a class="nav-link" href="{{ route('admin employees') }}">
             <i class="nav-icon icon-people"></i> Empleados</a>
     </li>
     <li class="nav-item">

@@ -1,31 +1,4 @@
 @extends('layouts.admin')
-
-@if (session('status')=='created')
-<script>
-    function myFunction() {
-      alert("Empleado creado");
-    }
-
-    myFunction();
-    </script>
-@elseif (session('status')=='deleted')
-<script>
-    function myFunction() {
-      alert("Empleado eliminado");
-    }
-
-    myFunction();
-  </script>
-  @elseif (session('status')=='edited')
-  <script>
-      function myFunction() {
-        alert("Empleado editado");
-      }
-  
-      myFunction();
-    </script>
-@endif
-
 @section('route')
     <li class="breadcrumb-item">Admin</li>
     <li class="breadcrumb-item active">
@@ -34,63 +7,52 @@
 @endsection
 
 @section('cards')
+
+    <table style="margin-bottom: 10px">
+            <tr>
+                <td style="text-align: left;">
+                    <a class="btn btn-primary btn-add" href="{{ route('admin employees create') }}"></a>
+                </td>
+                <td >
+                    <form method="get">
+                        <input type="text" id="search" value="{{ isset($search) ? $search : ''}}" autofocus="" name="search" placeholder="Filtrar..." style="width: auto;">
+                        <input type="submit" style="display: none" />
+                    </form>
+                </td> 
+            </tr>
+        </table>
 <div class="card">
     <div class="card-header">
         <i class="fa fa-align-justify"></i> Empleados
-        <div class="card-header-actions">
-            <a class="card-header-action btn-setting" href="{{ route('admin employes add') }}">
-                <i class="icon-plus"></i>
-            </a>
-        </div>
     </div>
+    
     <div class="card-body">
         <br>
-        <table class="table table-responsive-sm table-bordered">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
                     <th>Rol</th>
-                    <th>Comision</th>
-                    <th>Meta</th>
-                    <th>Opciones</th>
+                    <th>email</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
-                
-                  @foreach ($employees as $emp)
+                @foreach($employees as $employee)
                   <tr>
-                  <td>{{$emp->id}}</td>
-                  <td>{{$emp->name}}</td>
-                  <td>{{$emp->last_name}}</td>
-                  <td>{{$emp->rl}}</td>
-                  <td>{{$emp->cm}}</td>
-                  <td>{{$emp->sg}}</td>
-                  <td>
-                      <span class="badge badge-success">Active</span>
-
-                      <form action="{{ route('admin employees edit', $emp->id) }} method="get">
+                    <td>{{$employee->nombre.' '.$employee->apellido}}</td>
+                    <td>{{$employee->rol}}</td>
+                    <td>{{$employee->email}}</td>
+                    <td>
+                      <a class="btn-edit btn btn-success" href="{{route('admin employees edit',$employee->id)}}"></a>
+                      <form method="post" style="display: contents;" action="{{route('admin employees delete',$employee->id)}}">
                         @csrf
-                        <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
-                        <button class="btn btn-sm btn-outline-primary" type="submit">
-                          <i class="fa fa-pencil-square-o"></i>
-                      </button>
-                  </form>
-
-                      <form action="{{ route('admin employees delete', $emp->id) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <input type="hidden" id="empId" name="empId" value="{{$emp->id}}">
-                      <button class="btn btn-sm btn-outline-danger mr-2" type="submit">
-                        <i class="fa fa-trash-o"></i>
-                    </button>
-                    
+                        @method('DELETE')
+                        <button type="submit"   class="btn-delete btn btn-danger"></ button>
                       </form>
-                  </td> 
-                </tr>
-                  @endforeach
-                
+                    </td>
+                  </tr>
+                @endforeach
             </tbody>
         </table>
         {{$employees->links()}}

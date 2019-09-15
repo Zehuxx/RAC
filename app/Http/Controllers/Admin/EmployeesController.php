@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\EmployeeStoreRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 use App\Http\Controllers\Controller;
-use App\Models;
+use App\Models\Employee;
+use App\Models\Person;
+use App\Models\User;
 use Illuminate\Support\Facades\Input;
 
 class EmployeesController extends Controller
@@ -16,136 +21,90 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+     public function index(Request $request)
     {
-        return view('admin/add_employe')->with('holders',['name'=>'nombre', 'last'=>'apellido','id'=>'NNNN-NNNN-NNNNN','tel'=>'NNNN-NNNN','addr'=>'ej. Col.', 'birthdate'=>'date','salary'=>'NNNNN','commission'=>'NN','goal'=>'NNNN','email'=>'email']);
-    }
-    /**   
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $employees=\App\Models\Employee::select('employees.*','users.*','persons.*','roles.name as rl','sale_goals.commission as cm','sale_goals.sale_goal as sg')
-        ->join('users','users.id','=','employees.id')
-        ->join('persons','persons.id','=','employees.id')
-        ->join('roles','users.role_id','=','roles.id')
-        ->join('sale_goals','sale_goals.employee_id','=','employees.id')
+        $search = $request->input('search');
+        $employees=DB::table('employees as a')
+        ->select('a.id as id','c.name as nombre','c.last_name as apellido','b.email as email','d.name as rol')
+        ->join('users as b','a.id','=','b.id')
+        ->join('persons as c','a.id','=','c.id')
+        ->join('roles as d','b.role_id','=','d.id')
+        ->whereNull('a.deleted_at')
+        ->where(function($q)use($search){
+                $q->where('c.name','like','%'.$search.'%')
+                ->orWhere('c.last_name','like','%'.$search.'%')
+                ->orWhere('b.email','like','%'.$search.'%')
+                ->orWhere('d.name','like','%'.$search.'%');
+            })
+        //->toSql();
         ->paginate(10);
-
+        //return dd($employees);
         return view('admin/employes')
         ->with('employees', $employees);
     }
 
   
 
+
+
+
+    public function create()
+    {
+        return view('admin/add_employe');
+    }
+   
        /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeStoreRequest $request)
     {
-        $request->validate([
-            'nombre'=>'required',
-            'apellido'=> 'required',
-            'identidad'=>array('required','unique:persons,identification_card','regex:/(^[01][0-8][0-9]{2}-((19)[4-9][0-9]|(20)[0-9]{2})-[0-9]{5}$)/u'),
-            'telefono'=>array('required','regex:/(^[0-9]{4}-[0-9]{4}$)/u'),
-            'direccion'=>'required|alpha',
-            'sexo'=>'required|numeric',
-            'fecha-nacimiento'=>'required|date',
-            'salario'=>'numeric',
-            'comision'=>'numeric',
-            'rol'=>'required|numeric',
-            'meta'=>'numeric',
-            'Email'=>'required|e-mail',
-            'password'=>'required|min:8'
-        ]);
-
         
-        $pers=new \App\Models\Person;
-        $pers->name=Input::get('nombre');
-        $pers->last_name=Input::get('apellido');
-        $pers->identification_card=Input::get('identidad');
-        $pers->phone=Input::get('telefono');
-        $pers->home_address=Input::get('direccion');
-        $pers->gender=Input::get('sexo');
-        $pers->birth_date=Input::get('fecha-nacimiento');
+        $pers=new Person();
+        $pers->name= $request->input('nombre');
+        $pers->last_name= $request->input('apellido');
+        $pers->identification_card= $request->input('identidad');
+        $pers->phone= $request->input('telefono');
+        $pers->home_address= $request->input('direccion');
+        if ($request->input('sexo')==1) {
+            $pers->gender= 'M';
+        }else{
+            $pers->gender= 'F';
+        }
+        $pers->birth_date= $request->input('fechan');
         $pers->save();
 
-        $id=\App\Models\Person::where('identification_card',$pers->identification_card)->first();
+        $id=$pers->id;
 
-        $emp=new \App\Models\Employee;
-        $emp->id=$id->id;
-        $emp->salary=Input::get('salario');
+        $emp=new Employee();
+        $emp->id=$id;
+        $emp->salary=$request->input('salario');
         $emp->save();
 
-        $usr=new \App\Models\User;
-        $usr->id=$id->id;
-        $usr->email=Input::get('Email');
-        $usr->password=bcrypt(Input::get('password'));
-        $usr->role_id=Input::get('rol');
+        $usr=new User();
+        $usr->id=$id;
+        $usr->email=$request->input('email');
+        $usr->password=bcrypt($request->input('password'));
+        $usr->role_id=$request->input('rol');
         $usr->save();
 
-        $sg=new \App\Models\SaleGoal;
-        $sg->employee_id=$id->id;
-        $sg->commission=Input::get('comision');
-        $sg->sale_goal=Input::get('meta');
-        $sg->car_type_id=1;
-        $sg->save();
-        
-        return redirect('/empleados')->with('status','created');
+        return redirect()->route('admin employees')->with('status','created');
     }
 
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $id=Input::get('id');
-
-        $request->validate([
-            'nombre'=>'required',
-            'apellido'=> 'required',
-            'identidad'=>array('required','unique:persons,identification_card','regex:/(^[01][0-8][0-9]{2}-((19)[4-9][0-9]|(20)[0-9]{2})-[0-9]{5}$)/u'),
-            'telefono'=>array('required','regex:/(^[0-9]{4}-[0-9]{4}$)/u'),
-            'direccion'=>'required|alpha',
-            'sexo'=>'required|numeric',
-            'fecha-nacimiento'=>'required|date',
-            'salario'=>'numeric',
-            'comision'=>'numeric',
-            'rol'=>'required|numeric',
-            'meta'=>'numeric',
-            'Email'=>'required|e-mail',
-            'password'=>'required|min:8'
-        ]);
-
-        $pers=\App\Models\Person::where('id',$id)->first();
-        $pers->name=Input::get('nombre');
-        $pers->last_name=Input::get('apellido');
-        $pers->identification_card=Input::get('identidad');
-        $pers->phone=Input::get('telefono');
-        $pers->home_address=Input::get('direccion');
-        $pers->gender=Input::get('sexo');
-        $pers->birth_date=Input::get('fecha-nacimiento');
-        $pers->save();
-
-        $emp=\App\Models\Employee::where('id',$id)->first();
-        $emp->salary=Input::get('salario');
-        $emp->save();
-
-        $usr=\App\Models\User::where('id',$id)->first();
-        $usr->email=Input::get('Email');
-        $usr->password=bcrypt(Input::get('password'));
-        $usr->role_id=Input::get('rol');
-        $usr->save();
-
-        $sg=\App\Models\SaleGoal::where('employee_id',$id)->first();
-        $sg->commission=Input::get('comision');
-        $sg->sale_goal=Input::get('meta');
-        $sg->car_type_id=1;
-        $sg->save();
-
-        return redirect('/empleados')->with('status','edited');
+        $employee=DB::table('employees as a')
+        ->select('a.id as id','a.salary as salario','c.*','b.email as email','b.role_id as rol')
+        ->join('users as b','a.id','=','b.id')
+        ->join('persons as c','a.id','=','c.id')
+        ->join('roles as d','b.role_id','=','d.id')
+        ->whereNull('a.deleted_at')
+        ->where('a.id','=',$id)
+        ->first();
+        //return dd($employee);
+        return view('admin.edit_employee',compact('employee'));
     }
 
     /**
@@ -159,37 +118,37 @@ class EmployeesController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function preEdit($id)
-    {
-        //$id=Input::get('empId');
+    public function update(EmployeeUpdateRequest $request, $id)
+    {   
+            $pers=Person::find($id);
+            $pers->name= $request->input('nombre');
+            $pers->last_name= $request->input('apellido');
+            $pers->identification_card= $request->input('identidad');
+            $pers->phone= $request->input('telefono');
+            $pers->home_address= $request->input('direccion');
 
-        $pers=\App\Models\Person::where('id', $id)->first();
-        $emp=\App\Models\employee::where('id', $id)->first();
-        $usr=\App\Models\user::where('id',$id)->first();
-        $sg=\App\Models\SaleGoal::where('employee_id',$id)->first();
+            if ($request->input('sexo')==1) {
+                $pers->gender= 'M';
+            }else{
+                $pers->gender= 'F';
+            }
 
-        //return $id;
+            $pers->birth_date= $request->input('fechan');
+            $pers->save();
 
-        return view('admin/edit_employee')
-        ->with('holders',['id'=>$id,'name'=>$pers->name, 'last'=>$pers->last_name, 'id_card'=>$pers->identification_card, 'tel'=>$pers->phone, 'addr'=>$pers->home_address, 'birthdate'=>$pers->birth_date, 'salary'=>$emp->salary, 'commission'=>$sg->commission, 'goal'=>$sg->sale_goal, 'email'=>$usr->email]);
-    }
+            $emp=Employee::find($id);
+            $emp->salary=$request->input('salario');
+            $emp->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+            $user=User::find($id);
+            $user->email=$request->input('email');
+            if ($request->input('password')) {
+                $user->password=bcrypt($request->input('password'));
+            }
+            $user->role_id=$request->input('rol');
+            $user->save();
+
+            return redirect()->route('admin employees');
     }
 
     /**
@@ -200,21 +159,18 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        $pers=\App\Models\Person::where('id',$id)->first();
+        $pers=Person::find($id);
         $pers->delete();
 
-        $emp=\App\Models\Employee::where('id', $id)->first();
+        $emp=Employee::find($id);
         $emp->delete();
 
-        $usr=\App\Models\User::where('id', $id)->first();
+        $usr=User::find($id);
         $usr->delete();
 
-        $sg=\App\Models\SaleGoal::where('employee_id', $id);
-        foreach ($sg as $s) {
-            $s->delete();
+        if ((int)Auth::user()->id===(int)$id) {
+               return redirect()->route('logout');
         }
-
-        return redirect('/empleados')->with('status','deleted');
-        //return "destroy: ".Input::get('empId');
+        return redirect()->route('admin employees');
     }
 }

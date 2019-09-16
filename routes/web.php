@@ -18,6 +18,7 @@ Route::get('/','HomeController@index')->name('root');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
+
 Route::group(['middleware'=>['check.admin.role']], function(){
 
     //RUTAS ADMINS

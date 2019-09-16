@@ -7,6 +7,10 @@
 
 namespace App\Models;
 
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
@@ -27,8 +31,9 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  *
  * @package App\Models
  */
-class User extends Eloquent
+class User extends Authenticatable
 {
+	use HasApiTokens, Notifiable;
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 	public $incrementing = false;
 
@@ -47,6 +52,7 @@ class User extends Eloquent
 	];
 
 	protected $fillable = [
+		'id',
 		'role_id',
 		'email',
 		'email_verified_at',

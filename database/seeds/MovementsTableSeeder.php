@@ -20,7 +20,7 @@ class MovementsTableSeeder extends Seeder
         ]);
         DB::table('movements')->insert([
             'id'=>3,
-            'name'=>'SALIDA',
+            'name'=>'ARRENDAMIENTO',
         ]);
         DB::table('movements')->insert([
             'id'=>4,

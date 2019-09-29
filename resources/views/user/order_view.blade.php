@@ -15,7 +15,7 @@
 @endsection
 
 @section('cards')
-<div class="col-lg-12 col-sm-12 col-md-12">
+<div class="col-lg-12 col-sm-12 col-md-12" style="padding-left: 0px;padding-right: 0px">
     <table style="margin-bottom: 10px">
         <tr>
             <td style="text-align: left;">

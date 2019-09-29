@@ -17,20 +17,8 @@
                 <img class="img-avatar" src="{{asset('img/avatars/6.jpg')}}" alt="admin@bootstrapmaster.com">
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-header text-center">
-                <strong>Account</strong>
-                </div>
                 <a class="dropdown-item" href="#">
-                    <i class="fa fa-bell-o"></i> Updates
-                    <span class="badge badge-info">42</span>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-envelope-o"></i> Messages
-                    <span class="badge badge-success">42</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-shield"></i> Lock Account
+                    <i class="nav-icon icon-people"></i>{{Auth::user()->employee->person->name.' '.Auth::user()->employee->person->last_name}}
                 </a>
                 <a class="dropdown-item" href="{{ route('logout') }}">
                     <i class="fa fa-lock"></i> Logout

@@ -15,7 +15,7 @@ class DetailStoreRequest extends FormRequest
 
     public function rules(Request $request)
     {
-        $today = now()->format('Y-m-d');
+        $today = now()->format('Y-m-d H:i');
         return [
             'tipomovimiento'=>'exists:movements,id',
             'fechasalida'=>'required|after_or_equal:'.$today,
@@ -24,10 +24,9 @@ class DetailStoreRequest extends FormRequest
                     $fechasalida=strtotime($this->fechasalida);
                     $fechareeingreso=strtotime($this->fechareeingreso);
                     $tipomovimiento=(int)$this->tipomovimiento;
-                    //2 = ROBO
-                    //4= MANTENIMIENTO
-
-                    if ($tipomovimiento!==2 && $tipomovimiento!==4) {
+                    //3 = ARRENDAMIENTO
+                    // SI ES MOVIMIENTO DE ARRENDAMIENTOES NECESARIO UNA FECHA DE REEINGRESO Y TAMBIEN ESTA DEBE SER MAYOR AL LA FECHA EN QUE SE HIZO EL DETALLE
+                    if ($tipomovimiento===3) {
                         //dd($fechasalida,$fechareeingreso);
                         if ($fechasalida>$fechareeingreso) {
                             return $fail('La fecha de reeingreso debe ser igual o posterior a la fecha de salida');
@@ -40,7 +39,7 @@ class DetailStoreRequest extends FormRequest
 
                     $idcarro=(int)$this->id_carro;
                     $idtipo=(int)$this->tipomovimiento;
-                    //EN CASO DE QUE EL MOVIMIENTO SE ENTRADA DEBEMOS PERMITIR EL MOVIMIENTO
+                    //EN CASO DE QUE EL MOVIMIENTO SEA ENTRADA DEBEMOS PERMITIR EL MOVIMIENTO
                     //AUNQUE EL CARRO NO ESTE DISPONIBLE 
                         if($attribute == 'id_carro'){
                             //4 = ENTRADA

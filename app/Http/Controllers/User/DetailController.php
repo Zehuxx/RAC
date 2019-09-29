@@ -73,6 +73,8 @@ class DetailController extends Controller
      */
     public function store(DetailStoreRequest $request,$id_orden,$id_carro)
     {
+        $request->fechasalida=date_format(date_create($request->fechasalida),'Y-m-d H:i:s');
+        $request->fechareeingreso=date_format(date_create($request->fechareeingreso),'Y-m-d H:i:s');
         $detail=new Detail();
         $detail->order_id=$id_orden;
         $detail->car_id=$id_carro;
@@ -109,13 +111,27 @@ class DetailController extends Controller
                     return redirect()->route('details index',$id_orden);
                 }
                 break;
-            case 3://SALIDA
+            case 3://ARRENDAMIENTO
                 $location=Location::find($carro->location_id);
                 if ($location===null) {
                     return redirect()->back()->withErrors(["ubicacion"=>"El carro no cuenta con una ubicacion"]);
                 }
-                $location->availability=1;
-                $location->save();
+                //SI LA FECHA DEL ARRENDAMIENTO ES EL DIA ACTUAL INMEDIATAMENTE SE LIBERA
+                //LA UBICACION DEL VEHICULO DE LO CONTRARIO SE CREA UN EVENTO QUE 
+                //LIBERARA LA LA UBICACION EL DIA DEL ARRENDAMIENTO
+
+                if (date_format(date_create($request->fechasalida),'Y-m-d') === now()->format('Y-m-d')) {
+                    $location->availability=1;
+                    $location->save();
+                }else{
+                     DB::unprepared('
+                    CREATE EVENT '.str_replace('.','_',uniqid("ARRENDAMIENTO_", true)).'
+                    ON SCHEDULE AT \''.$request->fechasalida.'\'
+                    DO
+                      UPDATE rac.locations SET availability=1 WHERE id='.$location->id.';
+                    ');
+                }
+                
                 $carro->state_id=2;
                 $detail->save();
                 $carro->save();
@@ -125,7 +141,7 @@ class DetailController extends Controller
                 if ($location!==null) {
                     $location->availability=0;
                     $location->save();
-                }else{
+                }else{ 
                     return redirect()->back()->withErrors(["ubicacion"=>"No hay espacio disponible para alojar mas vehiculos"]);
                 }
                 $detail->save();

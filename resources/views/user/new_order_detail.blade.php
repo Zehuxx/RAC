@@ -66,7 +66,7 @@
 	        	    <tr>
 	        	    	<th>Fecha Salida</th>
 	        	    	<td>
-	        	    		<input type="date" class="form-control @error('fechasalida') is-invalid @enderror" name="fechasalida" value="{{old("fechasalida")}}">
+	        	    		<input type="datetime-local" class="form-control @error('fechasalida') is-invalid @enderror" name="fechasalida" value="{{old("fechasalida")}}">
 							@error('fechasalida')
                         	    <span class="invalid-feedback" role="alert">
                         	        <strong>{{ $errors->first('fechasalida') }}</strong>
@@ -77,7 +77,7 @@
 	        	    <tr>
 	        	    	<th>Fecha Reeingreso</th>
 	        	    	<td>
-	        	    		<input type="date" class="form-control @error('fechamodificada') is-invalid @enderror" name="fechareeingreso" value="{{old("fechareeingreso")}}">
+	        	    		<input type="datetime-local" class="form-control @error('fechamodificada') is-invalid @enderror" name="fechareeingreso" value="{{old("fechareeingreso")}}">
 							@error('fechamodificada')
                         	    <span class="invalid-feedback" style="display: block;" role="alert">
                         	        <strong>{{ $errors->first('fechamodificada') }}</strong>

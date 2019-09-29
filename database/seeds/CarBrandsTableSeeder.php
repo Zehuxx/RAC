@@ -18,5 +18,13 @@ class CarBrandsTableSeeder extends Seeder
             'id'=>2,
             'name'=>'KIA',
         ]);
+        DB::table('car_brands')->insert([
+            'id'=>3,
+            'name'=>'FORD',
+        ]);
+        DB::table('car_brands')->insert([
+            'id'=>4,
+            'name'=>'NISSAN',
+        ]);
     }
 }

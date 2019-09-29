@@ -31,24 +31,29 @@
 	  		<div class='card-header'
 	  		{{$mov=""}}
 	  		@if($car->detail_state!==null)
-	  			{{$mov="I"}}
+	  			{{$mov=" Indefinido"}}
 	  			style="background-color: #d88839" 
 	  		@else
-	  			@if($car->movement_id==1)
-	  				{{$mov="M"}}
-	  			 	style="background-color: #4ac7c6" 
-	  			@elseif($car->movement_id==2)
-	  				{{$mov="R"}}
-	  				style="background-color: #d25b5b" 
-	  			@elseif($car->movement_id==3)
-	  				{{$mov="S"}}
-	  				style="background-color: #e8dd69" 
-	  			@elseif($car->movement_id==4)
-	  				{{$mov="E"}}
-	  				style="background-color: #6fce7e" 
+	  			@if($car->reserved===null) 
+	  				@if($car->movement_id==1)
+	  					{{$mov=" Mantenimiento"}}
+	  				 	style="background-color: #4ac7c6" 
+	  				@elseif($car->movement_id==2)
+	  					{{$mov=" Robo"}}
+	  					style="background-color: #d25b5b" 
+	  				@elseif($car->movement_id==3)
+	  					{{$mov=" Arrendamiento"}}
+	  					style="background-color: #e8dd69" 
+	  				@elseif($car->movement_id==4)
+	  					{{$mov=" Entrada"}}
+	  					style="background-color: #6fce7e" 
+	  				@else
+	  					{{$mov=" Indefinido"}}
+	  					style="background-color: #d88839" 
+	  				@endif
 	  			@else
-	  				{{$mov="I"}}
-	  				style="background-color: #d88839" 
+	  				{{$mov=" Reservado"}}
+	  				style="background-color: #ac94da" 
 	  			@endif
 	  		@endif
 

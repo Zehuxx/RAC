@@ -1,21 +1,6 @@
-$("#editar").on("click",function(){
-	$("#guardar").show();
-    $("#marca").prop("disabled",false);
-    $("#modelo").prop("disabled",false);
-    $("#chasis").prop("disabled",false);
-    $("#placa").prop("disabled",false);
-    $("#tipo").prop("disabled",false);
-    $("#estado").prop("disabled",false);
-    $('#year').removeAttr('disabled');
-    $("#ubicacion").prop("disabled",false);
-    $('#imagen').removeAttr('disabled');
-});
-
-
-    $(".table tr").click(function(event) {
-      //console.log(event.target.className);
+ $(".table tr").click(function(event) {
         if (event.target.className == "btn btn-sm btn-outline-danger" || event.target.className == "fa fa-trash-o") {
-            
+            //console.log(event.target.className);
             const swalWithBootstrapButtons = Swal.mixin({
               customClass: {
                 confirmButton: 'btn btn-success',
@@ -36,18 +21,16 @@ $("#editar").on("click",function(){
               if (result.value) {
                 var token = $("meta[name='csrf-token']").attr("content");
                 if (event.target.className == "fa fa-trash-o") {
-                  var id_detalle=$(event.target.parentNode).attr("data-id");
-                  var id_orden=$(event.target.parentNode).attr("data-order");
+                  var id_orden=$(event.target.parentNode).attr("order-id");
                 }else{
-                  var id_detalle=$(event.target).attr("data-id");
-                  var id_orden=$(event.target).attr("data-order");
+                  var id_orden=$(event.target).attr("order-id");
                 }
                 var element=$(this);
                 //console.log(id_detalle,id_orden);
                 $.ajax({
-                url:"detalle/"+id_detalle+"/borrar",
+                url:"orden/"+id_orden+"/borrar",
                 method:"DELETE",
-                data:{"id_orden": id_orden,"id_detalle": id_detalle,"_token":token },
+                data:{"id_orden": id_orden,"_token":token },
                 success:function(d){
                   console.log(d);
                   element.fadeOut();
@@ -73,5 +56,3 @@ $("#editar").on("click",function(){
         }
 
     }); 
-
-

@@ -123,9 +123,65 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_orden)
     {
-        $car = Car::find($id);
-        $car->delete();
+        $detalles=Detail::where('order_id',$id_orden)
+                        ->get();
+        foreach ($detalles as $detalle) {
+            //LUEGO SE BUSCA EL ULTIMO MOVIMIENTO DONDE ESTA INVOLUCRADO 
+            //EL CARRO QUE PERTENECE AL DETALLE A ELIMINAR
+            $last_detail=Detail::where('car_id',$detalle->car_id)
+                               ->orderBy('created_at','desc')->first();
+            //dd($last_detail);
+            if ($detalle->id===$last_detail->id) {
+                $location=location::where('availability',1)->first();
+                $carro=Car::find($detalle->car_id);
+                switch ($detalle->movement_id) {
+                    case 1://mantenimiento
+                        $carro->state_id=2;
+                        $carro->location_id=null;
+                        $carro->save();
+                        $detalle->delete();
+                        break;
+                    case 2://robo
+                        $carro->location_id=null;
+                        $carro->save();
+                        $detalle->delete();
+                        break;
+                    case 3://arrendamiento
+                        if ($carro->reserved!==null) {
+                            DB::unprepared('DROP EVENT IF EXISTS '.$carro->reserved);
+                            $carro->reserved=null;
+                            $location=location::find($carro->location_id);
+                            $location->availability=1;
+                            $location->save();
+                        }
+                        $carro->location_id=null;
+                        $detalle->delete();
+                        $carro->save();
+                        break;
+                    case 4://entrada
+                        if ($carro->location_id!==null) {
+                            $location=location::find($carro->location_id);
+                            $location->availability=1;
+                            $location->save();
+                            $carro->location_id=null;
+                        }
+
+                        $carro->state_id=2;
+                        $carro->save();
+                        $detalle->delete();
+                        break;
+                    default:
+                        //
+                        break;
+                }
+            }else{
+                $detalle->delete();
+            }
+        }
+        $orden=Order::find($id_orden);
+        $orden->delete();
+        return "yes";
     }
 }

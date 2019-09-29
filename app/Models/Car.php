@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Sat, 14 Sep 2019 03:56:06 +0000.
+ * Date: Sun, 29 Sep 2019 21:59:52 +0000.
  */
 
 namespace App\Models;
@@ -18,6 +18,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $model_id
  * @property int $car_type_id
  * @property int $location_id
+ * @property string $reserved
  * @property string $chassis
  * @property string $license_plate
  * @property \Carbon\Carbon $year
@@ -57,6 +58,7 @@ class Car extends Eloquent
 		'model_id',
 		'car_type_id',
 		'location_id',
+		'reserved',
 		'chassis',
 		'license_plate',
 		'year',

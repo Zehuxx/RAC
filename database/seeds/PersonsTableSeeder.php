@@ -16,9 +16,9 @@ class PersonsTableSeeder extends Seeder
                'name'=>'admin',
                'last_name'=>'lopez',
                'birth_date'=>Carbon::parse('2000-01-01'),
-               'home_address'=>'tegus',
-               'phone'=>'98746373',
-               'identification_card'=>'tarjeta de identidad',
+               'home_address'=>'Amapala',
+               'phone'=>'9874-6373',
+               'identification_card'=>'0304-1998-00231',
                'gender'=>'M',
            ]);
         DB::table('persons')->insert([
@@ -26,9 +26,9 @@ class PersonsTableSeeder extends Seeder
             'name'=>'user',
             'last_name'=>'perez',
             'birth_date'=>Carbon::parse('2000-01-01'),
-            'home_address'=>'tegus',
-            'phone'=>'98746373',
-            'identification_card'=>'tarjeta de identidad',
+            'home_address'=>'Tegucigalpa',
+            'phone'=>'9874-6373',
+            'identification_card'=>'0801-1998-00211',
             'gender'=>'M',
         ]);
         DB::table('persons')->insert([
@@ -37,8 +37,8 @@ class PersonsTableSeeder extends Seeder
             'last_name'=>'Soler',
             'birth_date'=>Carbon::parse('2019-09-11'),
             'home_address'=>'Esquias',
-            'phone'=>'98374828',
-            'identification_card'=>'jwsdiw233jk',
+            'phone'=>'9837-4828',
+            'identification_card'=>'0305-1995-00221',
             'gender'=>'M',
         ]);
         DB::table('persons')->insert([
@@ -47,8 +47,8 @@ class PersonsTableSeeder extends Seeder
             'last_name'=>'Ruiz',
             'birth_date'=>Carbon::parse('2019-09-22'),
             'home_address'=>'El porvenir',
-            'phone'=>'003032',
-            'identification_card'=>'odooew',
+            'phone'=>'9893-9483',
+            'identification_card'=>'0504-1995-00131',
             'gender'=>'M',
         ]);
         

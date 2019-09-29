@@ -48,6 +48,7 @@ class DetailController extends Controller
                 ->orWhere('a.reentry_date','like', '%'.$search.'%')
                 ->orWhere('d.name','like', '%'.$search.'%');
             })
+            ->orderby('a.created_at','desc')
             //->toSql();
             ->paginate(10);
 
@@ -74,7 +75,10 @@ class DetailController extends Controller
     public function store(DetailStoreRequest $request,$id_orden,$id_carro)
     {
         $request->fechasalida=date_format(date_create($request->fechasalida),'Y-m-d H:i:s');
-        $request->fechareeingreso=date_format(date_create($request->fechareeingreso),'Y-m-d H:i:s');
+        if ($request->fechareeingreso!==null) {
+            $request->fechareeingreso=date_format(date_create($request->fechareeingreso),'Y-m-d H:i:s');
+        }
+         
         $detail=new Detail();
         $detail->order_id=$id_orden;
         $detail->car_id=$id_carro;
@@ -116,24 +120,34 @@ class DetailController extends Controller
                 if ($location===null) {
                     return redirect()->back()->withErrors(["ubicacion"=>"El carro no cuenta con una ubicacion"]);
                 }
+            
+                $carro->state_id=2;
+                $detail->save();
+                
                 //SI LA FECHA DEL ARRENDAMIENTO ES EL DIA ACTUAL INMEDIATAMENTE SE LIBERA
                 //LA UBICACION DEL VEHICULO DE LO CONTRARIO SE CREA UN EVENTO QUE 
-                //LIBERARA LA LA UBICACION EL DIA DEL ARRENDAMIENTO
+                //LIBERARA LA UBICACION EL DIA DEL ARRENDAMIENTO
 
                 if (date_format(date_create($request->fechasalida),'Y-m-d') === now()->format('Y-m-d')) {
                     $location->availability=1;
                     $location->save();
                 }else{
-                     DB::unprepared('
-                    CREATE EVENT '.str_replace('.','_',uniqid("ARRENDAMIENTO_", true)).'
+
+                    DB::unprepared('SET GLOBAL event_scheduler = ON;');
+                    $id=str_replace('.','_',uniqid("ORD".$id_orden."DET".$detail->id."_", true));
+                    DB::unprepared('
+                    CREATE EVENT '.$id.'
                     ON SCHEDULE AT \''.$request->fechasalida.'\'
                     DO
+                    BEGIN
                       UPDATE rac.locations SET availability=1 WHERE id='.$location->id.';
+                      UPDATE rac.cars SET reserved=null WHERE id='.$id_carro.';
+                    END
                     ');
+
+                    $carro->reserved=$id;
+
                 }
-                
-                $carro->state_id=2;
-                $detail->save();
                 $carro->save();
                 break;
             case 4://ENTRADA
@@ -202,36 +216,39 @@ class DetailController extends Controller
         //dd($id_orden,$id_detalle);
         //SE BUSCA EL DETALLE A ELIMINAR
         $detail=Detail::find($id_detalle);
-        if ($detail!==null) {
+        if ($detail) {
             //LUEGO SE BUSCA EL ULTIMO MOVIMIENTO DONDE ESTA INVOLUCRADO 
             //EL CARRO QUE PERTENECE AL DETALLE A ELIMINAR
             $last_detail=Detail::where('car_id',$detail->car_id)
                                ->orderBy('created_at','desc')->first();
-            //dd($last_detail);
             if ($detail->id===$last_detail->id) {
                 $location=location::where('availability',1)->first();
+                $carro=Car::find($detail->car_id);
                 switch ($detail->movement_id) {
                     case 1:
-                        $carro=Car::find($detail->car_id);
                         $carro->state_id=2;
                         $carro->location_id=null;
                         $carro->save();
                         $detail->delete();
                         break;
                     case 2:
-                        $carro=Car::find($detail->car_id);
                         $carro->location_id=null;
                         $carro->save();
                         $detail->delete();
                         break;
                     case 3:
-                        $carro=Car::find($detail->car_id);
+                        if ($carro->reserved!==null) {
+                            DB::unprepared('DROP EVENT IF EXISTS '.$carro->reserved);
+                            $carro->reserved=null;
+                            $location=location::find($carro->location_id);
+                            $location->availability=1;
+                            $location->save();
+                        }
                         $carro->location_id=null;
                         $carro->save();
                         $detail->delete();
                         break;
                     case 4:
-                        $carro=Car::find($detail->car_id);
                         if ($carro->location_id!==null) {
                             $location=location::find($carro->location_id);
                             $location->availability=1;
@@ -251,5 +268,6 @@ class DetailController extends Controller
             }
             
         }
+
     }
 }

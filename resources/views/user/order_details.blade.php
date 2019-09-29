@@ -32,7 +32,7 @@
 @endsection
 
 @section('cards')
-    <div class="col-lg-12 col-sm-12 col-md-12">
+    <div class="col-lg-12 col-sm-12 col-md-12" style="padding-right: 0px;padding-left: 0px">
         <table style="margin-bottom: 10px">
             <tr>
                 <td style="text-align: left;">
@@ -77,9 +77,9 @@
                         <td>{{$detail->reentry_date}}</td>
                         <td>{{$detail->movimiento}}</td>
                         <td>
-                            <a class="btn-delete btn btn-danger" data-order="{{Route::current()->parameters['id_orden']}}" data-id="{{$detail->id}}" href="#"></a>
-                            <form method="post" action="{{ route('detail destroy',['id_orden'=>Route::current()->parameters['id_orden'],'id_detalle'=>$detail->id]) }}">
-                            {{--        @csrf--}}
+                            <a class="btn btn-sm btn-outline-danger" data-order="{{Route::current()->parameters['id_orden']}}" data-id="{{$detail->id}}" href="#"><i class="fa fa-trash-o"></i></a>
+                           {{--  <form method="post" action="{{ route('detail destroy',['id_orden'=>Route::current()->parameters['id_orden'],'id_detalle'=>$detail->id]) }}">
+                                   @csrf--}}
                             {{--        @method('DELETE')--}}
                             {{--        <button type="submit" class="btn-delete btn btn-danger"></button>--}}
                             {{--</form>--}}

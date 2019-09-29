@@ -20,6 +20,7 @@ class CreateCarsTable extends Migration {
 			$table->integer('model_id')->index('fk_cars_models1_idx');
 			$table->integer('car_type_id')->index('fk_cars_car_types1_idx');
 			$table->integer('location_id')->nullable()->index('fk_cars_locations1_idx');
+			$table->string('reserved', 70)->nullable();
 			$table->string('chassis', 45);
 			$table->string('license_plate', 45);
 			$table->date('year');

@@ -57,19 +57,7 @@
                     <td>{{($order->cost===null) ? 0:$order->cost}}</td>
                     <td>{{$order->created_at}}</td>
                     <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <a class="btn btn-sm btn-outline-success mr-2" href="#"  type="submit">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </a>
-
-                            <form method="POST" action="#">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-sm btn-outline-danger" type="submit">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </form>
-                        </div>
+                        <a class="btn btn-sm btn-outline-danger" order-id="{{$order->id}}" href="#"><i class="fa fa-trash-o"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -84,6 +72,7 @@
 @endsection
 
 @section('js')
+<script src="{{asset('js/user/orders.js')}}"></script>
 @endsection
 
 

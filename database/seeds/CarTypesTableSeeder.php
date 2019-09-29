@@ -27,7 +27,12 @@ class CarTypesTableSeeder extends Seeder
         ]);
         DB::table('car_types')->insert([
             'id'=>4,
-            'name'=>'BARRIO',
+            'name'=>'PICKUP',
+            'cost'=>3498,
+        ]);
+        DB::table('car_types')->insert([
+            'id'=>5,
+            'name'=>'CROSSOVER',
             'cost'=>3498,
         ]);
     }

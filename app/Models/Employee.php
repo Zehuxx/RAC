@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Sat, 14 Sep 2019 03:56:06 +0000.
+ * Date: Sun, 29 Sep 2019 21:59:53 +0000.
  */
 
 namespace App\Models;
@@ -36,7 +36,7 @@ class Employee extends Eloquent
 	];
 
 	protected $fillable = [
-		'id','salary'
+		'salary'
 	];
 
 	public function person()

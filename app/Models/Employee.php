@@ -36,7 +36,7 @@ class Employee extends Eloquent
 	];
 
 	protected $fillable = [
-		'salary'
+		'id','salary'
 	];
 
 	public function person()

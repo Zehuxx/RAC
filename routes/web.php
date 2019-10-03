@@ -51,6 +51,9 @@ Route::get('admin/marcas/edit/{id}', 'Admin\CarBrandController@edit')->name('adm
 Route::post('admin/marcas/store', 'Admin\CarBrandController@store')->name('admin brands store');
 Route::put('admin/marcas/update/{id}', 'Admin\CarBrandController@update')->name('admin brands update');
 Route::delete('admin/marcas/delete/{id}', 'Admin\CarBrandController@destroy')->name('admin brands delete');
+
+Route::get('admin/reportes', 'Admin\ReportController@index')->name('admin reports'); 
+Route::post('admin/generar/reportes', 'Admin\ReportController@generate')->name('admin reports generate');
 });
 
 

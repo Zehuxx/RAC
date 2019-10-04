@@ -14,7 +14,7 @@ class ReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'fechafinal'=>'after_or_equal:fechainicial',
+            //'fechafinal'=>'after_or_equal:fechainicial',
             'fechainicial'=>'required',
             'slc-reporte'=>'required|integer|between:1,2',
             'slc-grafica'=>'required|integer|between:1,3',
@@ -26,7 +26,7 @@ class ReportRequest extends FormRequest
     public function messages()
     {
         return [
-            'fechafinal.after_or_equal'=>'Fecha final debe ser mayor o igual a Fecha inicial.',
+            //'fechafinal.after_or_equal'=>'Fecha final debe ser mayor o igual a Fecha inicial.',
             'fechainicial.required'=>'fecha inicial obligatoria.',
             'slc-reporte.required'=>'Campo obligatorio.',
             'slc-reporte.integer'=>'Valor no permitido.',

@@ -41,7 +41,7 @@
                                     <option value="0">--Seleccione tipo de grafica--</option>
                                     <option value="1" {{("1"===old('slc-grafica')) ? 'selected':''}}>Barras</option>
                                     <option value="2" {{("2"===old('slc-grafica')) ? 'selected':''}}>Lineas</option>
-                                    <option value="2" {{("3"===old('slc-grafica')) ? 'selected':''}}>Pastel</option>
+                                    <option value="3" {{("3"===old('slc-grafica')) ? 'selected':''}}>Pastel</option>
                                 </select>
                                 @error('slc-grafica')
                                     <span class="invalid-feedback" role="alert">
@@ -50,8 +50,8 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="fechainicial" class="col-sm-4 col-form-label">Fecha inicial</label>
+                        <div class="form-group col-md-6" >
+                            <label for="fechainicial" class="col-sm-4 col-form-label" style="padding-top: 0px">Fecha inicial</label>
                             <div class="col-sm-10">
                                 <input class="form-control @error('fechainicial') is-invalid @enderror" id="fechainicial" type="date" name="fechainicial" value="{{ old('fechainicial') }}">
                                 @error('fechainicial')
@@ -61,7 +61,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
+                        {{--}}<div class="form-group col-md-6">
                             <label for="fechafinal" class="col-sm-4 col-form-label">Fecha Final</label>
                             <div class="col-sm-10">
                                 <input class="form-control @error('fechafinal') is-invalid @enderror" id="fechafinal" type="date" name="fechafinal" value="{{ old('fechafinal') }}">
@@ -71,7 +71,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div>{{--}}
                         <fieldset class="form-group col-md-6">
                             <div class="row">
                                 <label class="col-form-label col-sm-2 pt-0" style="padding-left: 30px;padding-right: 0px">Filtro</label>
@@ -88,7 +88,7 @@
                             </div>
                         </fieldset>
                         <div class="form-group col-md-6" id="item" style="display: none;">
-                            <label for="name" id="name-fil" class="col-sm-4 col-form-label" style="padding-top: 0px"></label>
+                            <label for="name" id="name-fil" class="col-sm-4 col-form-label" style="padding-top: 0px" ></label>
                             <div class="col-sm-10">
                                 <input class="form-control @error('text-fil') is-invalid @enderror" id="text-fil" type="text" placeholder="opcional" name="text-fil" value="{{ old('text-fil') }}" >
                                 @error('text-fil')
@@ -112,28 +112,39 @@
     </div>
 </div>
 
+@if($errors->has('NR') || $grafica!=null)
 <div class="card">
+    @if($grafica!=null)
     <div class="card-header">
-        <i class="fa fa-car"></i> Tipos
+        <div class="col input-group">
+            <form action="{{route('admin pdf')}}" method="POST" target="_blank">
+                @csrf
+                <input type="hidden" value="{{$info}}" name="info">
+                <input type="hidden" value="{{$repor_id}}" name="repor_id">
+                <button type="submit" class="btn btn-pdf" style="background-color: transparent;"></button>
+            </form>
+        </div>
     </div>
+    @endif
     <div class="card-body">
       <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12"> 
-               {!! $line_chart->container() !!}
-            </div>
-            <div class="col-md-12"> 
-               {!! $pie_chart->container() !!}
-            </div>
-            <div class="col-md-12"> 
-               {!! $bar_chart->container() !!}
-            </div>
+            @error('NR')
+                <h5>{{ $errors->first('NR') }}</h5>
+            @enderror
+            @if($grafica!=null)
+                <div class="col-md-12">
+                    {!!$grafica->container()!!}
+                </div>
+            @endif
+            
         </div>
           
       </div>
 
     </div>
   </div>
+@endif
 @endsection
 
 @section('js')
@@ -155,7 +166,8 @@
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
-{!! $line_chart->script() !!}
-{!! $pie_chart->script() !!}
-{!! $bar_chart->script() !!}
+@if($grafica!=null)
+    {!! $grafica->script() !!}
+@endif
+
 @endsection

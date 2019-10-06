@@ -16,7 +16,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12"> 
-                <form role="form" id="reporte" name="reporte" action="{{route('admin reports generate')}}" method="POST">
+                <form role="form" id="reporte" name="reporte" action="{{route('admin reports generate')}}" method="POST"> 
                     @csrf
                     <div class="row">
                         <div class="form-group col-md-6">
@@ -121,6 +121,8 @@
                 @csrf
                 <input type="hidden" value="{{$info}}" name="info">
                 <input type="hidden" value="{{$repor_id}}" name="repor_id">
+                <input type="hidden" name="img_repor" id="img_repor">
+                
                 <button type="submit" class="btn btn-pdf" style="background-color: transparent;"></button>
             </form>
         </div>
@@ -157,7 +159,7 @@
             }else{
                  $("#name-fil").text('N. Placa');
             }
-            
+             
             $("#item").css('display','block');
         }else{
             $("#item").css('display','none');
@@ -167,7 +169,48 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 @if($grafica!=null)
-    {!! $grafica->script() !!}
+<script type="text/javascript">
+        // draw background
+        var backgroundColor = 'white';
+        Chart.plugins.register({
+            beforeDraw: function(c) {
+                var ctx = c.chart.ctx;
+                ctx.fillStyle = backgroundColor;
+                ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+            }
+        });
+</script>
+   {!! $grafica->script() !!}
+    <script type="text/javascript">
+
+        
+        var dataset='<?php echo json_encode($grafica->datasets);?>';
+        var labels='<?php echo json_encode($grafica->labels);?>';
+        var options='<?php echo json_encode($grafica->options);?>';
+        labels=JSON.parse(labels);
+        options=JSON.parse(options);
+        dataset=JSON.parse(dataset)[0];
+        var opt=dataset.options;
+
+        function done(){
+          var url=document.getElementById('{{$grafica->id}}').toDataURL("image/jpg");
+          $('#img_repor').val(url);
+        }
+        var ctx = new Chart(document.getElementById('{{$grafica->id}}').getContext("2d"),{
+                                                     data: {
+                                                        labels: labels,
+                                                        datasets: [{"borderWidth":opt.borderWidth,"backgroundColor":opt.backgroundColor,"data":dataset.values,"label":dataset.name,"type":dataset.type,}]
+                                                    },
+                                                      type:dataset.type,
+                                                      options:{"maintainAspectRatio":options.maintainAspectRatio,"scales":options.scales,bezierCurve : false,
+                                                          animation: {
+                                                            onComplete: done
+                                                          }
+                                                           }
+                                                    });
+
+        
+    </script>
 @endif
 
 @endsection

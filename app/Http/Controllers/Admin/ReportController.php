@@ -231,20 +231,23 @@ class ReportController extends Controller
                         $dataset=$grafica_chart->dataset('Arrendamientos anual por tipo','bar',$data);
                         //se cargan los colores a la grafica
                         $dataset->backgroundColor(collect($colors));
-                    
+                        
+                        
                         break;
                     case 2: //Lineas
                         $dataset=$grafica_chart->dataset('Arrendamientos anual por tipo','line',$data);
                         //la grafica de lineas solo ocupa un color
-                        $dataset->Color(collect(['#20c997']));
+                        $dataset->backgroundColor(collect(['#20c997']));
+                        
                         
                         break;
                     case 3: //Pastel
 
                         $dataset=$grafica_chart->dataset('Arrendamientos anual por tipo','pie',$data);
                         $dataset->backgroundColor(collect($colors));
+                        
                         break;
-                    default:
+                    default:    
                         //en caso de algun error se devuelve null como grafica
                         //que en la vista se interpreta como que no se esta buscando nada
                         $grafica_chart=null;
@@ -282,19 +285,20 @@ class ReportController extends Controller
                     case 1: //Barras
                         $dataset=$grafica_chart->dataset('Arrendamiento mensual por tipo','bar',$data);
                         $dataset->backgroundColor(collect($colors));
-                    
-                        break;
+                        
+                        break;  
                     case 2: //Lineas
                         $dataset=$grafica_chart->dataset('Arrendamiento mensual por tipo','line',$data);
-                        $dataset->Color(collect(['#20c997']));
+                        $dataset->backgroundColor(collect(['#20c997']));
                         
-                        break;
+                        break;  
                     case 3: //Pastel
 
                         $dataset=$grafica_chart->dataset('Arrendamiento mensual por tipo','pie',$data);
                         $dataset->backgroundColor(collect($colors));
+                        
                         break;
-                    default:
+                    default:    
                         $grafica_chart=null;
                         break;
                 }
@@ -344,7 +348,7 @@ class ReportController extends Controller
                     case 2: //Lineas
                         $dataset=$grafica_chart->dataset('Arrendamiento anual por tipo','line',$data);
                         //la grafica de lineas solo ocupa un color
-                        $dataset->Color(collect(['#20c997']));
+                        $dataset->backgroundColor(collect(['#20c997']));
                         
                         break;
                     case 3: //Pastel
@@ -393,7 +397,7 @@ class ReportController extends Controller
                         break;
                     case 2: //Lineas
                         $dataset=$grafica_chart->dataset('Arrendamiento mensual por tipo','line',$data);
-                        $dataset->Color(collect(['#20c997']));
+                        $dataset->backgroundColor(collect(['#20c997']));
                         
                         break;
                     case 3: //Pastel
@@ -407,7 +411,6 @@ class ReportController extends Controller
                 }
             }
         }      
-
         return $this->index($grafica_chart,$info,$repor_id);
                      
     }
@@ -415,8 +418,9 @@ class ReportController extends Controller
     public function pdf(Request $request){
         $info=json_decode($request->info);
         $repor_id=(int)$request->repor_id;
+        $img_repor=$request->img_repor;
 
-        $pdf = PDF::loadView('report', compact('info','repor_id'));
+        $pdf = PDF::loadView('report', compact('info','repor_id','img_repor'));
         return $pdf->stream('Reporte.pdf',array('Attachment'=>false));
     }
 

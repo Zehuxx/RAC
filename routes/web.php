@@ -52,8 +52,15 @@ Route::post('admin/marcas/store', 'Admin\CarBrandController@store')->name('admin
 Route::put('admin/marcas/update/{id}', 'Admin\CarBrandController@update')->name('admin brands update');
 Route::delete('admin/marcas/delete/{id}', 'Admin\CarBrandController@destroy')->name('admin brands delete');
 
-Route::get('admin/reportes', 'Admin\ReportController@index')->name('admin reports'); 
+Route::get('admin/groups', 'Admin\GroupController@index')->name('admin groups');
+Route::get('admin/groups/show/{id}', 'Admin\GroupController@show')->name('admin groups show');
+Route::get('admin/groups/add', 'Admin\GroupController@create')->name('admin groups add');
+Route::post('admin/groups/store', 'Admin\GroupController@store')->name('admin groups store');
+Route::post('admin/groups/add/employee/{id}', 'Admin\GroupController@addEmployee')->name('admin groups add employee');
+
+Route::get('admin/reportes', 'Admin\ReportController@index')->name('admin reports');
 Route::post('admin/reportes', 'Admin\ReportController@generate')->name('admin reports generate');
+
 
 Route::post('admin/reportes/pdf','Admin\ReportController@pdf')->name('admin pdf');
 });

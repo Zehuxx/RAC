@@ -19,6 +19,10 @@
             <i class="nav-icon icon-badge"></i> Marcas</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin groups') }}">
+            <i class="nav-icon icon-credit-card"></i> Grupos</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('admin reports') }}">
             <i class="nav-icon icon-note"></i> Reportes</a>
     </li>

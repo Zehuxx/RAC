@@ -53,11 +53,11 @@
                                 <a class="btn btn-sm btn-outline-primary mr-2" href="{{ route('admin groups show', $group->id) }}"  type="submit">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a class="btn btn-sm btn-outline-success mr-2" href="{{ route('admin models edit', $group->id) }}"  type="submit">
+                                <a class="btn btn-sm btn-outline-success mr-2" href="{{ route('admin groups edit', $group->id) }}"  type="submit">
                                     <i class="fa fa-pencil-square-o"></i>
                                 </a>
 
-                                <form method="POST" action="{{ route('admin models delete', $group->id) }}">
+                                <form method="POST" action="{{ route('admin groups delete', $group->id) }}">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-sm btn-outline-danger" type="submit">

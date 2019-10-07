@@ -11,13 +11,13 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class Group
- * 
+ *
  * @property int $id
  * @property int $car_type_id
  * @property string $name
  * @property float $commission
  * @property float $sale_goal
- * 
+ *
  * @property \App\Models\CarType $car_type
  * @property \Illuminate\Database\Eloquent\Collection $sale_goals
  *
@@ -25,7 +25,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class Group extends Eloquent
 {
-	public $timestamps = false;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
 	protected $casts = [
 		'car_type_id' => 'int',

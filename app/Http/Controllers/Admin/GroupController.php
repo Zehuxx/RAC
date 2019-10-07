@@ -67,6 +67,7 @@ class GroupController extends Controller
 
         $temp = DB::table('sale_goals as s')
         ->select('s.employee_id')
+        ->whereNull('s.deleted_at')
         ->where('s.group_id', '=', $id);
 
         $employees=DB::table('employees as a')
@@ -79,7 +80,7 @@ class GroupController extends Controller
         ->paginate(10);
 
         $members = DB::table('employees as a')
-        ->select('a.id as id','c.name as nombre','c.last_name as apellido','b.email as email','d.name as rol')
+        ->select('a.id as id','c.name as nombre','c.last_name as apellido','b.email as email','d.name as rol', 's.id as sale_goal')
         ->join('users as b','a.id','=','b.id')
         ->join('persons as c','a.id','=','c.id')
         ->join('roles as d','b.role_id','=','d.id')
@@ -100,7 +101,10 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        $group = Group::find($id);
+        $carTypes = CarType::all();
+
+        return view('admin.edit_group', compact('group', 'carTypes'));
     }
 
     /**
@@ -112,7 +116,15 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $group = Group::find($id);
+
+        $group->car_type_id = $request->car_type;
+        $group->commission = $request->comission;
+        $group->sale_goal = $request->goal;
+
+        $group->update();
+
+        return redirect()->route('admin groups');
     }
 
     /**
@@ -123,17 +135,34 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group = Group::find($id);
+        $group->delete();
+
+        return redirect()->route('admin groups');
     }
 
     public function addEmployee(Request $request, $id) {
-        $saleGoal = new SaleGoal();
-        $saleGoal->employee_id = $id;
-        $saleGoal->group_id = $request->group;
-        $saleGoal->save();
+        $temp = SaleGoal::onlyTrashed()
+            ->where('employee_id', '=', $id)
+            ->where('group_id', '=', $request->group)->first();
 
-        dd($saleGoal);
+        if (!$temp) {
+            $saleGoal = new SaleGoal();
+            $saleGoal->employee_id = $id;
+            $saleGoal->group_id = $request->group;
+            $saleGoal->save();
+        } else {
+            $temp->restore();
+        }
 
-        return redirect()->route('admin groups');
+        return redirect()->route('admin groups show', $request->group);
+    }
+
+    public function removeEmployee($id) {
+        $saleGoal = SaleGoal::find($id);
+
+        $saleGoal->delete();
+
+        return redirect()->route('admin groups show', $saleGoal->group_id);
     }
 }

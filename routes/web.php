@@ -56,7 +56,11 @@ Route::get('admin/groups', 'Admin\GroupController@index')->name('admin groups');
 Route::get('admin/groups/show/{id}', 'Admin\GroupController@show')->name('admin groups show');
 Route::get('admin/groups/add', 'Admin\GroupController@create')->name('admin groups add');
 Route::post('admin/groups/store', 'Admin\GroupController@store')->name('admin groups store');
+Route::get('admin/groups/edit/{id}', 'Admin\GroupController@edit')->name('admin groups edit');
+Route::put('admin/groups/update/{id}', 'Admin\GroupController@update')->name('admin groups update');
 Route::post('admin/groups/add/employee/{id}', 'Admin\GroupController@addEmployee')->name('admin groups add employee');
+Route::get('admin/groups/remove/employee/{id}', 'Admin\GroupController@removeEmployee')->name('admin groups remove employee');
+Route::delete('admin/groups/delete/{id}', 'Admin\GroupController@destroy')->name('admin groups delete');
 
 Route::get('admin/reportes', 'Admin\ReportController@index')->name('admin reports');
 Route::post('admin/reportes', 'Admin\ReportController@generate')->name('admin reports generate');

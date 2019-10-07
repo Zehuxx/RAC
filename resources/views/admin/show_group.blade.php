@@ -2,8 +2,9 @@
 
 @section('route')
     <li class="breadcrumb-item">Admin</li>
+    <li class="breadcrumb-item">Groups</li>
     <li class="breadcrumb-item active">
-        <a href="#">Modelos</a>
+        <a href="#">Show</a>
     </li>
 @endsection
 
@@ -58,13 +59,9 @@
                         <td>{{$member->rol}}</td>
                         <td>{{$member->email}}</td>
                         <td>
-                            <form method="post" style="display: contents;" action="{{route('admin groups add employee',$member->id)}}">
-                                @csrf
-                                <input type="hidden" name="group" id="group" value="{{ $group->id }}">
-                                <button type="submit"   class="btn btn-sm btn-outline-primary">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </form>
+                            <a class="btn btn-sm btn-outline-danger" href="{{ route('admin groups remove employee', $member->sale_goal) }}"  type="submit">
+                                <i class="fa fa-close"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

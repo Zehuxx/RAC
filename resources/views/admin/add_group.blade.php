@@ -21,52 +21,53 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="name">Nombre</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="name" type="text" name="name" value="{{ old('name') }}" placeholder="Nombre">
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                        <input class="form-control  @error('name') is-invalid @enderror" id="name" type="text" name="name" value="{{ old('name') }}" placeholder="Nombre">
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="car_type">Tipo auto</label>
                     <div class="col-md-9">
-                        <select class="form-control" name="car_type" id="car_type" value="">
+                        <select class="form-control @error('car_type') is-invalid @enderror" name="car_type" id="car_type" value="">
+                                <option value="">-- Seleccione el tipo de carro --</option>
                             @foreach ($carTypes as $carType)
-                                <option value="{{ $carType->id }}"> {{ $carType->name }} </option>
+                                <option value="{{ $carType->id }}" {{ (old('car_type') == $carType->id) ? 'selected' : '' }}> {{ $carType->name }} </option>
                             @endforeach
                         </select>
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                         @error('car_type')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('car_type') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="comission">Comisión</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="comission" type="number" name="comission" value="{{ old('comission') }}" placeholder="Commisió">
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                        <input class="form-control @error('comission') is-invalid @enderror" id="comission" type="text" name="comission" value="{{ old('comission') }}" placeholder="Comisión">
+                         @error('comission')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('comission') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="goal">Meta</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="goal" type="number" name="goal" value="{{ old('goal') }}" placeholder="Meta">
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                        <input class="form-control @error('goal') is-invalid @enderror" id="goal" type="number" name="goal" value="{{ old('goal') }}" placeholder="Meta">
+                         @error('goal')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('goal') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
             </form>

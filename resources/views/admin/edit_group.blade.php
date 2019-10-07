@@ -18,56 +18,57 @@
         <div class="card-body">
         <form class="form-horizontal" name="modelo" id="modelo" action="{{ route('admin groups update', $group->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
-                @method('put')
+                @method('put') 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="name">Nombre</label>
                     <div class="col-md-9">
-                        <input class="form-control" disabled id="name" type="text" name="name" value="{{ old('name', $group->name) }}" placeholder="Nombre">
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                        <input class="form-control @error('name') is-invalid @enderror" id="name" type="text" name="name" value="{{ old('name', $group->name) }}" placeholder="Nombre">
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="car_type">Tipo auto</label>
                     <div class="col-md-9">
-                        <select class="form-control" name="car_type" id="car_type" value="{{old('car_Type', $group->car_type_id)}}">
+                        <select class="form-control @error('car_type') is-invalid @enderror" name="car_type" id="car_type" value="{{old('car_Type', $group->car_type_id)}}">
+                            <option value="">-- Seleccione el tipo de carro --</option>
                             @foreach ($carTypes as $carType)
                                 <option {{ ($group->car_type_id == $carType->id) ? 'selected' : '' }} value="{{ $carType->id }}"> {{ $carType->name }} </option>
                             @endforeach
                         </select>
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                        @error('car_type')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('car_type') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="comission">Comisión</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="comission" type="number" name="comission" value="{{ old('comission', $group->commission) }}" placeholder="Commisió">
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                        <input class="form-control @error('comission') is-invalid @enderror" id="comission" type="text" name="comission" value="{{ old('comission', $group->commission) }}" placeholder="Commisió">
+                        @error('comission')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('comission') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="goal">Meta</label>
                     <div class="col-md-9">
-                        <input class="form-control" id="goal" type="number" name="goal" value="{{ old('goal', $group->sale_goal) }}" placeholder="Meta">
-                        {{-- @if($errors->has('name'))
-                        <div class="alert alert-danger">
-                            <span>* {{ $errors->first('name') }}</span>
-                        </div>
-                        @endif --}}
+                        <input class="form-control @error('goal') is-invalid @enderror" id="goal" type="number" name="goal" value="{{ old('goal', $group->sale_goal) }}" placeholder="Meta">
+                        @error('goal')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('goal') }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
             </form>

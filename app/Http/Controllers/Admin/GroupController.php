@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GroupRequestStore;
+use App\Http\Requests\GroupRequestUpdate;
 use App\Models\CarType;
 use App\Models\Group;
 use App\Models\SaleGoal;
@@ -20,10 +22,15 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $groups = Group::orderBy('id', 'desc')
-                         ->where('name','like','%'.$search.'%')
-                         ->paginate(10);
-
+        $groups = Group::select('groups.*')
+                        ->leftjoin('car_types', 'groups.car_type_id', '=', 'car_types.id')
+                        ->whereNull('groups.deleted_at')
+                        ->orderBy('groups.created_at', 'desc')
+                        ->where(function($q)use($search){
+                            $q->where('groups.name','like','%'.$search.'%')
+                            ->orWhere('car_types.name','like','%'.$search.'%');
+                        })
+                        ->paginate(10);
         return view('admin.groups', compact('groups'));
     }
 
@@ -44,7 +51,7 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GroupRequestStore $request)
     {
         $group = new Group();
 
@@ -71,7 +78,7 @@ class GroupController extends Controller
         $temp = DB::table('sale_goals as s')
         ->select('s.employee_id')
         ->whereNull('s.deleted_at')
-        ->where('s.group_id', '=', $id);
+        ->where('s.group_id', '=', $id); 
 
         $employees=DB::table('employees as a')
         ->select('a.id as id','c.name as nombre','c.last_name as apellido','b.email as email','d.name as rol')
@@ -117,10 +124,10 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GroupRequestUpdate $request, $id)
     {
         $group = Group::find($id);
-
+        $group->name = $request->name;
         $group->car_type_id = $request->car_type;
         $group->commission = $request->comission;
         $group->sale_goal = $request->goal;

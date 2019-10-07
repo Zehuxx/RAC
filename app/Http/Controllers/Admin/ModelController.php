@@ -9,9 +9,12 @@ use App\Http\Controllers\Controller;
 
 class ModelController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $models = Model::orderBy('id', 'desc')->paginate(10);
+        $search = $request->input('search');
+        $models = Model::orderBy('id', 'desc')
+                         ->where('name','like','%'.$search.'%')
+                         ->paginate(10);
 
         return view('admin/models', compact('models'));
     }

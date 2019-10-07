@@ -11,15 +11,24 @@ use App\Http\Controllers\Controller;
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
         $clients = Person::join('customers', 'persons.id', '=', 'customers.id')
                 ->whereNull('customers.deleted_at')
                 ->orderBy('customers.updated_at', 'desc')
+                ->where(function($q)use($search){
+                    $q->where('persons.name','like','%'.$search.'%')
+                    ->orWhere('persons.last_name','like','%'.$search.'%')
+                    ->orWhere('persons.identification_card','like','%'.$search.'%')
+                    ->orWhere('persons.phone','like','%'.$search.'%')
+                    ->orWhere('persons.home_address','like','%'.$search.'%')
+                    ->orWhere('persons.gender','like','%'.$search.'%');
+                })
                 ->paginate(10);
 
         return view('user/client_view', compact('clients'));

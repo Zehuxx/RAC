@@ -14,9 +14,12 @@ class CarTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $carTypes = CarType::orderBy('id', 'desc')->paginate(10);
+        $search = $request->input('search');
+        $carTypes = CarType::orderBy('id', 'desc')
+                             ->where('name','like','%'.$search.'%')
+                             ->paginate(10);
 
         return view('admin/types', compact('carTypes'));
     }

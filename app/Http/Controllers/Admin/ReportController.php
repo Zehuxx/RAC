@@ -416,8 +416,11 @@ class ReportController extends Controller
     }
 
     public function pdf(Request $request){
+        //valores a imprimir en la tabla
         $info=json_decode($request->info);
+        //usada para impresion de tabla en pdf
         $repor_id=(int)$request->repor_id;
+        //envia la imagen de la grafica para agregarla al pdf
         $img_repor=$request->img_repor;
 
         $pdf = PDF::loadView('report', compact('info','repor_id','img_repor'));

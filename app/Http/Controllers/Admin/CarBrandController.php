@@ -14,9 +14,12 @@ class CarBrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $brands = CarBrand::paginate(10);
+        $search = $request->input('search');
+        $brands = CarBrand::orderBy('id', 'desc')
+                         ->where('name','like','%'.$search.'%')
+                         ->paginate(10);
 
         return view('admin/brands', compact('brands'));
     }

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Controllers\Controller;
-
+ 
 class CustomerController extends Controller
 {
     /**
@@ -74,7 +74,7 @@ class CustomerController extends Controller
 
         if ((int)$request->slc_cuenta==2) {
             $company = new Company();
-            $company->name=$request->name;
+            $company->name=$request->company_name;
             $company->rtn=$request->rtn;
             $company->save();
 
@@ -128,19 +128,23 @@ class CustomerController extends Controller
      */
     public function update(CustomerUpdateRequest $request, $id)
     {
-        // $client = Customer::find($id)->person;
-        // $client->name = $request->name;
-        // $client->last_name = $request->last_name;
-        // $client->identification_card = $request->identification_card;
-        // $client->phone = $request->phone;
-        // $client->home_address = $request->home_address;
-        // $client->gender = $request->gender;
-        // $client->birth_date = $request->birth_date;
-        // $client->update();
+        $client = Customer::find($id)->person;
+        $client->name = $request->name;
+        $client->last_name = $request->last_name;
+        $client->identification_card = $request->identification_card;
+        $client->phone = $request->phone;
+        $client->home_address = $request->home_address;
+        $client->gender = $request->gender;
+        $client->birth_date = $request->birth_date;
+        $client->update();
 
-        // $cust = $client->customer;
-        // $cust->updated_at = $client->updated_at;
-        // $cust->save();
+        if (isset($request->slc_cuenta)) {
+            $aux = CompanyCustomer::where('customer_id',$id)->first();
+            $company=Company::find($aux->company_id);
+            $company->name=$request->company_name;
+            $company->rtn=$request->rtn;
+            $company->save();
+        }
 
         return redirect()->route('user clients');
     }

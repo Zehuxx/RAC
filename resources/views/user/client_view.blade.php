@@ -57,8 +57,8 @@
                         <td>{{ $client->gender }}</td>
                         @php
                             try {
-                                echo('<td>'.e($client->customer->companies[0]->rtn).'</td>');
                                 echo('<td>'.e($client->customer->companies[0]->name).'</td>');
+                                echo('<td>'.e($client->customer->companies[0]->rtn).'</td>');
                             } catch (\Throwable $th) {
                                 echo('<td> -- . -- </td>');
                                 echo('<td> -- . -- </td>');

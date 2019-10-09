@@ -113,7 +113,7 @@
                             </div>
             			    @endif
                         </td>
-                    </tr>
+                    </tr> 
 
                     @if ($isCompany == true)
 

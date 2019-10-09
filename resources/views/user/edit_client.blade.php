@@ -113,7 +113,37 @@
                             </div>
             			    @endif
                         </td>
-	        	    </tr>
+                    </tr>
+
+                    @if ($isCompany == true)
+
+                        <input type="hidden" name="slc_cuenta" id="slc_cuenta" value='1'>
+
+                        <tr id="company_data1">
+                            <th>Nombre de la Compañia</th>
+                            <td>
+                            <input type="text" name="company_name" id="company_name" value="{{ old('company_name', $client->customer->companies[0]->name) }}" class="form-control">
+                                @if($errors->has('company_name'))
+                                    <div class="alert alert-danger">
+                                        <span>*{{ $errors->first('company_name') }}</span>
+                                    </div>
+                                @endif
+                            </td>
+                        </tr>
+
+                        <tr id="company_data2">
+                            <th>RTN</th>
+                            <td>
+                            <input type="text" name="rtn" id="rtn" value="{{ old('rtn', $client->customer->companies[0]->rtn) }}" class="form-control">
+                                @if($errors->has('rtn'))
+                                    <div class="alert alert-danger">
+                                        <span>*{{ $errors->first('rtn') }}</span>
+                                    </div>
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
+
 	        	  </tbody>
 	        	</table>
 				</form>

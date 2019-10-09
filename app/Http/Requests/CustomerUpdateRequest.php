@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerRequest extends FormRequest
+class CustomerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CustomerRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return True;
     }
 
     /**
@@ -25,18 +25,7 @@ class CustomerRequest extends FormRequest
     {
         $today = now()->format('Y-m-d');
 
-        if((int)$this->slc_cuenta==1){
-            return [
-
-                'name'=>'required',
-                'last_name'=>'required',
-                'identification_card'=>'required|unique:persons,identification_card,'.$this->id.'|regex:/(^(\d{4}\-\d{4}\-\d{5})$)/u',
-                'phone'=>'required|unique:persons,phone,'.$this->id.'|regex:/(^(\d{4}\-\d{4})$)/u',
-                'home_address'=>'required|max:45',
-                'gender'=>'required|in:M,F',
-                'birth_date'=>'required|before:'.$today
-            ];
-        } elseif((int)$this->slc_cuenta==2){
+        if (isset($this->slc_cuenta)) {
             return [
                 'company_name'=>'required',
                 'rtn'=>'required|regex:/(^(\d{14})$)/u',
@@ -48,12 +37,17 @@ class CustomerRequest extends FormRequest
                 'gender'=>'required|in:M,F',
                 'birth_date'=>'required|before:'.$today
             ];
-        }else{
+        } else {
             return [
-                'slc_cuenta'=>'numeric|min:1|max:2',
+                'name'=>'required',
+                'last_name'=>'required',
+                'identification_card'=>'required|unique:persons,identification_card,'.$this->id.'|regex:/(^(\d{4}\-\d{4}\-\d{5})$)/u',
+                'phone'=>'required|unique:persons,phone,'.$this->id.'|regex:/(^(\d{4}\-\d{4})$)/u',
+                'home_address'=>'required|max:45',
+                'gender'=>'required|in:M,F',
+                'birth_date'=>'required|before:'.$today
             ];
         }
-
     }
 
     public function messages()

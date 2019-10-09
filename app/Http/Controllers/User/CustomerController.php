@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Person;
+use App\Models\CompanyCustomer;
+use App\Models\Company;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Controllers\Controller;
 
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource. 
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -68,6 +71,20 @@ class CustomerController extends Controller
         $customer->updated_at = $client->updated_at;
         $customer->save();
 
+
+        if ((int)$request->slc_cuenta==2) {
+            $company = new Company();
+            $company->name=$request->name;
+            $company->rtn=$request->rtn;
+            $company->save();
+
+            $company_Customer = new CompanyCustomer();
+            $company_Customer->company_id=$company->id;
+            $company_Customer->customer_id=$customer->id;
+            $company_Customer->save();
+        }
+
+
         return redirect()->route('user clients');
     }
 
@@ -91,8 +108,15 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $client = Customer::find($id)->person;
+        $isCompany = true;
 
-        return view('user/edit_client', compact('client'));
+        try {
+            $client->customer->companies[0];
+        } catch (\Throwable $th) {
+            $isCompany = false;
+        }
+
+        return view('user/edit_client', compact('client', 'isCompany'));
     }
 
     /**
@@ -102,21 +126,21 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerRequest $request, $id)
+    public function update(CustomerUpdateRequest $request, $id)
     {
-        $client = Customer::find($id)->person;
-        $client->name = $request->name;
-        $client->last_name = $request->last_name;
-        $client->identification_card = $request->identification_card;
-        $client->phone = $request->phone;
-        $client->home_address = $request->home_address;
-        $client->gender = $request->gender;
-        $client->birth_date = $request->birth_date;
-        $client->update();
+        // $client = Customer::find($id)->person;
+        // $client->name = $request->name;
+        // $client->last_name = $request->last_name;
+        // $client->identification_card = $request->identification_card;
+        // $client->phone = $request->phone;
+        // $client->home_address = $request->home_address;
+        // $client->gender = $request->gender;
+        // $client->birth_date = $request->birth_date;
+        // $client->update();
 
-        $cust = $client->customer;
-        $cust->updated_at = $client->updated_at;
-        $cust->save();
+        // $cust = $client->customer;
+        // $cust->updated_at = $client->updated_at;
+        // $cust->save();
 
         return redirect()->route('user clients');
     }

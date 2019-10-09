@@ -39,6 +39,8 @@
                     <th>Phone</th>
                     <th>Fecha nacimiento</th>
                     <th>Genero</th>
+                    <th>Compañia</th>
+                    <th>RTN</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
@@ -53,6 +55,17 @@
                         <td>{{ $client->phone }}</td>
                         <td>{{ \Carbon\Carbon::parse($client->birth_date)->format('Y-m-d') }}</td>
                         <td>{{ $client->gender }}</td>
+                        @php
+                            try {
+                                echo('<td>'.e($client->customer->companies[0]->rtn).'</td>');
+                                echo('<td>'.e($client->customer->companies[0]->name).'</td>');
+                            } catch (\Throwable $th) {
+                                echo('<td> -- . -- </td>');
+                                echo('<td> -- . -- </td>');
+                            }
+                        @endphp
+
+
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a class="btn btn-sm btn-outline-success mr-2" href="{{ route('user clients edit', $client->id) }}"  type="submit">
